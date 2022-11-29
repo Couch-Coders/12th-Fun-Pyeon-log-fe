@@ -13,7 +13,6 @@ module.exports = {
       },
       rules: {
         "preferred-import/ts-imports": "error",
-        "@typescript-eslint/explicit-function-return-type": "off",
       },
     },
   ],
@@ -22,5 +21,9 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "preferred-import"],
-  rules: {},
+  rules: {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/consistent-type-definitions": "warn",
+  },
 };

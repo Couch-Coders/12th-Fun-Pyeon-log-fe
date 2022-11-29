@@ -1,11 +1,14 @@
 import React from "react";
-import { ArrowDownOutlined } from "@ant-design/icons";
+import { Route, Routes } from "react-router-dom";
+
+import { Todo } from "@pages/Todo";
 
 function App() {
   return (
     <div className="App">
-      지도 api 만들기
-      <ArrowDownOutlined />
+      <Routes>
+        <Route path="/todo" element={<Todo />} />
+      </Routes>
     </div>
   );
 }

@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
 
 function App() {
-  return <div className="App">지도 api 해보기</div>;
+	return <div className='App'></div>;
+
 }
 
 export default App;

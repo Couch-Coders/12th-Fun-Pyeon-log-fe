@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import { addTodo, deleteTodo, selectTodo } from "@stores/todo/todoSlice";
 import { useAppDispatch } from "@stores/store";
 
+import { getRandomData } from "@stores/todo/todoThunk";
+
 export const Todo = () => {
-  const todos = useSelector(selectTodo);
+  const { todos, randata } = useSelector(selectTodo);
   const dispatch = useAppDispatch();
   const [value, setValue] = useState<string>("");
-
+  // const [data, setData] = useState<any>(null)
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -21,6 +23,7 @@ export const Todo = () => {
   return (
     <div style={{ fontSize: "30px" }}>
       Todo page <ArrowDownOutlined />
+      <button onClick={() => dispatch(getRandomData())}>GET</button>
       <form onSubmit={onSubmit}>
         <input type="text" value={value} onChange={onChange} />
         <input type="submit" value="Add" />
@@ -35,6 +38,11 @@ export const Todo = () => {
           </li>
         ))}
       </ul>
+      <div>
+        {randata?.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </div>
     </div>
   );
 };

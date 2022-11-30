@@ -11,12 +11,12 @@ interface TodoState {
   todos: Todo[];
 }
 
+let nextId = 1;
+
 // Define the initial state using that type
 const initialState: TodoState = {
   todos: [],
 };
-
-let nextId = 1;
 
 export const todoSlice = createSlice({
   name: "todo",
@@ -30,8 +30,9 @@ export const todoSlice = createSlice({
           text: action.payload,
         },
       ];
-      nextId++;
+      nextId += 1;
     },
+
     deleteTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter(({ id }) => id !== action.payload);
     },

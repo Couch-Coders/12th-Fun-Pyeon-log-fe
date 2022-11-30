@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { ArrowDownOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { addTodo, deleteTodo, selectTodo } from "@stores/todo/todoSlice";
+import { useAppDispatch } from "@stores/store";
 
 export const Todo = () => {
   const todos = useSelector(selectTodo);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [value, setValue] = useState<string>("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

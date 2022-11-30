@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@stores/store";
-import { getRandomData } from "./todoThunk";
+import { getKakaoData, getRandomData } from "./todoThunk";
 
 export interface Post {
   userId: number;
@@ -15,9 +15,20 @@ interface Todo {
   text: string;
 }
 
+interface kakaoDocumnet {
+  id: string;
+  place_name: string;
+}
+
+interface Kakao {
+  documents: kakaoDocumnet[];
+  meta: object;
+}
+
 interface TodoinitalState {
   todos: Todo[];
   randata: null | Post[];
+  kakaoData: null | Kakao;
   error: null | string;
   loading: boolean;
 }
@@ -28,6 +39,7 @@ let nextId = 1;
 const initialState: TodoinitalState = {
   todos: [],
   randata: null,
+  kakaoData: null,
   error: null,
   loading: false,
 };
@@ -69,12 +81,29 @@ export const todoSlice = createSlice({
         state.error = action.payload;
       }
     );
+    builder.addCase(getKakaoData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      getKakaoData.fulfilled,
+      (state, action: PayloadAction<Kakao>) => {
+        state.loading = false;
+        state.kakaoData = action.payload;
+      }
+    );
+    builder.addCase(
+      getKakaoData.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload;
+      }
+    );
   },
 });
 
 export const { addTodo, deleteTodo } = todoSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectTodo = (state: RootState) => state.todos;
+export const selectTodo = (state: RootState): TodoinitalState => state.todos;
 
 export default todoSlice.reducer;

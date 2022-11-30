@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["plugin:react/recommended", "standard-with-typescript", "prettier"],
+  extends: [
+    "plugin:react/recommended",
+    "standard-with-typescript",
+    "prettier",
+    // "react-hooks",
+  ],
   overrides: [
     {
       files: ["src/**/*.{ts,tsx}"],
@@ -22,11 +27,12 @@ module.exports = {
   },
   plugins: ["react", "preferred-import"],
   rules: {
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/consistent-type-definitions": "warn",
-    "@typescript-eslint/strict-boolean-expressions": "off",
-    // "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/consistent-type-imports": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    // "react-hooks/rules-of-hooks": "error",
+    // "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/consistent-type-definitions": "warn",
   },
 };

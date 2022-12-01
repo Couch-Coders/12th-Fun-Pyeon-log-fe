@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import Map from "./Map";
+import MapContainer from "@components/MapContainer";
 import { useSelector } from "react-redux";
 import type { RootState } from "@stores/store";
 import { useAppDispatch } from "@stores/store";
 import { getMapThunk } from "@stores/map/mapThunk";
 import List from "@components/List";
 
-export interface propsType {
-  keyword: string;
-}
-
-const Main = () => {
+const Map = () => {
   const mapData = useSelector((state: RootState) => state.map.data);
   const dispatch = useAppDispatch();
 
@@ -40,7 +36,7 @@ const Main = () => {
         <input type="submit" value="검색" />
       </form>
 
-      <Map keyword={keyword} />
+      <MapContainer keyword={keyword} />
 
       {mapData?.map((map) => (
         <List key={map.id} {...map} />
@@ -49,4 +45,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Map;

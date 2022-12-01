@@ -4,15 +4,18 @@ import type { Post } from "./todoSlice";
 
 const JSON_RANDOMAPI = "https://jsonplaceholder.typicode.com/posts?_limit=10";
 
-export const getRandomData = createAsyncThunk(
+export const getRandomData = createAsyncThunk( //  fetchRandomData
   "todo/randomData",
   async (_, thunkApi) => {
     try {
-      const response = await axios.get(JSON_RANDOMAPI);
-      console.log(response);
-      return response.data as Post[];
+      const response = await axios.get<Post[]>(JSON_RANDOMAPI);
+      return response.data ;
     } catch (error) {
-      return thunkApi.rejectWithValue((error as AxiosError).message);
+      if(error instanceof AxiosError){
+        return thunkApi.rejectWithValue(error.message);
+      }else{
+        throw error
+      }
     }
   }
 );

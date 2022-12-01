@@ -8,6 +8,7 @@ const ConBox = styled.div`
 	margin: 10px;
 `;
 
+
 const List = ({ ...map }) => {
 	return (
 		<div>

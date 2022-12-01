@@ -31,7 +31,7 @@ let nextId = 1;
 const initialState: TodoinitalState = {
   todos: [],
   randata: null,
-  error: null,
+  error: "",
   loading: false,
 };
 
@@ -67,7 +67,7 @@ export const todoSlice = createSlice({
     );
     builder.addCase(getRandomData.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message ?? null;
+      state.error = action.error.message ?? "";
     });
   },
 });

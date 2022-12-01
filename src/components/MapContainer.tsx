@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { propsType } from './List';
 
 // head에 작성한 Kakao API 불러오기
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const { kakao } = window as any
-
-export interface MapPropsType {
-  keyword: string
-}
 
 const Map: React.FC<MapPropsType> = ({ keyword }) => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
@@ -21,6 +17,8 @@ const Map: React.FC<MapPropsType> = ({ keyword }) => {
 
     // 지도를 생성
     const map = new kakao.maps.Map(mapContainer, mapOption)
+    // 지도를 생성
+    const map = new kakao.maps.Map(mapContainer, mapOption)
 
     // 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
     kakao.maps.event.addListener(map, 'center_changed', function () {
@@ -29,10 +27,17 @@ const Map: React.FC<MapPropsType> = ({ keyword }) => {
 
       // 지도의 중심좌표를 얻어옵니다
       const latlng = map.getCenter()
+      // 지도의 중심좌표를 얻어옵니다
+      const latlng = map.getCenter()
 
       let message = `<p>지도 레벨은${level}이고</p>`
       message += `<p>중심 좌표는 위도 ${latlng.getLat()} / 경도 ${latlng.getLng()}입니다</p>`
+      let message = `<p>지도 레벨은${level}이고</p>`
+      message += `<p>중심 좌표는 위도 ${latlng.getLat()} / 경도 ${latlng.getLng()}입니다</p>`
 
+      const resultDiv = document.getElementById('result')!
+      resultDiv.innerHTML = message
+    })
       const resultDiv = document.getElementById('result') as HTMLDivElement
       resultDiv.innerHTML = message
     })

@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import mapApi from "./mapApi";
-import { MapData } from "./mapType";
 
 export const getMapThunk = createAsyncThunk(
   "mapSlice/getMap",

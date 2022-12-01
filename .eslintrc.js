@@ -25,13 +25,13 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'preferred-import'],
+  plugins: ['react', 'preferred-import', 'prettier'],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/consistent-type-definitions': 'warn',
     '@typescript-eslint/strict-boolean-expressions': 'off',
-    // "@typescript-eslint/no-floating-promises": "off",
+    '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-misused-promises': [
       'error',
       {

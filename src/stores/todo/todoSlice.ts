@@ -14,6 +14,9 @@ interface Todo {
   id: number;
   text: string;
 }
+// type KnownError = {
+//   errorMessage : string;
+// }
 
 interface TodoinitalState {
   todos: Todo[];
@@ -62,13 +65,10 @@ export const todoSlice = createSlice({
         state.randata = action.payload;
       }
     );
-    builder.addCase(
-      getRandomData.rejected,
-      (state, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.error = action.payload;
-      }
-    );
+    builder.addCase(getRandomData.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message ?? null;
+    });
   },
 });
 

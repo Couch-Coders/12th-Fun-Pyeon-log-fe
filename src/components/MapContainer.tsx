@@ -1,5 +1,5 @@
 // import { MapData } from '@stores/map/mapType'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Result } from './Result'
 import { useAppDispatch } from '@stores/store'
 import { getData } from '@stores/map/mapSlice'
@@ -24,7 +24,6 @@ export interface ResultPropsType {
 const { kakao } = window
 
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
-  // const MapContainer = () => {
   const dispatch = useAppDispatch()
   const [mapApi, setMapApi] = useState<kakao.maps.Map | null>(null)
   const [mapValue, setMapValue] = useState<ResultPropsType>({
@@ -32,6 +31,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     lat: 37.54699,
     lng: 127.09598,
   })
+  const mapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const mapContainer = document.getElementById('map') as HTMLDivElement
@@ -124,11 +124,12 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   }
 
   return (
-    <MapCon className="map-container">
+    <MapCon>
       <div
         id="map"
         className="map"
         style={{ width: '100%', height: '80vh' }}
+        ref={mapRef}
       ></div>
       <Result level={mapValue.level} lat={mapValue.lat} lng={mapValue.lng} />
     </MapCon>

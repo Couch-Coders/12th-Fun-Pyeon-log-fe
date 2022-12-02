@@ -26,6 +26,7 @@ export interface ResultPropsType {
 }
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window
+
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   // const MapContainer = () => {
   const dispatch = useAppDispatch()
@@ -58,9 +59,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
         // 지도의 중심좌표를 얻어옵니다
         //   const latlng = map.getCenter()
-
         const lat = mapApi.getCenter().getLat()
-
         const lng = mapApi.getCenter().getLng()
         setMapValue({ level, lat, lng })
       })

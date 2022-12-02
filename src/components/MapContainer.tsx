@@ -1,7 +1,16 @@
 // import { MapData } from '@stores/map/mapType'
 import React, { useEffect, useState } from 'react'
 import { Result } from './Result'
+import { useAppDispatch } from '@stores/store'
+import { getData } from '@stores/map/mapSlice'
+import styled from 'styled-components'
 // import useScript from 'react-script-hook'
+
+const MapCon = styled.div`
+  width: 100%;
+  padding: 20px;
+`
+
 interface MapPropsType {
   keyword: string
 }
@@ -16,6 +25,7 @@ const { kakao } = window
 
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   // const MapContainer = () => {
+  const dispatch = useAppDispatch()
   const [mapApi, setMapApi] = useState<kakao.maps.Map | null>(null)
   const [mapValue, setMapValue] = useState<ResultPropsType>({
     level: 3,
@@ -81,6 +91,9 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds)
+
+      // mapData dispatch
+      dispatch(getData(data))
     } else {
       console.log('error')
     }
@@ -111,14 +124,14 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   }
 
   return (
-    <div className="map-container">
+    <MapCon className="map-container">
       <div
         id="map"
         className="map"
-        style={{ width: '100%', height: '500px', margin: '50px' }}
+        style={{ width: '100%', height: '80vh' }}
       ></div>
       <Result level={mapValue.level} lat={mapValue.lat} lng={mapValue.lng} />
-    </div>
+    </MapCon>
   )
 }
 

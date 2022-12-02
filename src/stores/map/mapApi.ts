@@ -13,7 +13,6 @@ const getMap = async (search: string) => {
     `https://dapi.kakao.com/v2/local/search/keyword.json?radius=500&query=${search}&category_group_code=CS2`,
     config
   )
-  console.log(resp)
 
   return resp.data.documents
 }

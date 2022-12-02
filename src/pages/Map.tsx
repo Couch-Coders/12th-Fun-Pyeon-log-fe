@@ -45,6 +45,7 @@ const Map = () => {
             <input type="submit" value="검색" />
           </form>
           <MapContainer keyword={keyword} />
+          {/* <MapContainer /> */}
         </>
       ) : (
         <div>error</div>

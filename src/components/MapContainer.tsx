@@ -8,7 +8,11 @@ import styled from 'styled-components'
 
 const MapCon = styled.div`
   width: 100%;
-  padding: 20px;
+
+  .map {
+    width: 100%;
+    height: 100vh;
+  }
 `
 
 interface MapPropsType {
@@ -73,6 +77,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       )
     }
   }, [mapApi, keyword])
+
   // 키워드 검색 완료 시 호출되는 콜백함수 입니다
   function placesSearchCB(
     data: kakao.maps.services.PlacesSearchResult,
@@ -126,11 +131,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   return (
     <MapCon className="map-container">
-      <div
-        id="map"
-        className="map"
-        style={{ width: '100%', height: '80vh' }}
-      ></div>
+      <div id="map" className="map"></div>
       <Result level={mapValue.level} lat={mapValue.lat} lng={mapValue.lng} />
     </MapCon>
   )

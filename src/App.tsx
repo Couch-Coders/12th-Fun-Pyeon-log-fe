@@ -3,13 +3,16 @@ import { Route, Routes } from 'react-router-dom'
 
 import { Todo } from '@pages/Todo'
 import Map from '@pages/Map'
+import Navigation from '@pages/Navigation'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Routes>
-        <Route path="/" element={<Map />} />
-        <Route path="/todo" element={<Todo />} />
+        <Route path="/" element={<Navigation />}>
+          <Route path="/" element={<Map />} />
+          <Route path="/todo" element={<Todo />} />
+        </Route>
       </Routes>
     </div>
   )

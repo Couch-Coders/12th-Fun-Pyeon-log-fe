@@ -5,7 +5,7 @@ import type { RootState } from '@stores/store'
 // import { useAppDispatch } from '@stores/store'
 // import { getMapThunk } from '@stores/map/mapThunk'
 import List from '@components/List'
-import useScript from 'react-script-hook/lib/use-script'
+
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -33,11 +33,6 @@ styled(MapContainer)`
 `
 
 const Map = () => {
-  const [loading, error] = useScript({
-    src: '//dapi.kakao.com/v2/maps/sdk.js?appkey=d25f19cf0a1860dd105275f8a970b86d&libraries=services',
-    onload: () => console.log('Script loaded!'),
-  })
-
   const mapData = useSelector((state: RootState) => state.map.data)
   // const dispatch = useAppDispatch()
 
@@ -61,27 +56,21 @@ const Map = () => {
 
   return (
     <div>
-      {!loading && !error ? (
-        <>
-          <Wrapper>
-            <ListView>
-              <form onSubmit={onSubmit}>
-                <input type="text" value={value} onChange={onChange} />
-                <input type="submit" value="검색" />
-              </form>
-              <ListWrapper>
-                {mapData.map((map) => (
-                  <List key={map.id} {...map} />
-                ))}
-              </ListWrapper>
-            </ListView>
+      <Wrapper>
+        <ListView>
+          <form onSubmit={onSubmit}>
+            <input type="text" value={value} onChange={onChange} />
+            <input type="submit" value="검색" />
+          </form>
+          <ListWrapper>
+            {mapData.map((map) => (
+              <List key={map.id} {...map} />
+            ))}
+          </ListWrapper>
+        </ListView>
 
-            <MapContainer keyword={keyword} />
-          </Wrapper>
-        </>
-      ) : (
-        <div>error</div>
-      )}
+        <MapContainer keyword={keyword} />
+      </Wrapper>
     </div>
   )
 }

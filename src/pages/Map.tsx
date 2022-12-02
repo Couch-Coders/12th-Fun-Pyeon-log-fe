@@ -23,7 +23,7 @@ const ListView = styled.div`
 `
 
 const ListWrapper = styled.div`
-  height: 80vh;
+  height: 90vh;
   overflow-x: scroll;
 `
 

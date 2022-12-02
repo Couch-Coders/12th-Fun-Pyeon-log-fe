@@ -5,7 +5,6 @@ import MapContainer from '@components/MapContainer'
 import { useAppDispatch } from '@stores/store'
 import { getMapThunk } from '@stores/map/mapThunk'
 // import List from "@components/List";
-
 import useScript from 'react-script-hook/lib/use-script'
 
 const Map = () => {

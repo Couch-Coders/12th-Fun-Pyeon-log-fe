@@ -55,6 +55,7 @@ export interface ResultPropsType {
 
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   const dispatch = useAppDispatch()
+  // const [keywordValue, setKeywordValue] = useState<string>(keyword)
   const [mapApi, setMapApi] = useState<kakao.maps.Map | null>(null)
   const [mapValue, setMapValue] = useState<ResultPropsType>({
     level: 3,
@@ -99,22 +100,33 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   }
 
   useEffect(() => {
-    getMyGps()
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude // 위도
+          const lng = position.coords.longitude // 경도
+
+          const center = new kakao.maps.LatLng(lat, lng)
+          setMapValue({ level: 3, lat, lng })
+          drawMap(center)
+        },
+        function () {
+          const center = new kakao.maps.LatLng(mapValue.lat, mapValue.lng)
+          drawMap(center)
+        }
+      )
+    }
   }, [])
 
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
-    search()
+    // setKeywordValue(keyword)
+    search(keyword)
   }, [mapApi, keyword])
 
-  const searchOption = {
-    location: new kakao.maps.LatLng(mapValue.lat, mapValue.lng),
-    radius: 1000,
-    sort: kakao.maps.services.SortBy.DISTANCE,
-  }
-
   // 검색 함수
-  const search = () => {
+  const search = (searchTerm: string) => {
     if (mapApi) {
       // 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(mapApi, 'center_changed', function () {
@@ -125,10 +137,14 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
         const lat = mapApi.getCenter().getLat()
         const lng = mapApi.getCenter().getLng()
         setMapValue({ level, lat, lng })
-        console.log(mapValue.lat, mapValue.lng)
       })
-      searchKeywordFunction(`${keyword} 편의점`, mapApi)
+      searchKeywordFunction(`${searchTerm} 편의점`, mapApi)
     }
+  }
+
+  const searchOption = {
+    location: new kakao.maps.LatLng(mapValue.lat, mapValue.lng),
+    sort: kakao.maps.services.SortBy.DISTANCE,
   }
 
   const searchKeywordFunction = (
@@ -164,27 +180,6 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     )
   }
 
-  // 내 위치에서 지도 생성
-  const getMyGps = () => {
-    if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude // 위도
-          const lng = position.coords.longitude // 경도
-
-          const center = new kakao.maps.LatLng(lat, lng)
-          setMapValue({ level: 3, lat, lng })
-          drawMap(center)
-        },
-        function () {
-          const center = new kakao.maps.LatLng(mapValue.lat, mapValue.lng)
-          drawMap(center)
-        }
-      )
-    }
-  }
-
   // 지도 생성 함수
   const drawMap = (center: kakao.maps.LatLng) => {
     // 지도 초기화
@@ -204,7 +199,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       <div id="map" className="map" ref={mapRef}></div>
       <Result level={mapValue.level} lat={mapValue.lat} lng={mapValue.lng} />
 
-      <Button onClick={search} className="search_Btn">
+      <Button onClick={search.bind(null, '편의점')} className="search_Btn">
         이 위치에서 다시 검색
       </Button>
       <Button onClick={moveToCenter} className="myGps_Btn">

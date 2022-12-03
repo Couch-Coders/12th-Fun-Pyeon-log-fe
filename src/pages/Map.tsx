@@ -60,6 +60,7 @@ const Map = () => {
     } else {
       // dispatch(getMapThunk(value))
       setKeyword(value)
+      setValue('')
     }
   }
 

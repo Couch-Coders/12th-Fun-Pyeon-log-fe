@@ -124,13 +124,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     search(keyword)
   }, [mapApi, keyword])
 
-  const searchOption = {
-    location: new kakao.maps.LatLng(mapValue.lat, mapValue.lng),
-    sort: kakao.maps.services.SortBy.DISTANCE,
-  }
-
   // 검색 함수
-  const search = (keyword: string) => {
+  const search = (searchTerm: string) => {
     if (mapApi) {
       // 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(mapApi, 'center_changed', function () {

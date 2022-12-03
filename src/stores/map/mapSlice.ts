@@ -14,6 +14,7 @@ const mapSlice = createSlice({
   reducers: {
     getData: (state, action) => {
       state.data = action.payload
+      // console.log(action.payload)
     },
   },
   extraReducers(builder) {

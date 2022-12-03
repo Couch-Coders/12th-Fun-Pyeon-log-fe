@@ -7,7 +7,7 @@ import FunButton from '@styles/FunButton'
 const NavigationContainer = styled.div`
   background-color: #fff;
   top: 0;
-  height: 95px;
+  height: 80px;
 
   display: flex;
   justify-content: space-between;

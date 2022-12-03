@@ -99,7 +99,24 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   }
 
   useEffect(() => {
-    getMyGps()
+    // getMyGps()
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude // 위도
+          const lng = position.coords.longitude // 경도
+
+          const center = new kakao.maps.LatLng(lat, lng)
+          setMapValue({ level: 3, lat, lng })
+          drawMap(center)
+        },
+        function () {
+          const center = new kakao.maps.LatLng(mapValue.lat, mapValue.lng)
+          drawMap(center)
+        }
+      )
+    }
   }, [])
 
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
@@ -164,26 +181,26 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     )
   }
 
-  // 내 위치에서 지도 생성
-  const getMyGps = () => {
-    if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude // 위도
-          const lng = position.coords.longitude // 경도
+  // // 내 위치에서 지도 생성
+  // const getMyGps = () => {
+  //   if (navigator.geolocation) {
+  //     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+  //     navigator.geolocation.getCurrentPosition(
+  //       function (position) {
+  //         const lat = position.coords.latitude // 위도
+  //         const lng = position.coords.longitude // 경도
 
-          const center = new kakao.maps.LatLng(lat, lng)
-          setMapValue({ level: 3, lat, lng })
-          drawMap(center)
-        },
-        function () {
-          const center = new kakao.maps.LatLng(mapValue.lat, mapValue.lng)
-          drawMap(center)
-        }
-      )
-    }
-  }
+  //         const center = new kakao.maps.LatLng(lat, lng)
+  //         setMapValue({ level: 3, lat, lng })
+  //         drawMap(center)
+  //       },
+  //       function () {
+  //         const center = new kakao.maps.LatLng(mapValue.lat, mapValue.lng)
+  //         drawMap(center)
+  //       }
+  //     )
+  //   }
+  // }
 
   // 지도 생성 함수
   const drawMap = (center: kakao.maps.LatLng) => {

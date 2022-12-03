@@ -201,7 +201,12 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   return (
     <MapCon>
-      <div id="map" className="map" ref={mapRef}></div>
+      <div
+        id="map"
+        className="map"
+        ref={mapRef}
+        style={{ backgroundColor: 'red' }}
+      ></div>
       <Result level={mapValue.level} lat={mapValue.lat} lng={mapValue.lng} />
 
       <Button onClick={search} className="search_Btn">

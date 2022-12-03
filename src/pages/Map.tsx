@@ -5,7 +5,6 @@ import type { RootState } from '@stores/store'
 // import { useAppDispatch } from '@stores/store'
 // import { getMapThunk } from '@stores/map/mapThunk'
 import List from '@components/List'
-
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -13,21 +12,28 @@ const Wrapper = styled.section`
   flex-direction: row;
 `
 const ListView = styled.div`
+  position: relative;
+  z-index: 2;
   width: 30vw;
-
+  height: calc(100vh - 80px);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 
   z-index: 10;
 
   form {
+    height: 50px;
     border-bottom: 1px solid #ddd;
     padding: 10px 20px;
   }
 `
 
 const ListWrapper = styled.div`
-  height: 90vh;
+  height: calc(100% - 50px);
   overflow-x: scroll;
+
+  p {
+    padding: 10px;
+  }
 `
 
 styled(MapContainer)`
@@ -48,12 +54,12 @@ const Map = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!value) {
+    if (!value.trim()) {
       alert('검색어를 입력해주세요.')
+      setValue('')
     } else {
       // dispatch(getMapThunk(value))
       setKeyword(value)
-      setValue('')
     }
   }
 
@@ -66,9 +72,11 @@ const Map = () => {
             <input type="submit" value="검색" />
           </form>
           <ListWrapper>
-            {mapData.map((map) => (
-              <List key={map.id} {...map} />
-            ))}
+            {mapData.length === 0 ? (
+              <p>검색 결과가 없습니다.</p>
+            ) : (
+              mapData.map((map) => <List key={map.id} {...map} />)
+            )}
           </ListWrapper>
         </ListView>
 

@@ -127,12 +127,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
         setMapValue({ level, lat, lng })
         console.log(mapValue.lat, mapValue.lng)
       })
-      // 키워드로 장소를 검색합니다
-      ps.keywordSearch(
-        `${keyword} 편의점`,
-        (data, status) => placesSearchCB(data, status, mapApi, infowindow),
-        searchOption
-      )
+      searchKeywordFunction(`${keyword} 편의점`, mapApi)
     }
   }
 
@@ -149,101 +144,24 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
           dispatch(getData(data))
           const bounds = new kakao.maps.LatLngBounds()
 
-      for (let i = 0; i < data.length; i++) {
-        displayMarker(data[i], map, infowindow)
-        bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
-      }
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i], map)
+            bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
+          }
 
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-      map.setBounds(bounds)
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+          map.setBounds(bounds)
 
-      // mapData dispatch
-      dispatch(getData(data))
-      console.log('검색 완료')
-    } else {
-      dispatch(getData([]))
-      console.log('error')
-    }
-  }
-
-  // 지도에 마커를 표시하는 함수입니다
-  function displayMarker(
-    place: kakao.maps.services.PlacesSearchResultItem,
-    map: kakao.maps.Map,
-    infowindow: kakao.maps.InfoWindow
-  ) {
-    // 마커를 생성하고 지도에 표시합니다
-    const marker = new kakao.maps.Marker({
-      map,
-      position: new kakao.maps.LatLng(+place.y, +place.x),
-    })
-
-    // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function () {
-      const name = String(place.place_name)
-
-      // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-      infowindow.setContent(
-        `<div style="padding:5px;font-size:12px;">${name}</div>`
-      )
-      infowindow.open(map, marker)
-    })
-  }
-
-  // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-  function displayMe(
-    map: kakao.maps.Map,
-    locPosition: kakao.maps.LatLng,
-    message: string
-  ) {
-    // 마커를 생성합니다
-    const marker = new kakao.maps.Marker({
-      map,
-      position: locPosition,
-    })
-
-    const iwContent = message // 인포윈도우에 표시할 내용
-    const iwRemoveable = true
-
-    // 인포윈도우를 생성합니다
-    const infowindow = new kakao.maps.InfoWindow({
-      content: iwContent,
-      removable: iwRemoveable,
-    })
-
-    // 인포윈도우를 마커위에 표시합니다
-    infowindow.open(map, marker)
-
-    // 지도 중심좌표를 접속위치로 변경합니다
-    map.setCenter(locPosition)
-    map.setLevel(3, { animate: true })
-  }
-
-  // 내 위치로 이동 함수
-  const moveToCenter = () => {
-    if (mapApi) {
-      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-      if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.getCurrentPosition(function (position) {
-          const lat = position.coords.latitude // 위도
-          const lng = position.coords.longitude // 경도
-
-          setMapValue({ level: 3, lat, lng })
-
-          const locPosition = new kakao.maps.LatLng(lat, lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-          const message = '<div style="padding:5px;">현 위치</div>' // 인포윈도우에 표시될 내용입니다
-
-          displayMe(mapApi, locPosition, message)
-        })
-      } else {
-        // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-        const locPosition = new kakao.maps.LatLng(mapValue.lat, mapValue.lng)
-        const message = 'geolocation을 사용할수 없어요..'
-
-        displayMe(mapApi, locPosition, message)
-      }
-    }
+          // mapData dispatch
+          dispatch(getData(data))
+          console.log('검색 완료')
+        } else {
+          dispatch(getData([]))
+          console.log('error')
+        }
+      },
+      searchOption
+    )
   }
 
   // 내 위치에서 지도 생성
@@ -270,7 +188,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   // 지도 생성 함수
   const drawMap = (center: kakao.maps.LatLng) => {
     // 지도 초기화
-    mapRef.current.innerHTML = ''
+    if (mapRef.current) mapRef.current.innerHTML = ''
 
     const mapContainer = document.getElementById('map') as HTMLDivElement
     const mapOption = {

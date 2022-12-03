@@ -104,17 +104,16 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
-    search()
+    search(keyword)
   }, [mapApi, keyword])
 
   const searchOption = {
     location: new kakao.maps.LatLng(mapValue.lat, mapValue.lng),
-    radius: 1000,
     sort: kakao.maps.services.SortBy.DISTANCE,
   }
 
   // 검색 함수
-  const search = () => {
+  const search = (keyword: string) => {
     if (mapApi) {
       // 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(mapApi, 'center_changed', function () {
@@ -204,7 +203,12 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       <div id="map" className="map" ref={mapRef}></div>
       <Result level={mapValue.level} lat={mapValue.lat} lng={mapValue.lng} />
 
-      <Button onClick={search} className="search_Btn">
+      <Button
+        onClick={() => {
+          search('')
+        }}
+        className="search_Btn"
+      >
         이 위치에서 다시 검색
       </Button>
       <Button onClick={moveToCenter} className="myGps_Btn">

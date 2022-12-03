@@ -14,7 +14,10 @@ const Wrapper = styled.section`
 `
 const ListView = styled.div`
   width: 30vw;
+
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+
+  z-index: 10;
 
   form {
     border-bottom: 1px solid #ddd;

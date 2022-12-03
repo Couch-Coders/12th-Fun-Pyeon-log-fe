@@ -7,16 +7,20 @@ import FunButton from '@styles/FunButton'
 const NavigationContainer = styled.div`
   background-color: #fff;
   top: 0;
-  height: 95px;
+  height: 80px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  border: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
 `
 
-const LogoContainer = styled.div``
+const LogoContainer = styled.div`
+  svg {
+    height: 45px;
+  }
+`
 
 const Avatar = styled.div`
   border-radius: 50%;

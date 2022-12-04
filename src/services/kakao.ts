@@ -2,25 +2,20 @@ export const { kakao } = window
 
 // 지도에 마커를 표시하는 함수입니다
 export const displayMarker = (
-  place: kakao.maps.services.PlacesSearchResultItem,
-  map: kakao.maps.Map
+  data: kakao.maps.services.PlacesSearchResultItem,
+  map: kakao.maps.Map,
+  marker: kakao.maps.Marker
 ) => {
   // 마커를 생성하고 지도에 표시합니다
-  const marker = new kakao.maps.Marker({
-    map,
-    position: new kakao.maps.LatLng(+place.y, +place.x),
-  })
-
   // 마커에 클릭이벤트를 등록합니다
   kakao.maps.event.addListener(marker, 'click', function () {
-    const name = String(place.place_name)
-    const message = `<div style="padding:5px;font-size:12px;">${name}</div>`
+    const name = String(data.place_name)
+    const content = `<div style="padding:5px;font-size:12px;">${name}</div>`
     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
     const infoWindow = new kakao.maps.InfoWindow({
-      content: message,
+      content,
       removable: true,
     })
-
     infoWindow.open(map, marker)
   })
 }

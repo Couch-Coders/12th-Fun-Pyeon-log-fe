@@ -51,13 +51,7 @@ const Button = styled.button`
 interface MapPropsType {
   keyword: string
 }
-
-export interface ResultPropsType {
-  level: number
-  lat: number
-  lng: number
-}
-
+// 카카오 서치 함수 구분용 타입
 enum SearchType {
   KEYWORD = 'KEYWORD',
   CATEGORY = 'CATEGORY',
@@ -66,27 +60,17 @@ enum SearchType {
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   const dispatch = useAppDispatch()
   const mapRef = useRef<HTMLDivElement | null>(null)
-
+  // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
     lat: 37.54699,
     lng: 127.09598,
   })
+  // kakao map 객체 저장
   const [mapApi, setMapApi] = useState<kakao.maps.Map | null>(null)
+  // 검색으로 생성된 마커 저장
   const [markers, setMarkers] = useState<kakao.maps.Marker[]>([])
 
-  const moveToCenter = () => {
-    removeMarkerNInfo()
-    const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-
-    if (mapApi) {
-      const myMaker = displayMe(mapApi, locPosition)
-      setMarkers((prevState) => {
-        return [...prevState, myMaker]
-      })
-      searchStore(SearchType.CATEGORY, '', mapApi)
-    }
-  }
-
+  // 처음 들어왔을 때
   useEffect(() => {
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     if (!navigator.geolocation) {
@@ -99,6 +83,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
           setMyPosition((prev) => {
             return { ...prev, lat, lng }
           })
+          // 받아온 좌표로 지도 center 값 셋팅
           const center = new kakao.maps.LatLng(lat, lng)
           drawMap(center)
         },
@@ -143,7 +128,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     }
   }, [mapApi, keyword])
 
-  // 검색 함수 map api 를 인자로 받아와 작동한다.
+  // 검색 함수 kakao map을 인자로 받아와 작동한다.
   const searchStore = (
     searchType: SearchType,
     searchTerm: string,
@@ -154,15 +139,18 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const lng = mapApi.getCenter().getLng()
 
     switch (searchType) {
+      //  키워드 서치 기능
       case SearchType.KEYWORD:
         ps.keywordSearch(`${searchTerm} 편의점`, (data, status) =>
           searchCallBack(data, status, mapApi)
         )
         break
+      //  카테고리 서치 기능
       case SearchType.CATEGORY:
         ps.categorySearch(
           'CS2',
           (data, status) => searchCallBack(data, status, mapApi),
+          //  카테고리 서치 옵션
           {
             location: new kakao.maps.LatLng(lat, lng),
             sort: kakao.maps.services.SortBy.DISTANCE,
@@ -175,6 +163,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     }
   }
 
+  // 위 서치로 받아온 data를 다루는 콜백함수
   const searchCallBack = (
     data: kakao.maps.services.PlacesSearchResult,
     status: kakao.maps.services.Status,
@@ -183,6 +172,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     if (status === kakao.maps.services.Status.OK) {
       // mapData dispatch -> 나중에 서버와 연결한 데이터를 받아올 action
       dispatch(getData(data))
+      // 새로 지도의 영역 설정
       const bounds = new kakao.maps.LatLngBounds()
       for (let i = 0; i < data.length; i++) {
         const marker = displayMarkerInfoWindow(data[i], map)
@@ -199,6 +189,22 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     }
   }
 
+  //  지도를 사용자의 위치로 이동하는 함수
+  const moveToCenter = () => {
+    removeMarkerNInfo()
+    // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+    const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
+
+    if (mapApi) {
+      const myMaker = displayMe(mapApi, locPosition)
+      setMarkers((prevState) => {
+        return [...prevState, myMaker]
+      })
+      searchStore(SearchType.CATEGORY, '', mapApi)
+    }
+  }
+
+  // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = () => {
     if (markers.length >= 1) {
       markers.forEach((markerInfo) => {

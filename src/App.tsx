@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { Todo } from '@pages/Todo'
 import Map from '@pages/Map'
 
 function App() {
@@ -9,7 +8,6 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Map />} />
-        <Route path="/todo" element={<Todo />} />
       </Routes>
     </div>
   )

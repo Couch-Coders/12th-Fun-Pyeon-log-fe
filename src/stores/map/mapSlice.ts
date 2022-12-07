@@ -12,9 +12,12 @@ const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    getData: (state, action) => {
+    getData: (state, action: PayloadAction<MapData[]>) => {
       state.data = action.payload
       // console.log(action.payload)
+    },
+    removeData: (state) => {
+      state.data = []
     },
   },
   extraReducers(builder) {
@@ -38,5 +41,5 @@ const mapSlice = createSlice({
 })
 
 // export { getMapThunk }
-export const { getData } = mapSlice.actions
+export const { getData, removeData } = mapSlice.actions
 export default mapSlice.reducer

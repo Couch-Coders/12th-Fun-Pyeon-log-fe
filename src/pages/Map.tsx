@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import MapContainer from '@components/MapContainer'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@stores/store'
-// import { useAppDispatch } from '@stores/store'
-// import { getMapThunk } from '@stores/map/mapThunk'
 import List from '@components/List'
 import styled from 'styled-components'
 
@@ -43,7 +41,6 @@ styled(MapContainer)`
 
 const Map = () => {
   const mapData = useSelector((state: RootState) => state.map.data)
-  // const dispatch = useAppDispatch()
 
   const [value, setValue] = useState<string>('')
   const [keyword, setKeyword] = useState<string>('')
@@ -58,7 +55,6 @@ const Map = () => {
       alert('검색어를 입력해주세요.')
       setValue('')
     } else {
-      // dispatch(getMapThunk(value))
       setKeyword(value)
       setValue('')
     }

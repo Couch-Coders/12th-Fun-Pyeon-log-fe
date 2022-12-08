@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import FunButton from '@styles/FunButton'
 import {
@@ -11,6 +11,7 @@ import {
 import LoginModal from '@components/LoginModal/LoginModal'
 
 const Navigation = () => {
+  const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
@@ -18,7 +19,11 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <LogoContainer>
-          <Funlogo />
+          <Funlogo
+            onClick={() => {
+              navigate('/')
+            }}
+          />
         </LogoContainer>
         {isLogin ? (
           <LogoutContainer>

@@ -12,6 +12,7 @@ export const NavigationContainer = styled.div`
   border-bottom: 1px solid #ececec;
 `
 export const LogoContainer = styled.div`
+  cursor: pointer;
   svg {
     height: 45px;
   }

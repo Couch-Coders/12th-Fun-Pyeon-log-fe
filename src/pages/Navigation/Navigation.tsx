@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import FunButton from '@styles/FunButton'
 import {
@@ -9,8 +9,10 @@ import {
   LogoutContainer,
 } from './Navigation.styles'
 import LoginModal from '@components/LoginModal/LoginModal'
+import { googleSignOut } from '@services/firebaseAuth'
 
 const Navigation = () => {
+  const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
@@ -18,7 +20,11 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <LogoContainer>
-          <Funlogo />
+          <Funlogo
+            onClick={() => {
+              navigate('/')
+            }}
+          />
         </LogoContainer>
         {isLogin ? (
           <LogoutContainer>
@@ -27,6 +33,7 @@ const Navigation = () => {
             <FunButton
               onClick={() => {
                 setIsLogin(false)
+                googleSignOut()
               }}
             >
               Logout

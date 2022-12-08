@@ -1,3 +1,4 @@
+import { googleSignIn } from '@services/firebaseAuth'
 import React from 'react'
 import {
   LoginWrap,
@@ -12,13 +13,18 @@ interface ModalProps {
 }
 
 const LoginModal = ({ setModalOpen }: ModalProps) => {
+  const logIn = async () => {
+    await googleSignIn()
+    setModalOpen(false)
+  }
+
   return (
     <LoginWrap>
       <LoginBox>
         <CloseBtn onClick={() => setModalOpen(false)}>X</CloseBtn>
         <Content>
           <div className="logo">Logo</div>
-          <LoginBtn>Google 로그인</LoginBtn>
+          <LoginBtn onClick={logIn}>Google 로그인</LoginBtn>
         </Content>
       </LoginBox>
     </LoginWrap>

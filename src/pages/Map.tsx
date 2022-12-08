@@ -72,7 +72,9 @@ const Map = () => {
             {mapData.length === 0 ? (
               <p>검색 결과가 없습니다.</p>
             ) : (
-              mapData.map((map) => <List key={map.id} {...map} />)
+              mapData.map((map) => (
+                <List key={map.id} placeName={map.place_name} />
+              ))
             )}
           </ListWrapper>
         </ListView>

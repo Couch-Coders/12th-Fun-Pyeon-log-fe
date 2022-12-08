@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 const ConBox = styled.div`
@@ -7,14 +7,15 @@ const ConBox = styled.div`
   padding: 10px;
   margin: 10px;
 `
+interface ListProps {
+  placeName: string
+}
 
-const List = ({ ...map }) => {
+const List: FC<ListProps> = ({ placeName }) => {
   return (
     <div>
       <ConBox>
-        <p>{map.place_name}</p>
-        <p>{map.road_address_name}</p>
-        <p>{map?.phone}</p>
+        <p>{placeName}</p>
         <p>제품이 다양해요</p>
       </ConBox>
     </div>

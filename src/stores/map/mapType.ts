@@ -11,7 +11,7 @@ export interface MapData {
 }
 
 export interface MapState {
-  data: MapData[]
+  data: kakao.maps.services.PlacesSearchResultItem[]
   loading: boolean
   error: boolean
 }

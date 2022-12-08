@@ -75,27 +75,24 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser')
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude // 위도
-          const lng = position.coords.longitude // 경도
-          setMyPosition((prev) => {
-            return { ...prev, lat, lng }
-          })
-          // 받아온 좌표로 지도 center 값 셋팅
-          const center = new kakao.maps.LatLng(lat, lng)
-          drawMap(center)
-        },
-        function (positionError) {
-          alert(
-            `좌표를 가져오지 못했습니다. 기본위치에서 시작합니다. ${positionError.message}  `
-          )
-          const center = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
-          drawMap(center)
-        }
-      )
     }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude // 위도
+        const lng = position.coords.longitude // 경도
+        setMyPosition((prev) => ({ ...prev, lat, lng }))
+        // 받아온 좌표로 지도 center 값 셋팅
+        const center = new kakao.maps.LatLng(lat, lng)
+        drawMap(center)
+      },
+      (positionError) => {
+        alert(
+          `좌표를 가져오지 못했습니다. 기본위치에서 시작합니다. ${positionError.message}  `
+        )
+        const center = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
+        drawMap(center)
+      }
+    )
   }, [])
 
   // 지도 생성 함수
@@ -138,28 +135,24 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const lat = mapApi.getCenter().getLat()
     const lng = mapApi.getCenter().getLng()
 
-    switch (searchType) {
+    // if문으로
+    if (searchType === SearchType.KEYWORD) {
       //  키워드 서치 기능
-      case SearchType.KEYWORD:
-        ps.keywordSearch(`${searchTerm} 편의점`, (data, status) =>
-          searchCallBack(data, status, mapApi)
-        )
-        break
+      ps.keywordSearch(`${searchTerm} 편의점`, (data, status) =>
+        searchCallBack(data, status, mapApi)
+      )
+    } else {
       //  카테고리 서치 기능
-      case SearchType.CATEGORY:
-        ps.categorySearch(
-          'CS2',
-          (data, status) => searchCallBack(data, status, mapApi),
-          //  카테고리 서치 옵션
-          {
-            location: new kakao.maps.LatLng(lat, lng),
-            sort: kakao.maps.services.SortBy.DISTANCE,
-            useMapBounds: true,
-          }
-        )
-        break
-      default:
-        alert('KEYWORD ERROR - NO valid keyword')
+      ps.categorySearch(
+        'CS2',
+        (data, status) => searchCallBack(data, status, mapApi),
+        //  카테고리 서치 옵션
+        {
+          location: new kakao.maps.LatLng(lat, lng),
+          sort: kakao.maps.services.SortBy.DISTANCE,
+          useMapBounds: true,
+        }
+      )
     }
   }
 
@@ -206,13 +199,15 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = () => {
-    if (markers.length >= 1) {
-      markers.forEach((markerInfo) => {
-        markerInfo.setMap(null)
-      })
-      infoWindow.close()
-      setMarkers([])
+    if (markers.length < 1) {
+      alert('No Marker in here')
+      return
     }
+    markers.forEach((markerInfo) => {
+      markerInfo.setMap(null)
+    })
+    infoWindow.close()
+    setMarkers([])
   }
 
   const searchFromHereHandler = () => {

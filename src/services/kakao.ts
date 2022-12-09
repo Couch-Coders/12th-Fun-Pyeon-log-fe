@@ -5,7 +5,7 @@ export const infoWindow = new kakao.maps.InfoWindow({
 // 사용자 이미지 마커를 불러옵니다.
 export const myMarkerImg = new kakao.maps.MarkerImage(
   'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-  new kakao.maps.Size(31, 35)
+  new kakao.maps.Size(31, 34)
 )
 
 // 지도에 마커를 표시하는 함수입니다

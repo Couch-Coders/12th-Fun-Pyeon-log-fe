@@ -21,4 +21,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ol, ul, li {
+list-style: none;
+}
 `

@@ -34,7 +34,7 @@ export const Title = styled.div`
   .star_box {
     svg {
       fill: rgba(255, 230, 0, 1);
-      margin-right: 3px;
+      margin-right: 4px;
     }
   }
 `

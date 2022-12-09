@@ -10,6 +10,11 @@ export const NavigationContainer = styled.div`
   align-items: center;
   padding: 0 30px;
   border-bottom: 1px solid #ececec;
+
+  p {
+    font-size: 16px;
+    font-weight: 700;
+  }
 `
 export const LogoContainer = styled.div`
   cursor: pointer;
@@ -19,10 +24,16 @@ export const LogoContainer = styled.div`
 `
 export const Avatar = styled.div`
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: 1px solid #ececec;
   background-color: #d9d9d9;
+
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
 `
 export const LogoutContainer = styled.div`
   display: flex;

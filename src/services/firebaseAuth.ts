@@ -23,13 +23,13 @@ const provider = new GoogleAuthProvider()
 
 export const googleSignIn = async () => {
   const res = await signInWithPopup(auth, provider)
-
-  const token: string = await res.user.getIdToken()
+  return res
+  // const token: string = await res.user.getIdToken()
   // console.log(token)
-  const res2 = await axios.get('/users/me', {
-    headers: { Authorization: `${token}` },
-  })
-  console.log(res2)
+  // const res2 = await axios.delete('/users', {
+  //   headers: { Authorization: `${token}` },
+  // })
+  // console.log(res2)
 }
 
 export const googleSignOut = async () => {

@@ -1,7 +1,6 @@
 export const { kakao } = window
 export const infoWindow = new kakao.maps.InfoWindow({
   zIndex: 1,
-  removable: true,
 })
 // 사용자 이미지 마커를 불러옵니다.
 export const myMarkerImg = new kakao.maps.MarkerImage(

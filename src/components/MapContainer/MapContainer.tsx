@@ -1,52 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-
 import { useAppDispatch } from '@stores/store'
 import { getData, removeData } from '@stores/map/mapSlice'
-import styled from 'styled-components'
 import {
   displayMarkerInfoWindow,
   displayMe,
   infoWindow,
   kakao,
 } from '@services/kakao'
-
-const MapCon = styled.div`
-  position: relative;
-  width: 100%;
-  .map {
-    width: 100%;
-    height: calc(100vh - 80px);
-  }
-`
-
-const Button = styled.button`
-  background-color: #fff;
-  color: #222;
-  border-radius: 10px;
-  opacity: 0.7;
-  position: absolute;
-  top: 10px;
-  z-index: 5;
-  transition: 0.5s;
-  padding: 10px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &.myGps_Btn {
-    right: 10px;
-  }
-
-  &.search_Btn {
-    left: 50%;
-  }
-`
+import { MapWrap, ControlBtns } from './MapContainer.styles'
 
 interface MapPropsType {
   keyword: string
@@ -218,15 +179,18 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   }
 
   return (
-    <MapCon>
+    <MapWrap>
       <div id="map" className="map" ref={mapRef}></div>
-      <Button onClick={searchFromHereHandler} className="search_Btn">
-        이 위치에서 다시 검색
-      </Button>
-      <Button onClick={moveToCenter} className="myGps_Btn">
-        내위치로 이동
-      </Button>
-    </MapCon>
+
+      <ControlBtns>
+        <button onClick={searchFromHereHandler} className="search_Btn">
+          이 위치에서 다시 검색
+        </button>
+        <button onClick={moveToCenter} className="myGps_Btn">
+          내위치로 이동
+        </button>
+      </ControlBtns>
+    </MapWrap>
   )
 }
 

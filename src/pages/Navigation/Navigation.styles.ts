@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const NavigationContainer = styled.div`
+export const NavCon = styled.header`
   background-color: #fff;
   top: 0;
   height: 80px;
@@ -16,7 +16,7 @@ export const NavigationContainer = styled.div`
     font-weight: 700;
   }
 `
-export const LogoContainer = styled.div`
+export const LogoCon = styled.div`
   cursor: pointer;
   svg {
     height: 45px;
@@ -35,7 +35,7 @@ export const Avatar = styled.div`
     width: 100%;
   }
 `
-export const LogoutContainer = styled.div`
+export const LogoutCon = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;

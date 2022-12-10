@@ -2,12 +2,7 @@ import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import FunButton from '@styles/FunButton'
-import {
-  NavigationContainer,
-  LogoContainer,
-  Avatar,
-  LogoutContainer,
-} from './Navigation.styles'
+import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
 import LoginModal from '@components/LoginModal/LoginModal'
 
 const Navigation = () => {
@@ -17,16 +12,16 @@ const Navigation = () => {
 
   return (
     <>
-      <NavigationContainer>
-        <LogoContainer>
+      <NavCon>
+        <LogoCon>
           <Funlogo
             onClick={() => {
               navigate('/')
             }}
           />
-        </LogoContainer>
+        </LogoCon>
         {isLogin ? (
-          <LogoutContainer>
+          <LogoutCon>
             <Avatar>
               <img
                 src="https://lh3.googleusercontent.com/a/AEdFTp4oKPFW_6nqYPabxkYl1wZ8zvdbYIvb7Ndo7nJh=s96-c"
@@ -41,7 +36,7 @@ const Navigation = () => {
             >
               Logout
             </FunButton>
-          </LogoutContainer>
+          </LogoutCon>
         ) : (
           <FunButton
             onClick={() => {
@@ -53,7 +48,7 @@ const Navigation = () => {
           </FunButton>
         )}
         {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
-      </NavigationContainer>
+      </NavCon>
 
       <main>
         <Outlet />

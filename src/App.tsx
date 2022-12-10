@@ -5,13 +5,13 @@ import { Route, Routes } from 'react-router-dom'
 
 function App() {
   return (
-    <div>
+    <>
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route path="/" element={<Map />} />
         </Route>
       </Routes>
-    </div>
+    </>
   )
 }
 

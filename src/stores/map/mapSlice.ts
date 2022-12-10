@@ -12,7 +12,10 @@ const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    getData: (state, action: PayloadAction<MapData[]>) => {
+    getData: (
+      state,
+      action: PayloadAction<kakao.maps.services.PlacesSearchResultItem[]>
+    ) => {
       state.data = action.payload
       // console.log(action.payload)
     },

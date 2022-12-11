@@ -4,6 +4,7 @@ import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Map.styles'
 import ListBox from '@components/ListBox/ListBox'
+import FilterBox from '@components/FilterBox/FilterBox'
 
 styled(MapContainer)`
   width: 70vw;
@@ -12,6 +13,8 @@ styled(MapContainer)`
 
 const Map = () => {
   const [keyword, setKeyword] = useState<string>('')
+  const [isFiltering, setIsFiltering] = useState(false)
+  const sortBtnRef = useRef<HTMLButtonElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const updateValue = () => {

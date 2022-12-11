@@ -5,11 +5,11 @@ import Map from '@pages/Map/Map'
 
 function App() {
   return (
-    <div>
+    <>
       <Routes>
         <Route path="/" element={<Map />} />
       </Routes>
-    </div>
+    </>
   )
 }
 

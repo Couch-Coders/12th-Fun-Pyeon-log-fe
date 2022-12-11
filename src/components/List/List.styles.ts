@@ -9,15 +9,6 @@ export const ConBox = styled.li`
   &:hover {
     background-color: #7d53d6;
     color: white;
-
-    ul {
-      li {
-        span {
-          background-color: white;
-          color: #7d53d6;
-        }
-      }
-    }
   }
 `
 
@@ -50,6 +41,7 @@ export const Content = styled.div`
 
     li {
       span {
+        background-color: white;
         font-size: 14px;
         color: #7d53d6;
         border: 1px solid #7d53d6;

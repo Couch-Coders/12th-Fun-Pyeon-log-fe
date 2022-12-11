@@ -46,12 +46,18 @@ const Map = () => {
             </button>
           </SearchBox>
 
-          <SortBtn>
+          <SortBtn
+            ref={sortBtnRef}
+            onClick={() => {
+              setIsFiltering((prev) => !prev)
+              sortBtnRef.current?.classList.toggle('on')
+            }}
+          >
             <FilterOutlined />
           </SortBtn>
         </ListTop>
 
-        <ListBox />
+        {isFiltering ? <FilterBox /> : <ListBox />}
       </ListView>
 
       <MapContainer keyword={keyword} />

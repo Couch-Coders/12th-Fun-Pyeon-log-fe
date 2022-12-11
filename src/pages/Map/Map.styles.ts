@@ -65,6 +65,10 @@ export const SortBtn = styled.button`
   justify-content: center;
   align-items: center;
 
+  &.on {
+    background-color: #efefef;
+  }
+
   svg {
     width: 16px;
     height: 16px;

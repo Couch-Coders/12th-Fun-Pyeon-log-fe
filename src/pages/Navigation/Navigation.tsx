@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import LoginModal from '@components/LoginModal/LoginModal'
 import FunButton from '@styles/FunButton'
+import Spinner from '@styles/Spinner'
+import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
+import { googleSignOut } from '@services/firebaseAuth'
+import { authService } from '@services/authService'
+import { RootState } from '@stores/store'
+import { setUser } from '@stores/auth/authSlice'
 import {
   NavigationContainer,
   LogoContainer,
   Avatar,
   LogoutContainer,
 } from './Navigation.styles'
-import LoginModal from '@components/LoginModal/LoginModal'
-import { googleSignOut } from '@services/firebaseAuth'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
-import { authService } from '@services/authService'
-import { setUser } from '@stores/auth/authSlice'
-import Spinner from '@styles/Spinner'
 
 const Navigation = () => {
   const navigate = useNavigate()

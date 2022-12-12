@@ -16,6 +16,7 @@ export const NavCon = styled.header`
     font-weight: 700;
   }
 `
+
 export const LogoCon = styled.div`
   cursor: pointer;
   svg {

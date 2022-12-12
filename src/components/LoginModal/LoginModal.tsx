@@ -1,12 +1,18 @@
 import React from 'react'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
+import { googleSignIn } from '@services/firebaseAuth'
 import { LoginWrap, LoginBox, CloseBtn, Content } from './LoginModal.styles'
 
 interface ModalProps {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setModalOpen: (modalOpen: boolean) => void
 }
 
 const LoginModal: React.FC<ModalProps> = ({ setModalOpen }) => {
+  const logIn = async () => {
+    await googleSignIn()
+    setModalOpen(false)
+  }
+  
   return (
     <LoginWrap>
       <LoginBox>
@@ -16,6 +22,7 @@ const LoginModal: React.FC<ModalProps> = ({ setModalOpen }) => {
           <FunButton
             buttonType={BUTTON_TYPE_CLASSES.google}
             name={'Google 로그인'}
+            onClick={logIn}
           />
         </Content>
       </LoginBox>

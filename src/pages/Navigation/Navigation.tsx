@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
-import FunButton from '@styles/FunButton'
-import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
 import LoginModal from '@components/LoginModal/LoginModal'
+import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
+import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
+import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
 
 const Navigation = () => {
   const navigate = useNavigate()
@@ -30,22 +30,22 @@ const Navigation = () => {
             </Avatar>
             <p>nickname</p>
             <FunButton
+              buttonType={BUTTON_TYPE_CLASSES.base}
+              name={'Logout'}
               onClick={() => {
                 setIsLogin(false)
               }}
-            >
-              Logout
-            </FunButton>
+            />
           </LogoutCon>
         ) : (
           <FunButton
+            buttonType={BUTTON_TYPE_CLASSES.base}
+            name={'Login'}
             onClick={() => {
               setIsLogin(true)
               setModalOpen(true)
             }}
-          >
-            Login
-          </FunButton>
+          />
         )}
         {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
       </NavCon>

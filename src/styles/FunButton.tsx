@@ -1,27 +1,29 @@
-import React, { ButtonHTMLAttributes, FC } from 'react'
-import styled from 'styled-components'
+import React, { ButtonHTMLAttributes } from 'react'
+import { BaseBtn, GoogleSignInBtn } from './FunButton.styles'
 
-const BaseButton = styled.button`
-  width: 5.5rem;
-  height: 2rem;
+export enum BUTTON_TYPE_CLASSES {
+  base = 'base',
+  google = 'google',
+}
 
-  background-color: #7d53d6;
-  border-radius: 5px;
-  border: none;
+const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof BaseBtn =>
+  ({
+    [BUTTON_TYPE_CLASSES.base]: BaseBtn,
+    [BUTTON_TYPE_CLASSES.google]: GoogleSignInBtn,
+  }[buttonType])
 
-  color: white;
-  cursor: pointer;
+type FunButtonProps = {
+  name: string
+  buttonType?: BUTTON_TYPE_CLASSES
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-  :hover {
-    background-color: rgba(125, 83, 214, 0.8);
-  }
-`
-
-const FunButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
-  children,
+const FunButton: React.FC<FunButtonProps> = ({
+  buttonType,
+  name,
   ...otherProps
 }) => {
-  return <BaseButton {...otherProps}>{children}</BaseButton>
+  const CustomButton = getButton(buttonType)
+  return <CustomButton {...otherProps}>{name}</CustomButton>
 }
 
 export default FunButton

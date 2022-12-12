@@ -53,14 +53,3 @@ export const Content = styled.div`
     margin-bottom: 20px;
   }
 `
-
-export const LoginBtn = styled.div`
-  width: 200px;
-  background-color: #fff;
-  font-weight: 700;
-  text-align: center;
-  border: 1px solid #7d53d6;
-  border-radius: 5px;
-  padding: 15px 5px;
-  cursor: pointer;
-`

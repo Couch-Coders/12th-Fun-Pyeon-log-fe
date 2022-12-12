@@ -1,20 +1,16 @@
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import LoginModal from '@components/LoginModal/LoginModal'
-import FunButton from '@styles/FunButton'
-import Spinner from '@styles/Spinner'
-import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import { googleSignOut } from '@services/firebaseAuth'
 import { authService } from '@services/authService'
 import { RootState } from '@stores/store'
 import { setUser } from '@stores/auth/authSlice'
-import {
-  NavigationContainer,
-  LogoContainer,
-  Avatar,
-  LogoutContainer,
-} from './Navigation.styles'
+
+import LoginModal from '@components/LoginModal/LoginModal'
+import Spinner from '@styles/Spinner'
+import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
+import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
+import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
 
 const Navigation = () => {
   const navigate = useNavigate()
@@ -37,35 +33,45 @@ const Navigation = () => {
   }
   return (
     <>
-      <NavigationContainer>
-        <LogoContainer>
+      <NavCon>
+        <LogoCon>
           <Funlogo
             onClick={() => {
               navigate('/')
             }}
           />
-        </LogoContainer>
-
-        {loading ? (
+        </LogoCon>
+        
+       {loading ? (
           <Spinner />
         ) : user ? (
-          <LogoutContainer>
-            <Avatar></Avatar>
-            <p>{user.displayName}</p>
-            <FunButton onClick={signOutHandler}>Logout</FunButton>
-          </LogoutContainer>
+          <LogoutCon>
+            <Avatar>
+              <img
+                src="https://lh3.googleusercontent.com/a/AEdFTp4oKPFW_6nqYPabxkYl1wZ8zvdbYIvb7Ndo7nJh=s96-c"
+                alt=""
+              />
+            </Avatar>
+           <p>{user.displayName}</p>
+            <FunButton
+              name={'Logout'}
+              onClick={() => {
+                setIsLogin(false)
+                onClick={signOutHandler}
+              }}
+            />
+          </LogoutCon>
         ) : (
           <FunButton
+            name={'Login'}
             onClick={() => {
               setModalOpen(true)
             }}
-          >
-            Login
-          </FunButton>
+          />
         )}
 
         {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
-      </NavigationContainer>
+      </NavCon>
 
       <main>
         <Outlet />

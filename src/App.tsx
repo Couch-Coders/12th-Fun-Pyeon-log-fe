@@ -22,13 +22,11 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Navigation />}>
-          <Route path="/" element={<Map />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route path="/" element={<Map />} />
+      </Route>
+    </Routes>
   )
 }
 

@@ -7,7 +7,8 @@ export const getUserThunk = createAsyncThunk(
   async (token: string, thunkApi) => {
     try {
       const res = await authService.signIn({ token })
-      return { email: res.data, token }
+      const displayName = res.data.split('@')[0]
+      return { email: res.data, token, displayName }
     } catch (error) {
       if (error instanceof AxiosError) {
         return thunkApi.rejectWithValue(error.message)

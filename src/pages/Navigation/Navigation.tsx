@@ -51,7 +51,7 @@ const Navigation = () => {
         ) : user ? (
           <LogoutContainer>
             <Avatar></Avatar>
-            <p>{user.email.split('@')[0]}</p>
+            <p>{user.displayName}</p>
             <FunButton onClick={signOutHandler}>Logout</FunButton>
           </LogoutContainer>
         ) : (

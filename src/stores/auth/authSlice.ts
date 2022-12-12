@@ -4,6 +4,7 @@ import { getUserThunk } from './authThunk'
 export interface UserType {
   token: string
   email: string
+  displayName: string
 }
 
 interface UserStateType {

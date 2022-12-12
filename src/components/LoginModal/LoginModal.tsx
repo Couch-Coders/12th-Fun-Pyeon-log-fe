@@ -11,7 +11,7 @@ interface ModalProps {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const LoginModal = ({ setModalOpen }: ModalProps) => {
+const LoginModal: React.FC<ModalProps> = ({ setModalOpen }) => {
   return (
     <LoginWrap>
       <LoginBox>

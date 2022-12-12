@@ -1,5 +1,5 @@
-import { googleSignIn } from '@services/firebaseAuth'
 import React from 'react'
+import { googleSignIn } from '@services/firebaseAuth'
 import {
   LoginWrap,
   LoginBox,
@@ -9,7 +9,7 @@ import {
 } from './LoginModal.styles'
 
 interface ModalProps {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setModalOpen: (modalOpen: boolean) => void
 }
 
 const LoginModal = ({ setModalOpen }: ModalProps) => {

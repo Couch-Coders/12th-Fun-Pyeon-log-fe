@@ -30,7 +30,6 @@ const Navigation = () => {
             </Avatar>
             <p>nickname</p>
             <FunButton
-              buttonType={BUTTON_TYPE_CLASSES.base}
               name={'Logout'}
               onClick={() => {
                 setIsLogin(false)
@@ -39,7 +38,6 @@ const Navigation = () => {
           </LogoutCon>
         ) : (
           <FunButton
-            buttonType={BUTTON_TYPE_CLASSES.base}
             name={'Login'}
             onClick={() => {
               setIsLogin(true)

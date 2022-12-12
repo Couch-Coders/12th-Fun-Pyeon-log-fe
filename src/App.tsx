@@ -11,14 +11,14 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const onAuthListener = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const token: string = await user.getIdToken()
         dispatch(getUserThunk(token))
         console.log(user)
       }
     })
-    return onAuthListener
+    return unsubscribe
   }, [])
 
   return (

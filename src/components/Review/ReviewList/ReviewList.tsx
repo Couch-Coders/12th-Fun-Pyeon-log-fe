@@ -9,7 +9,7 @@ import {
 
 interface ReviewType {
   reviewContent: string
-  createdDate: number
+  createdDate: string
   starCount: number
   keywords: string[]
 }
@@ -20,6 +20,8 @@ interface ReviewListProps {
 
 const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
   const [isWideView, setIsWideView] = useState<boolean>(false)
+  const date = review.createdDate
+
   const onWideViewHandler = () => {
     setIsWideView(!isWideView)
   }
@@ -46,7 +48,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
 
         <ReviewWirter>
           <p className="user">편의점 매니아</p>
-          <p className="day">2022.11.17</p>
+          <p className="day">{date}</p>
         </ReviewWirter>
       </ListInfo>
     </ListContainer>

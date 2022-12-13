@@ -8,7 +8,7 @@ import { setUser } from '@stores/auth/authSlice'
 
 import LoginModal from '@components/LoginModal/LoginModal'
 import Spinner from '@styles/Spinner'
-import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
+import FunButton from '@styles/FunButton'
 import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
 
@@ -41,8 +41,8 @@ const Navigation = () => {
             }}
           />
         </LogoCon>
-        
-       {loading ? (
+
+        {loading ? (
           <Spinner />
         ) : user ? (
           <LogoutCon>
@@ -52,14 +52,8 @@ const Navigation = () => {
                 alt=""
               />
             </Avatar>
-           <p>{user.displayName}</p>
-            <FunButton
-              name={'Logout'}
-              onClick={() => {
-                setIsLogin(false)
-                onClick={signOutHandler}
-              }}
-            />
+            <p>{user.displayName}</p>
+            <FunButton name={'Logout'} onClick={signOutHandler} />
           </LogoutCon>
         ) : (
           <FunButton

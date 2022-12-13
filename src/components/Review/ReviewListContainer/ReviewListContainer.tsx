@@ -17,7 +17,7 @@ const reviewData = [
     starCount: 4.0,
     createdDate: '2022. 12. 25',
     storeId: 1,
-    userId: 3,
+    userId: 4,
     keywords: [
       '트렌디한 상품이 많아요',
       '분위기가 좋아요',
@@ -33,7 +33,7 @@ const reviewData = [
     starCount: 4.5,
     createdDate: '2022. 12. 22',
     storeId: 1,
-    userId: 3,
+    userId: 1,
     keywords: ['분위기가 좋아요', '매장이 넓어요'],
   },
   {
@@ -43,7 +43,7 @@ const reviewData = [
     starCount: 4.7,
     createdDate: '2022. 12. 20',
     storeId: 1,
-    userId: 3,
+    userId: 6,
     keywords: ['분위기가 좋아요', '트렌디한 상품이 많아요', '굿이에요'],
   },
   {
@@ -53,7 +53,7 @@ const reviewData = [
     starCount: 4.0,
     createdDate: '2022. 12. 25',
     storeId: 1,
-    userId: 3,
+    userId: 7,
     keywords: [
       '트렌디한 상품이 많아요',
       '분위기가 좋아요',
@@ -69,7 +69,7 @@ const reviewData = [
     starCount: 4.5,
     createdDate: '2022. 12. 22',
     storeId: 1,
-    userId: 3,
+    userId: 8,
     keywords: ['분위기가 좋아요', '매장이 넓어요'],
   },
   {
@@ -79,7 +79,7 @@ const reviewData = [
     starCount: 4.7,
     createdDate: '2022. 12. 20',
     storeId: 1,
-    userId: 3,
+    userId: 31,
     keywords: ['분위기가 좋아요', '트렌디한 상품이 많아요', '굿이에요'],
   },
 ]
@@ -103,7 +103,14 @@ const ReviewListContainer = () => {
       </ReviewTop>
       <ListContainer>
         {reviews.map((review) => (
-          <ReviewList key={review.reviewId} review={review} />
+          <ReviewList
+            key={review.reviewId}
+            starCount={review.starCount}
+            createdDate={review.createdDate}
+            keywords={review.keywords}
+            reviewContent={review.reviewContent}
+            userId={review.userId}
+          />
         ))}
       </ListContainer>
     </ReviewListWrapper>

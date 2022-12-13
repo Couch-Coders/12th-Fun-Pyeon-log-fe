@@ -1,6 +1,6 @@
 import React from 'react'
-import { Title } from '@components/FilterBox/FilterBox.styles'
 import Keywords from './Keywords'
+import { Title } from '@components/FilterBox/FilterBox.styles'
 
 const product = [
   '제품이 다양해요',

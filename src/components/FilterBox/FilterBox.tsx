@@ -1,7 +1,7 @@
 import React from 'react'
-import { FilterWrapper } from './FilterBox.styles'
 import Brand from '@components/Brand/Brand'
 import KeywordBox from '@components/Keyword/KeywordBox'
+import { FilterWrapper } from './FilterBox.styles'
 
 const Filter = () => {
   return (

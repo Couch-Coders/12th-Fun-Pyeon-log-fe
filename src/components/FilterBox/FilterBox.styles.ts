@@ -7,10 +7,9 @@ export const FilterWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
   > div {
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid ${(props) => props.theme.colors.filterBorder};
     padding-bottom: 20px;
     margin-bottom: 20px;
   }

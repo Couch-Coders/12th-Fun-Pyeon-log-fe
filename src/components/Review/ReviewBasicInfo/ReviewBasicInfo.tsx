@@ -1,4 +1,7 @@
 import React from 'react'
+import GsImg from '../../../assets/convImg/gs.png'
+import cuImg from '../../../assets/convImg/cu.png'
+import { PhoneFilled, PushpinFilled, StarFilled } from '@ant-design/icons'
 import {
   ConvImgWrapper,
   InfoContainer,
@@ -6,9 +9,6 @@ import {
   KeywordBox,
   StarPoint,
 } from './ReviewBasicInfo.styles'
-import GsImg from '../../../assets/convImg/gs.png'
-import cuImg from '../../../assets/convImg/cu.png'
-import { PhoneFilled, PushpinFilled, StarFilled } from '@ant-design/icons'
 
 const ReviewBasicInfo = () => {
   return (

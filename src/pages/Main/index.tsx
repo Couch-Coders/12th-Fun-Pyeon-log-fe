@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import MapContainer from '@components/MapContainer/MapContainer'
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
-import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Map.styles'
+import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
 import ListBox from '@components/ListBox/ListBox'
 import FilterBox from '@components/FilterBox/FilterBox'
 

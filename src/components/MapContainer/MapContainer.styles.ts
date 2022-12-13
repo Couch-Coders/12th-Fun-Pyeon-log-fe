@@ -19,16 +19,16 @@ export const ControlBtns = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  gap: 10px;
 
   button {
     background-color: #fff;
     color: #555;
-    border: 1px solid #efefef;
+    border: 1px solid ${(props) => props.theme.colors.border};
     border-radius: 10px;
     opacity: 0.9;
     transition: 0.5s;
     padding: 10px;
+    margin: 0 5px;
 
     display: flex;
     justify-content: center;
@@ -37,8 +37,8 @@ export const ControlBtns = styled.div`
 
     &:hover {
       opacity: 1;
-      color: #7d53d6;
-      border: 1px solid #7d53d6;
+      color: ${(props) => props.theme.colors.purple};
+      border: 1px solid ${(props) => props.theme.colors.purple};
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
     }
   }

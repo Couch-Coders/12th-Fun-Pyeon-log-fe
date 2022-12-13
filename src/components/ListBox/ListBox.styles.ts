@@ -3,18 +3,19 @@ import styled from 'styled-components'
 export const ListWrapper = styled.div`
   height: calc(100% - 90px);
 
-  p {
-    color: #7d53d6;
+  .noResult {
+    color: ${(props) => props.theme.colors.purple};
     padding: 10px;
+    font-weight: 700;
   }
 `
 export const SortBtns = styled.ul`
   width: 100%;
   height: 30px;
-  color: #969696;
+  color: ${(props) => props.theme.colors.sortBtn};
   font-size: 14px;
   font-weight: 700;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.colors.border};
   padding: 5px;
   display: flex;
   justify-content: center;
@@ -25,14 +26,14 @@ export const SortBtns = styled.ul`
     cursor: pointer;
 
     :nth-of-type(1) {
-      border-right: 1px solid #d9d9d9;
+      border-right: 1px solid ${(props) => props.theme.colors.border};
     }
     :nth-of-type(3) {
-      border-left: 1px solid #d9d9d9;
+      border-left: 1px solid ${(props) => props.theme.colors.border};
     }
 
     &.active {
-      color: #7d53d6;
+      color: ${(props) => props.theme.colors.purple};
     }
   }
 `

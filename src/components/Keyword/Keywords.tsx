@@ -7,7 +7,7 @@ interface KeywordProps {
   array: string[]
 }
 
-const Keywords = ({ name, array }: KeywordProps) => {
+const Keywords: React.FC<KeywordProps> = ({ name, array }) => {
   const listRef = useRef<HTMLLIElement[] | null[]>([])
 
   const onClick = (idx: number) => {

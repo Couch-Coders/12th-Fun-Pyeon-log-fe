@@ -1,50 +1,76 @@
 import styled from 'styled-components'
 
-export const ReviewListWrapper = styled.div`
+interface ListContainerProps {
+  isWide: boolean
+}
+
+export const ListContainer = styled.div<ListContainerProps>`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  border: 1px solid red;
-  padding: 20px 0;
-`
-
-export const ReviewTop = styled.div`
-  display: flex;
   justify-content: space-between;
-`
 
-export const NameNCount = styled.div`
+  border: 1px solid #d9d9d9;
+
+  padding: 20px 20px 10px;
+
+  .review {
+    font-size: 16px;
+    line-height: 1.2rem;
+    margin-bottom: 20px;
+    height: ${({ isWide }) => (isWide ? '200px' : '73px')};
+    overflow-y: scroll;
+    transition: height 0.2s ease;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  cursor: pointer;
+`
+export const ListInfo = styled.div`
   position: relative;
   display: flex;
-  width: 180px;
-  h1 {
-    font-size: 32px;
-    font-weight: bold;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: 600;
+
+  .star_box {
+    width: 100px;
+    svg {
+      fill: rgba(255, 230, 0, 1);
+      margin-right: 4px;
+    }
   }
+`
 
-  .count {
+export const KeywordBox = styled.div`
+  ul {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-    border: 1px solid #cfcfcf;
-    border-radius: 5px;
-    padding: 0 8px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    align-items: flex-end;
-
-    span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform: translate(-2px, -2px);
-      svg {
-        width: 14px;
-        height: 14px;
+    li {
+      span {
+        background-color: white;
+        font-size: 14px;
+        color: #7d53d6;
+        border: 1px solid #7d53d6;
+        border-radius: 5px;
+        padding: 2px 5px;
+        margin: 0 5px;
+        transition: 0.5s;
       }
     }
+  }
+`
+
+export const ReviewWirter = styled.div`
+  display: flex;
+  align-items: baseline;
+  position: absolute;
+  right: 0;
+  font-size: 18px;
+
+  .day {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
   }
 `

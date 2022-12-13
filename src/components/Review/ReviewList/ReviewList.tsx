@@ -16,21 +16,22 @@ interface ReviewType {
   userId: number
 }
 
-interface ReviewListProps {
-  review: ReviewType
-}
-
-const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
+const ReviewList: React.FC<ReviewType> = ({
+  createdDate,
+  reviewContent,
+  starCount,
+  keywords,
+  userId,
+}) => {
   const [isWideView, setIsWideView] = useState<boolean>(false)
-  const date = review.createdDate
 
   const onWideViewHandler = () => {
     setIsWideView(!isWideView)
   }
 
   return (
-    <ListContainer onDoubleClick={onWideViewHandler} isWide={isWideView}>
-      <div className="review">{review.reviewContent}</div>
+    <ListContainer isWide={isWideView}>
+      {userId === 1 && (
         <ReviewEditButton>
           <button>
             <EditOutlined />
@@ -39,14 +40,18 @@ const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
             <DeleteOutlined />
           </button>
         </ReviewEditButton>
+      )}
+      <div className="review" onDoubleClick={onWideViewHandler}>
+        {reviewContent}
+      </div>
       <ListInfo>
         <div className="star_box">
           <StarFilled />
-          <span>{review.starCount}</span>
+          <span>{starCount}</span>
         </div>
         <KeywordBox>
           <ul>
-            {review.keywords
+            {keywords
               .filter((_, idx) => idx < 2)
               .map((keyword, idx) => (
                 <li key={idx}>
@@ -58,7 +63,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
 
         <ReviewWirter>
           <p className="user">편의점 매니아</p>
-          <p className="day">{date}</p>
+          <p className="day">{createdDate}</p>
         </ReviewWirter>
       </ListInfo>
     </ListContainer>

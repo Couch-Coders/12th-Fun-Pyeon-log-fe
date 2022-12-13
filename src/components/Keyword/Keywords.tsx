@@ -10,7 +10,7 @@ interface KeywordProps {
 const Keywords: React.FC<KeywordProps> = ({ name, array }) => {
   const listRef = useRef<HTMLLIElement[] | null[]>([])
 
-  const onClick = (idx: number) => {
+  const toggleOn = (idx: number) => {
     listRef.current[idx]?.classList.toggle('on')
   }
 
@@ -22,7 +22,7 @@ const Keywords: React.FC<KeywordProps> = ({ name, array }) => {
           <KeywordList
             key={idx}
             ref={(el) => (listRef.current[idx] = el)}
-            onClick={() => onClick(idx)}
+            onClick={() => toggleOn(idx)}
           >
             <CheckSquareFilled />
             <KeywordName>{keyword}</KeywordName>

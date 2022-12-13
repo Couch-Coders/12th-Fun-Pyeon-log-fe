@@ -4,7 +4,7 @@ import reset from 'styled-reset'
 export const GlobalStyle = createGlobalStyle`
   ${reset}
   
-*{
+* {
   margin: 0;
   box-sizing: border-box;
 }
@@ -20,5 +20,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+ol, ul, li {
+list-style: none;
 }
 `

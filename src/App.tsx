@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Map from '@pages/Map'
+import Main from '@pages/Main'
 import Navigation from '@pages/Navigation/Navigation'
 import { Route, Routes } from 'react-router-dom'
 import { auth } from '@services/firebaseAuth'
@@ -24,7 +24,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
-        <Route path="/" element={<Map />} />
+        <Route path="/" element={<Main />} />
       </Route>
     </Routes>
   )

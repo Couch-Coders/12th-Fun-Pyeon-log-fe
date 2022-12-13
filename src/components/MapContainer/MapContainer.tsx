@@ -8,6 +8,7 @@ import {
   kakao,
 } from '@services/kakao'
 import { MapWrap, ControlBtns } from './MapContainer.styles'
+import Map from '@components/Map/Map'
 
 interface MapPropsType {
   keyword: string
@@ -180,8 +181,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   return (
     <MapWrap>
-      <div id="map" className="map" ref={mapRef}></div>
-
+      <Map ref={mapRef} />
       <ControlBtns>
         <button onClick={searchFromHereHandler} className="search_Btn">
           이 위치에서 다시 검색

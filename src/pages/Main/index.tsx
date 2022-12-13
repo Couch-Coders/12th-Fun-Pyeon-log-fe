@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import MapContainer from '@components/MapContainer/MapContainer'
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
-import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
+import { Wrapper, ListView, ListTop, SearchBox, FilterBtn } from './Main.styles'
 import ListBox from '@components/ListBox/ListBox'
 
 styled(MapContainer)`
@@ -10,9 +10,9 @@ styled(MapContainer)`
   border: 1px solid #222;
 `
 
-const Map = () => {
+const Main = () => {
   const [keyword, setKeyword] = useState<string>('')
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const updateValue = () => {
     if (inputRef.current) {
@@ -23,6 +23,17 @@ const Map = () => {
         setKeyword(inputRef.current.value)
       }
     }
+
+    // if (inputRef.current && inputRef?.current.value.trim()) {
+    //   setKeyword(inputRef.current.value)
+    //   // inputRef.current.value = ''
+    // } else {
+    //   alert('검색어를 입력해주세요.')
+    // }
+  }
+
+  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') updateValue()
   }
 
   return (
@@ -34,18 +45,16 @@ const Map = () => {
               type="text"
               ref={inputRef}
               placeholder="편의점을 검색하세요."
-              onKeyUp={(e) => {
-                if (e.key === 'Enter') updateValue()
-              }}
+              onKeyUp={onKeyUp}
             />
             <button onClick={updateValue}>
               <SearchOutlined />
             </button>
           </SearchBox>
 
-          <SortBtn>
+          <FilterBtn>
             <FilterOutlined />
-          </SortBtn>
+          </FilterBtn>
         </ListTop>
 
         <ListBox />
@@ -56,4 +65,4 @@ const Map = () => {
   )
 }
 
-export default Map
+export default Main

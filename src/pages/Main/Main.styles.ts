@@ -15,7 +15,7 @@ export const ListView = styled.div`
 `
 export const ListTop = styled.div`
   height: 90px;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.colors.border};
   padding: 10px 20px;
 
   display: flex;
@@ -28,7 +28,7 @@ export const SearchBox = styled.div`
   min-width: 170px;
   height: 30px;
 
-  border: 1px solid #d9d9d9;
+  border: 1px solid ${(props) => props.theme.colors.border};
   border-radius: 5px;
   padding: 5px 0;
 
@@ -45,20 +45,20 @@ export const SearchBox = styled.div`
   button {
     width: 30px;
     height: 30px;
-    color: #8a8a8a;
+    color: ${(props) => props.theme.colors.searchBtn};
     background-color: transparent;
     border: none;
     text-align: right;
     cursor: pointer;
   }
 `
-export const SortBtn = styled.button`
+export const FilterBtn = styled.button`
   width: 30px;
   height: 30px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid ${(props) => props.theme.colors.border};
   border-radius: 5px;
   background-color: transparent;
-  color: #8a8a8a;
+  color: ${(props) => props.theme.colors.searchBtn};
   cursor: pointer;
 
   display: flex;

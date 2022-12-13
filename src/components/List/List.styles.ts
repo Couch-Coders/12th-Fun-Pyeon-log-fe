@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
 export const ConBox = styled.li`
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.colors.border};
   padding: 20px;
   cursor: pointer;
   transition: 0.5s;
 
   &:hover {
-    background-color: #7d53d6;
+    background-color: ${(props) => props.theme.colors.purple};
     color: white;
   }
 `
@@ -24,7 +24,7 @@ export const Title = styled.div`
 
   .star_box {
     svg {
-      fill: rgba(255, 230, 0, 1);
+      fill: ${(props) => props.theme.colors.star};
       margin-right: 4px;
     }
   }
@@ -43,8 +43,9 @@ export const Content = styled.div`
       span {
         background-color: white;
         font-size: 14px;
-        color: #7d53d6;
-        border: 1px solid #7d53d6;
+        color: ${(props) => props.theme.colors.purple};
+        background-color: white;
+        border: 1px solid ${(props) => props.theme.colors.purple};
         border-radius: 5px;
         padding: 2px 5px;
         transition: 0.5s;

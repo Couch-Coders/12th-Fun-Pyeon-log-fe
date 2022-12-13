@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import mapReducer from './map/mapSlice'
+import userReducer from './auth/authSlice'
 
 export const store = configureStore({
   reducer: {
     map: mapReducer,
+    user: userReducer,
   },
 })
 

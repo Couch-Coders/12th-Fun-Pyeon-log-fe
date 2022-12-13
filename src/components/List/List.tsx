@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { StarFilled } from '@ant-design/icons'
 import { ConBox, Title, Content } from './List.styles'
 
@@ -6,7 +6,7 @@ interface ListProps {
   placeName: string
 }
 
-const List: FC<ListProps> = ({ placeName }) => {
+const List: React.FC<ListProps> = ({ placeName }) => {
   return (
     <ConBox>
       <Title>

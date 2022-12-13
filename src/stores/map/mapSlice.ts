@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 // import { getMapThunk } from './mapThunk'
-import { MapData, MapState } from './mapType'
+import { MapState } from './mapType'
 
 const initialState: MapState = {
   data: [],

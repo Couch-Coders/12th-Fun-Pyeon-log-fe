@@ -16,7 +16,7 @@ const ListBox = () => {
 
       <ResultBox>
         {mapData.length === 0 ? (
-          <p>검색 결과가 없습니다.</p>
+          <p className="noResult">검색 결과가 없습니다.</p>
         ) : (
           mapData.map((map) => <List key={map.id} placeName={map.place_name} />)
         )}

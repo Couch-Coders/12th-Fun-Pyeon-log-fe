@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 // import { getMapThunk } from './mapThunk'
-import { MapData, MapState } from './mapType'
+import { MapState } from './mapType'
 
 const initialState: MapState = {
   data: [],
@@ -12,7 +12,10 @@ const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    getData: (state, action: PayloadAction<MapData[]>) => {
+    getData: (
+      state,
+      action: PayloadAction<kakao.maps.services.PlacesSearchResultItem[]>
+    ) => {
       state.data = action.payload
       // console.log(action.payload)
     },

@@ -15,7 +15,7 @@ export const KeywordGroup = styled.div`
 `
 export const KeywordName = styled.span`
   font-size: 14px;
-  color: #969696;
+  color: ${(props) => props.theme.colors.checkBoxDesc};
   transition: 0.5s;
 `
 export const KeywordList = styled.li`
@@ -26,7 +26,7 @@ export const KeywordList = styled.li`
   svg {
     width: 23px;
     height: 23px;
-    color: #ececec;
+    color: ${(props) => props.theme.colors.checkBox};
     border-radius: 5px;
     margin-right: 5px;
     transition: 0.5s;
@@ -34,7 +34,7 @@ export const KeywordList = styled.li`
 
   &.on {
     svg {
-      color: #7d53d6;
+      color: ${(props) => props.theme.colors.purple};
     }
 
     ${KeywordName} {

@@ -2,6 +2,7 @@ import { ReviewWrapper, ReviewMapWrapper } from './Review.styles'
 import React, { useState, useEffect, useRef } from 'react'
 import ReviewBasicInfo from '@components/Review/ReviewBasicInfo/ReviewBasicInfo'
 import ReviewList from '@components/Review/ReviewListContainer/ReviewListContainer'
+import { displayMe } from '@services/kakao'
 
 const Review = () => {
   const mapRef = useRef<HTMLDivElement | null>(null)
@@ -20,6 +21,8 @@ const Review = () => {
     }
 
     const map = new kakao.maps.Map(mapContainer, mapOption)
+    // 임의의 편의점 위치에 마커 생성
+    displayMe(map, new kakao.maps.LatLng(myPosition.lat, myPosition.lng))
   }, [])
 
   return (

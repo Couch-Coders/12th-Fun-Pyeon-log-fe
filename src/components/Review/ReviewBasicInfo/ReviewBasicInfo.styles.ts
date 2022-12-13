@@ -6,18 +6,19 @@ export const InfoContainer = styled.div`
   height: 170px;
   width: 80%;
   min-width: 1000px;
+  padding: 10px 0;
 `
 
 export const ConvImgWrapper = styled.div`
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border: 1.6px solid #cfcfcf;
   border-radius: 15px;
   overflow: hidden;
 
   img {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     transform: translate(-5px, -5px);
   }
 `
@@ -29,13 +30,13 @@ export const ConvInfo = styled.div`
   padding: 0 25px;
 
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
     color: #7d53d6;
   }
 
   p {
-    font-size: 28px;
+    font-size: 20px;
     display: flex;
     gap: 10px;
 
@@ -55,6 +56,7 @@ export const KeywordBox = styled.div`
       span {
         background-color: white;
         font-size: 14px;
+        font-weight: bold;
         color: #7d53d6;
         border: 1px solid #7d53d6;
         border-radius: 5px;
@@ -67,10 +69,10 @@ export const KeywordBox = styled.div`
 
 export const StarPoint = styled.div`
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 0;
-  width: 170px;
-  height: 55px;
+  width: 140px;
+  height: 45px;
 
   display: flex;
   align-items: center;
@@ -82,7 +84,7 @@ export const StarPoint = styled.div`
 
   text-align: center;
 
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
 
   svg {
@@ -95,7 +97,7 @@ export const StarPoint = styled.div`
     align-items: center;
     justify-content: center;
     width: 120px;
-    height: 55px;
+    height: 45px;
     border-left: 1px solid #d9d9d9;
   }
 `

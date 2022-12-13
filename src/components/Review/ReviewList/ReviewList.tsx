@@ -20,14 +20,12 @@ interface ReviewListProps {
 
 const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
   const [isWideView, setIsWideView] = useState<boolean>(false)
-
   const onWideViewHandler = () => {
     setIsWideView(!isWideView)
   }
-  console.log(review.keywords)
 
   return (
-    <ListContainer onClick={onWideViewHandler} isWide={isWideView}>
+    <ListContainer onDoubleClick={onWideViewHandler} isWide={isWideView}>
       <div className="review">{review.reviewContent}</div>
       <ListInfo>
         <div className="star_box">

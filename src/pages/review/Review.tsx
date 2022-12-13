@@ -2,6 +2,7 @@ import { ReviewWrapper, ReviewMapWrapper } from './Review.styles'
 import React, { useState, useEffect, useRef } from 'react'
 import ReviewBasicInfo from '@components/Review/ReviewBasicInfo/ReviewBasicInfo'
 import ReviewList from '@components/Review/ReviewListContainer/ReviewListContainer'
+import Map from '@components/Map/Map'
 import { displayMe } from '@services/kakao'
 
 const Review = () => {
@@ -30,7 +31,7 @@ const Review = () => {
       <ReviewBasicInfo />
       <ReviewList />
       <ReviewMapWrapper>
-        <div id="map" className="map" ref={mapRef}></div>
+        <Map ref={mapRef} />
       </ReviewMapWrapper>
     </ReviewWrapper>
   )

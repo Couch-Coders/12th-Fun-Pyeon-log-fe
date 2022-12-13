@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import { Title } from '@components/FilterBox/FilterBox.styles'
 import { BrandList } from './Brand.styles'
+import { Title } from '@components/FilterBox/FilterBox.styles'
 
 const brands = ['GS25', 'CU', '세븐일레븐', '이마트24', '미니스톱', '기타']
 

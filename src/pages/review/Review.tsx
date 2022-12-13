@@ -16,8 +16,9 @@ const Review = () => {
 
     const mapOption = {
       center: new kakao.maps.LatLng(myPosition.lat, myPosition.lng), // 지도의 중심좌표
-      level: 4, // 지도의 확대 레벨
+      level: 3, // 지도의 확대 레벨
     }
+
     const map = new kakao.maps.Map(mapContainer, mapOption)
   }, [])
 

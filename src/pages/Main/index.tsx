@@ -18,13 +18,14 @@ const Map = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const updateValue = () => {
-    if (inputRef.current) {
-      if (!inputRef.current.value.trim()) {
-        alert('검색어를 입력해주세요.')
-        inputRef.current.value = ''
-      } else {
-        setKeyword(inputRef.current.value)
-      }
+    const { current } = inputRef
+
+    if (!current) return
+    if (!current.value.trim()) {
+      alert('검색어를 입력해주세요.')
+      current.value = ''
+    } else {
+      setKeyword(current.value)
     }
   }
 

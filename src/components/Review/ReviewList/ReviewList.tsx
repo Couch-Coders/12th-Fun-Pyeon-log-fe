@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { StarFilled } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, StarFilled } from '@ant-design/icons'
 import {
   ListContainer,
   ListInfo,
   KeywordBox,
   ReviewWirter,
+  ReviewEditButton,
 } from './ReviewList.styles'
 
 interface ReviewType {
@@ -30,6 +31,14 @@ const ReviewList: React.FC<ReviewListProps> = ({ review }) => {
   return (
     <ListContainer onDoubleClick={onWideViewHandler} isWide={isWideView}>
       <div className="review">{review.reviewContent}</div>
+        <ReviewEditButton>
+          <button>
+            <EditOutlined />
+          </button>
+          <button>
+            <DeleteOutlined />
+          </button>
+        </ReviewEditButton>
       <ListInfo>
         <div className="star_box">
           <StarFilled />

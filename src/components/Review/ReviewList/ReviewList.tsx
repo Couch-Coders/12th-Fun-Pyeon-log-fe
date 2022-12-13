@@ -12,6 +12,7 @@ interface ReviewType {
   createdDate: string
   starCount: number
   keywords: string[]
+  userId: number
 }
 
 interface ReviewListProps {

@@ -5,13 +5,14 @@ interface ListContainerProps {
 }
 
 export const ListContainer = styled.div<ListContainerProps>`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   border: 1px solid #d9d9d9;
 
-  padding: 20px 20px 10px;
+  padding: 25px 10px 10px;
 
   .review {
     font-size: 16px;
@@ -20,13 +21,39 @@ export const ListContainer = styled.div<ListContainerProps>`
     height: ${({ isWide }) => (isWide ? '200px' : '73px')};
     overflow-y: scroll;
     transition: height 0.2s ease;
-
+    cursor: pointer;
     ::-webkit-scrollbar {
       display: none;
     }
   }
-  cursor: pointer;
 `
+export const ReviewEditButton = styled.div`
+  position: absolute;
+  top: 1px;
+  right: 8px;
+  display: flex;
+
+  :first-child button {
+    margin-left: 5px;
+  }
+  button {
+    width: 25px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    :active {
+      transform: scale(0.95);
+    }
+    :hover {
+      color: #4d4d4d;
+    }
+  }
+`
+
 export const ListInfo = styled.div`
   position: relative;
   display: flex;

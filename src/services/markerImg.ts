@@ -1,9 +1,14 @@
-import GsImg from '../assets/brandMaker/gsMaker.png'
-import cuImg from '../assets/brandMaker/cuMaker.png'
-import miniImg from '../assets/brandMaker/ministopMaker.png'
-import sevenImg from '../assets/brandMaker/sevenMaker.png'
-import emartImg from '../assets/brandMaker/emartMaker.png'
-import funMarkerImg from '../assets/brandMaker/funlogMaker.png'
+import GsMarker from '../assets/brandMaker/gsMaker.png'
+import cuMarker from '../assets/brandMaker/cuMaker.png'
+import miniMarker from '../assets/brandMaker/ministopMaker.png'
+import sevenMarker from '../assets/brandMaker/sevenMaker.png'
+import emartMarker from '../assets/brandMaker/emartMaker.png'
+import funMarker from '../assets/brandMaker/funlogMaker.png'
+import gsImg from '../assets/convImg/gs.png'
+import cuImg from '../assets/convImg/cu.png'
+import emartImg from '../assets/convImg/emart.png'
+import ministopImg from '../assets/convImg/ministop.png'
+import sevenImg from '../assets/convImg/seven.png'
 
 export enum CUSTOM_MARKER_CLASS {
   gs = 'GS25',

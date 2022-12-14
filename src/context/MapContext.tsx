@@ -11,15 +11,9 @@ interface MapContextType {
 export const MapContext = createContext<MapContextType>({
   mapApi: null,
   markers: [],
-  setMapApi: (newMap) => {
-    return null
-  },
-  setMarkers: (newMarker) => {
-    return null
-  },
-  deleteMarkers: () => {
-    return null
-  },
+  setMapApi: (newMap) => {},
+  setMarkers: (newMarker) => {},
+  deleteMarkers: () => {},
 })
 
 const MapProvider = ({ children }: { children: React.ReactNode }) => {

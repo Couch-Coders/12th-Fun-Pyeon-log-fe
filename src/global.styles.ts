@@ -25,4 +25,20 @@ code {
 ol, ul, li {
 list-style: none;
 }
+
+
+//오버레이 스타일
+.overlay {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 200px;
+  height: 250px;
+  padding: 10px;
+
+  background-color: white;
+  border: 3px solid ${(props) => props.theme.colors.purple};
+}
+
+
 `

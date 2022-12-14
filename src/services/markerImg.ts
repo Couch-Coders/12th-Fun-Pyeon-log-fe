@@ -49,3 +49,23 @@ export const customMarkerImage = {
     new kakao.maps.Size(30, 40)
   ),
 }
+
+// 마커 이미지 선택기
+export const getMarkerImg = (placeName: string) =>
+  ({
+    [CUSTOM_MARKER_CLASS.gs]: customMarkerImage.gsMarkerImg,
+    [CUSTOM_MARKER_CLASS.cu]: customMarkerImage.cuMarkerImg,
+    [CUSTOM_MARKER_CLASS.mini]: customMarkerImage.miniMarkerImg,
+    [CUSTOM_MARKER_CLASS.seven]: customMarkerImage.sevenMarkerImg,
+    [CUSTOM_MARKER_CLASS.emart]: customMarkerImage.emartMarkerImg,
+  }[placeName])
+
+// 브랜드 이미지 선택기
+export const getBrandImg = (placeName: string) =>
+  ({
+    [CUSTOM_MARKER_CLASS.gs]: gsImg,
+    [CUSTOM_MARKER_CLASS.cu]: cuImg,
+    [CUSTOM_MARKER_CLASS.mini]: ministopImg,
+    [CUSTOM_MARKER_CLASS.seven]: sevenImg,
+    [CUSTOM_MARKER_CLASS.emart]: emartImg,
+  }[placeName])

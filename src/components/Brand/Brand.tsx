@@ -1,11 +1,10 @@
 import React, { useRef } from 'react'
 import { BrandList } from './Brand.styles'
 import { Title } from '@components/FilterBox/FilterBox.styles'
-
-const brands = ['GS25', 'CU', '세븐일레븐', '이마트24', '미니스톱', '기타']
+import { BRANDS } from '@utils/constants'
 
 const BrandBox = () => {
-  const brandRef = useRef<HTMLLIElement[] | null[]>([])
+  const brandRef = useRef<{ [idx: number]: HTMLLIElement | null }>({})
 
   const onClick = (idx: number) => {
     brandRef.current[idx]?.classList.toggle('on')

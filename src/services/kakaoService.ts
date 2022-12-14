@@ -1,5 +1,9 @@
-import { customMarkerImage, CUSTOM_MARKER_CLASS } from './markerImg'
-
+import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
+import GsImg from '../assets/convImg/gs.png'
+import star from '../assets/star.png'
+import pin from '../assets/pin.png'
+import phone from '../assets/phone.png'
+import funlogImg from '../assets/convImg/funlog.png'
 const { kakao } = window
 const infoWindow = new kakao.maps.InfoWindow({
   zIndex: 1,

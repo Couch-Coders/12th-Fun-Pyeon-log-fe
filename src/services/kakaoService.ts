@@ -65,11 +65,20 @@ const displayMyLocation = (
   return marker
 }
 
+const overlayContainer = (name: string) => {
+  return `<div class="overlay" >
+  custom overlay ${name}
+  <a href="https://www.naver.com">네이버로가기</a>
+</div>`
+}
+
 const kakaoServie = {
   displayMarkerInfoWindow,
   displayMyLocation,
+  overlayContainer,
   infoWindow,
   kakao,
+  overlay,
 }
 
 export default kakaoServie

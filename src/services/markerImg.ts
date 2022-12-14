@@ -24,22 +24,28 @@ export const customMarkerImage = {
     'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
     new kakao.maps.Size(31, 35)
   ),
-  gsMarkerImg: new kakao.maps.MarkerImage(GsImg, new kakao.maps.Size(30, 40)),
-  cuMarkerImg: new kakao.maps.MarkerImage(cuImg, new kakao.maps.Size(30, 40)),
+  gsMarkerImg: new kakao.maps.MarkerImage(
+    GsMarker,
+    new kakao.maps.Size(30, 40)
+  ),
+  cuMarkerImg: new kakao.maps.MarkerImage(
+    cuMarker,
+    new kakao.maps.Size(30, 40)
+  ),
   miniMarkerImg: new kakao.maps.MarkerImage(
-    miniImg,
+    miniMarker,
     new kakao.maps.Size(30, 40)
   ),
   sevenMarkerImg: new kakao.maps.MarkerImage(
-    sevenImg,
+    sevenMarker,
     new kakao.maps.Size(30, 40)
   ),
   emartMarkerImg: new kakao.maps.MarkerImage(
-    emartImg,
+    emartMarker,
     new kakao.maps.Size(30, 40)
   ),
   funMarkerImg: new kakao.maps.MarkerImage(
-    funMarkerImg,
+    funMarker,
     new kakao.maps.Size(30, 40)
   ),
 }

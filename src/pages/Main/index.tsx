@@ -49,9 +49,9 @@ const Map = () => {
 
           <SortBtn
             ref={sortBtnRef}
+            className={isFiltering ? 'on' : ''}
             onClick={() => {
               setIsFiltering((prev) => !prev)
-              sortBtnRef.current?.classList.toggle('on')
             }}
           >
             <FilterOutlined />

@@ -52,7 +52,7 @@ export const SearchBox = styled.div`
     cursor: pointer;
   }
 `
-export const FilterBtn = styled.button`
+export const SortBtn = styled.button`
   width: 30px;
   height: 30px;
   border: 1px solid ${(props) => props.theme.colors.border};
@@ -64,6 +64,10 @@ export const FilterBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.on {
+    background-color: #efefef;
+  }
 
   svg {
     width: 16px;

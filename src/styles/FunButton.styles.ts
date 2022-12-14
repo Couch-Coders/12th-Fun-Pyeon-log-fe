@@ -4,7 +4,7 @@ export const BaseBtn = styled.button`
   width: 5.5rem;
   height: 2rem;
 
-  background-color: #7d53d6;
+  background-color: ${(props) => props.theme.colors.purple};
   border-radius: 5px;
   border: none;
 
@@ -22,7 +22,7 @@ export const GoogleSignInBtn = styled.button`
   font-size: 17px;
   font-weight: 700;
   text-align: center;
-  border: 1px solid #7d53d6;
+  border: 1px solid ${(props) => props.theme.colors.purple};
   border-radius: 5px;
   padding: 15px 5px;
   cursor: pointer;

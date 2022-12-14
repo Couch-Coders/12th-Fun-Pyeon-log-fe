@@ -2,38 +2,31 @@ import React, { useRef, useState } from 'react'
 import MapContainer from '@components/MapContainer/MapContainer'
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
-import { Wrapper, ListView, ListTop, SearchBox, FilterBtn } from './Main.styles'
+import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
 import ListBox from '@components/ListBox/ListBox'
+import FilterBox from '@components/FilterBox/FilterBox'
 
 styled(MapContainer)`
   width: 70vw;
   border: 1px solid #222;
 `
 
-const Main = () => {
+const Map = () => {
   const [keyword, setKeyword] = useState<string>('')
+  const [isFiltering, setIsFiltering] = useState(false)
+  const sortBtnRef = useRef<HTMLButtonElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const updateValue = () => {
-    if (inputRef.current) {
-      if (!inputRef.current.value.trim()) {
-        alert('검색어를 입력해주세요.')
-        inputRef.current.value = ''
-      } else {
-        setKeyword(inputRef.current.value)
-      }
+    const { current } = inputRef
+
+    if (!current) return
+    if (!current.value.trim()) {
+      alert('검색어를 입력해주세요.')
+      current.value = ''
+    } else {
+      setKeyword(current.value)
     }
-
-    // if (inputRef.current && inputRef?.current.value.trim()) {
-    //   setKeyword(inputRef.current.value)
-    //   // inputRef.current.value = ''
-    // } else {
-    //   alert('검색어를 입력해주세요.')
-    // }
-  }
-
-  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') updateValue()
   }
 
   return (
@@ -45,19 +38,27 @@ const Main = () => {
               type="text"
               ref={inputRef}
               placeholder="편의점을 검색하세요."
-              onKeyUp={onKeyUp}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') updateValue()
+              }}
             />
             <button onClick={updateValue}>
               <SearchOutlined />
             </button>
           </SearchBox>
 
-          <FilterBtn>
+          <SortBtn
+            ref={sortBtnRef}
+            className={isFiltering ? 'on' : ''}
+            onClick={() => {
+              setIsFiltering((prev) => !prev)
+            }}
+          >
             <FilterOutlined />
-          </FilterBtn>
+          </SortBtn>
         </ListTop>
 
-        <ListBox />
+        {isFiltering ? <FilterBox /> : <ListBox />}
       </ListView>
 
       <MapContainer keyword={keyword} />
@@ -65,4 +66,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default Map

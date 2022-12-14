@@ -37,9 +37,10 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
 
     li {
+      margin-bottom: 10px;
+
       span {
         background-color: white;
         font-size: 14px;

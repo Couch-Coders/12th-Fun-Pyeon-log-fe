@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ReviewList from '@components/Review/ReviewList/ReviewList'
+import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
 import { PlusOutlined } from '@ant-design/icons'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
 import {

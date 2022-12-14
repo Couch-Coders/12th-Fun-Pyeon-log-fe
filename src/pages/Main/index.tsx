@@ -14,8 +14,8 @@ styled(MapContainer)`
 const Map = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [isFiltering, setIsFiltering] = useState(false)
-  const sortBtnRef = useRef<HTMLButtonElement | null>(null)
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const sortBtnRef = useRef<HTMLButtonElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const updateValue = () => {
     const { current } = inputRef

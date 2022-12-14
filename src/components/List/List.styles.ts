@@ -41,6 +41,7 @@ export const Content = styled.div`
 
     li {
       span {
+        background-color: white;
         font-size: 14px;
         color: ${(props) => props.theme.colors.purple};
         background-color: white;

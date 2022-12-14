@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Main from '@pages/Main'
 import Navigation from '@pages/Navigation/Navigation'
 import { Route, Routes } from 'react-router-dom'
+import Store from '@pages/store/Store'
 import { auth } from '@services/firebaseAuth'
 import { onAuthStateChanged } from 'firebase/auth'
 import { getUserThunk } from '@stores/auth/authThunk'
@@ -25,6 +26,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigation />}>
         <Route path="/" element={<Main />} />
+        <Route path="/stores/:storeId" element={<Store />} />
       </Route>
     </Routes>
   )

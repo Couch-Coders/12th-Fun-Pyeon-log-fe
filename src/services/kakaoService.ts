@@ -1,5 +1,5 @@
-export const { kakao } = window
-export const infoWindow = new kakao.maps.InfoWindow({
+const { kakao } = window
+const infoWindow = new kakao.maps.InfoWindow({
   zIndex: 1,
 })
 // 사용자 이미지 마커를 불러옵니다.
@@ -9,7 +9,7 @@ export const myMarkerImg = new kakao.maps.MarkerImage(
 )
 
 // 지도에 마커를 표시하는 함수입니다
-export const displayMarkerInfoWindow = (
+const displayMarkerInfoWindow = (
   data: kakao.maps.services.PlacesSearchResultItem,
   map: kakao.maps.Map
 ) => {
@@ -30,7 +30,7 @@ export const displayMarkerInfoWindow = (
 }
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-export const displayMe = (
+const displayMyLocation = (
   map: kakao.maps.Map,
   locPosition: kakao.maps.LatLng
 ) => {
@@ -53,3 +53,12 @@ export const displayMe = (
   // map.setLevel(3, { animate: true })
   return marker
 }
+
+const kakaoServie = {
+  displayMarkerInfoWindow,
+  displayMyLocation,
+  infoWindow,
+  kakao,
+}
+
+export default kakaoServie

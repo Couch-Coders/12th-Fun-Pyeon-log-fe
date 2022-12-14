@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useAppDispatch } from '@stores/store'
 import { getData, removeData } from '@stores/map/mapSlice'
-import {
-  displayMarkerInfoWindow,
-  displayMe,
-  infoWindow,
-  kakao,
-} from '@services/kakao'
+import kakaoServie from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 
 import Map from '@components/Map/Map'
@@ -71,7 +66,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const map = new kakao.maps.Map(mapContainer, mapOption)
     setMapApi(map)
 
-    const myMarker = displayMe(map, center)
+    const myMarker = kakaoServie.displayMyLocation(map, center)
     setMarkers(myMarker)
     searchStore(SearchType.CATEGORY, '', map)
   }
@@ -129,7 +124,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       // 새로 지도의 영역 설정
       const bounds = new kakao.maps.LatLngBounds()
       for (let i = 0; i < data.length; i++) {
-        const marker = displayMarkerInfoWindow(data[i], map)
+        const marker = kakaoServie.displayMarkerInfoWindow(data[i], map)
         setMarkers(marker)
         bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
       }
@@ -148,7 +143,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
     if (mapApi) {
-      const myMarker = displayMe(mapApi, locPosition)
+      const myMarker = kakaoServie.displayMyLocation(mapApi, locPosition)
       setMarkers(myMarker)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
@@ -156,7 +151,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = () => {
-    infoWindow.close()
+    kakaoServie.infoWindow.close()
     deleteMarkers()
   }
 

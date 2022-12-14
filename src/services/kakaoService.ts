@@ -13,16 +13,6 @@ const overlay = new kakao.maps.CustomOverlay({
   position: new kakao.maps.LatLng(37.54699, 127.09598),
 })
 
-// 마커 이미지 선택기
-const getMarkerImg = (placeName: string) =>
-  ({
-    [CUSTOM_MARKER_CLASS.gs]: customMarkerImage.gsMarkerImg,
-    [CUSTOM_MARKER_CLASS.cu]: customMarkerImage.cuMarkerImg,
-    [CUSTOM_MARKER_CLASS.mini]: customMarkerImage.miniMarkerImg,
-    [CUSTOM_MARKER_CLASS.seven]: customMarkerImage.sevenMarkerImg,
-    [CUSTOM_MARKER_CLASS.emart]: customMarkerImage.emartMarkerImg,
-  }[placeName])
-
 // 지도에 마커를 표시하는 함수입니다
 const displayMarkerInfoWindow = (
   data: kakao.maps.services.PlacesSearchResultItem,

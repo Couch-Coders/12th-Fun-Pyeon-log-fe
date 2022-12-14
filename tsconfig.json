@@ -7,7 +7,8 @@
       "@services/*": ["./services/*"],
       "@utils/*": ["./utils/*"],
       "@stores/*": ["./stores/*"],
-      "@styles/*": ["./styles/*"]
+      "@styles/*": ["./styles/*"],
+      "@context/*": ["./context/*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

@@ -24,10 +24,15 @@ const displayMarkerInfoWindow = (
   data: kakao.maps.services.PlacesSearchResultItem,
   map: kakao.maps.Map
 ) => {
+  //  data에서 브랜드 이름을 빼내고 브랜드에 맞는 이미지를 찾습니다.
+  const storeBrand = data.place_name.split(' ')[0]
+  const markerImg = getMarkerImg(storeBrand)
+
   // 마커를 생성하고 지도에 표시합니다
   const marker = new kakao.maps.Marker({
     map,
     position: new kakao.maps.LatLng(+data.y, +data.x),
+    image: markerImg ?? customMarkerImage.funMarkerImg,
   })
   const name = String(data.place_name)
   const content = `<div style="padding:5px;font-size:12px;">${name}</div>`
@@ -49,7 +54,7 @@ const displayMyLocation = (
   const marker = new kakao.maps.Marker({
     map,
     position: locPosition,
-    image: myMarkerImg,
+    image: customMarkerImage.myMarkerImg,
   })
   const message = '<div style="padding:5px;">현위치</div>' // 인포윈도우에 표시될 내용입니다
   infoWindow.setContent(message)

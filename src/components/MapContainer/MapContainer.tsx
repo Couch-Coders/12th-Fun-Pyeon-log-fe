@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useAppDispatch } from '@stores/store'
 import { getData, removeData } from '@stores/map/mapSlice'
 import kakaoServie from '@services/kakaoService'
-import { MapWrap, ControlBtns } from './MapContainer.styles'
+import { MapContext } from '@context/MapContext'
+
 import Map from '@components/Map/Map'
+
+import { MapWrap, ControlBtns } from './MapContainer.styles'
 
 interface MapPropsType {
   keyword: string
@@ -16,16 +19,14 @@ enum SearchType {
 
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   const dispatch = useAppDispatch()
+  const { setMapApi, setMarkers, deleteMarkers, mapApi } =
+    useContext(MapContext)
   const mapRef = useRef<HTMLDivElement | null>(null)
   // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
     lat: 37.54699,
     lng: 127.09598,
   })
-  // kakao map 객체 저장
-  const [mapApi, setMapApi] = useState<kakao.maps.Map | null>(null)
-  // 검색으로 생성된 마커 저장
-  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([])
 
   // 처음 들어왔을 때
   useEffect(() => {
@@ -65,10 +66,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const map = new kakao.maps.Map(mapContainer, mapOption)
     setMapApi(map)
 
-    const myMaker = kakaoServie.displayMyLocation(map, center)
-    setMarkers((prevState) => {
-      return [...prevState, myMaker]
-    })
+    const myMarker = kakaoServie.displayMyLocation(map, center)
+    setMarkers(myMarker)
     searchStore(SearchType.CATEGORY, '', map)
   }
 
@@ -126,9 +125,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       const bounds = new kakao.maps.LatLngBounds()
       for (let i = 0; i < data.length; i++) {
         const marker = kakaoServie.displayMarkerInfoWindow(data[i], map)
-        setMarkers((prevState) => {
-          return [...prevState, marker]
-        })
+        setMarkers(marker)
         bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
       }
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
@@ -146,25 +143,16 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
     if (mapApi) {
-      const myMaker = kakaoServie.displayMyLocation(mapApi, locPosition)
-      setMarkers((prevState) => {
-        return [...prevState, myMaker]
-      })
+      const myMarker = kakaoServie.displayMyLocation(mapApi, locPosition)
+      setMarkers(myMarker)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
   }
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = () => {
-    if (markers.length < 1) {
-      alert('No Marker in here')
-      return
-    }
-    markers.forEach((markerInfo) => {
-      markerInfo.setMap(null)
-    })
     kakaoServie.infoWindow.close()
-    setMarkers([])
+    deleteMarkers()
   }
 
   const searchFromHereHandler = () => {

@@ -1,12 +1,23 @@
+import { customMarkerImage, CUSTOM_MARKER_CLASS } from './markerImg'
+
 const { kakao } = window
 const infoWindow = new kakao.maps.InfoWindow({
   zIndex: 1,
 })
-// 사용자 이미지 마커를 불러옵니다.
-export const myMarkerImg = new kakao.maps.MarkerImage(
-  'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-  new kakao.maps.Size(31, 35)
-)
+
+const overlay = new kakao.maps.CustomOverlay({
+  position: new kakao.maps.LatLng(37.54699, 127.09598),
+})
+
+// 마커 이미지 선택기
+const getMarkerImg = (placeName: string) =>
+  ({
+    [CUSTOM_MARKER_CLASS.gs]: customMarkerImage.gsMarkerImg,
+    [CUSTOM_MARKER_CLASS.cu]: customMarkerImage.cuMarkerImg,
+    [CUSTOM_MARKER_CLASS.mini]: customMarkerImage.miniMarkerImg,
+    [CUSTOM_MARKER_CLASS.seven]: customMarkerImage.sevenMarkerImg,
+    [CUSTOM_MARKER_CLASS.emart]: customMarkerImage.emartMarkerImg,
+  }[placeName])
 
 // 지도에 마커를 표시하는 함수입니다
 const displayMarkerInfoWindow = (

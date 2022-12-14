@@ -3,12 +3,12 @@ import { CheckSquareFilled } from '@ant-design/icons'
 import { KeywordGroup, KeywordList, KeywordName } from './Keywords.styles'
 
 interface KeywordProps {
-  name: string
-  array: string[]
+  title: string
+  keyword: string[]
 }
 
-const Keywords: React.FC<KeywordProps> = ({ name, array }) => {
-  const listRef = useRef<HTMLLIElement[] | null[]>([])
+const Keywords: React.FC<KeywordProps> = ({ title, keyword }) => {
+  const listRef = useRef<{ [idx: number]: HTMLLIElement | null }>({})
 
   const toggleOn = (idx: number) => {
     listRef.current[idx]?.classList.toggle('on')
@@ -16,16 +16,16 @@ const Keywords: React.FC<KeywordProps> = ({ name, array }) => {
 
   return (
     <KeywordGroup>
-      <h3>{name}</h3>
+      <h3>{title}</h3>
       <ul>
-        {array.map((keyword, idx) => (
+        {keyword.map((item, idx) => (
           <KeywordList
-            key={idx}
+            key={item}
             ref={(el) => (listRef.current[idx] = el)}
             onClick={() => toggleOn(idx)}
           >
             <CheckSquareFilled />
-            <KeywordName>{keyword}</KeywordName>
+            <KeywordName>{item}</KeywordName>
           </KeywordList>
         ))}
       </ul>

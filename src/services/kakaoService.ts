@@ -1,9 +1,9 @@
 import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
-import GsImg from '../assets/convImg/gs.png'
 import star from '../assets/star.png'
 import pin from '../assets/pin.png'
 import phone from '../assets/phone.png'
 import funlogImg from '../assets/convImg/funlog.png'
+
 const { kakao } = window
 const infoWindow = new kakao.maps.InfoWindow({
   zIndex: 1,
@@ -11,6 +11,7 @@ const infoWindow = new kakao.maps.InfoWindow({
 
 const overlay = new kakao.maps.CustomOverlay({
   position: new kakao.maps.LatLng(37.54699, 127.09598),
+  zIndex: 1,
 })
 
 // 지도에 마커를 표시하는 함수입니다

@@ -21,20 +21,34 @@ const displayMarkerInfoWindow = (
   //  data에서 브랜드 이름을 빼내고 브랜드에 맞는 이미지를 찾습니다.
   const storeBrand = data.place_name.split(' ')[0]
   const markerImg = getMarkerImg(storeBrand)
+  const markerCenter = new kakao.maps.LatLng(+data.y, +data.x)
 
   // 마커를 생성하고 지도에 표시합니다
   const marker = new kakao.maps.Marker({
     map,
-    position: new kakao.maps.LatLng(+data.y, +data.x),
+    position: markerCenter,
     image: markerImg ?? customMarkerImage.funMarkerImg,
   })
   const name = String(data.place_name)
   const content = `<div style="padding:5px;font-size:12px;">${name}</div>`
+  const overlayContent = overlayContainer(name)
 
   // 마커에 클릭이벤트를 등록합니다
   kakao.maps.event.addListener(marker, 'click', function () {
+    overlay.setContent(overlayContent)
+    overlay.setPosition(markerCenter)
+    overlay.setMap(map)
+    map.panTo(markerCenter)
+  })
+
+  // 마커에 마우스오버 이벤트를 등록합니다
+  kakao.maps.event.addListener(marker, 'mouseover', () => {
     infoWindow.setContent(content)
     infoWindow.open(map, marker)
+  })
+  // 마커에 마우스아웃 이벤트를 등록합니다
+  kakao.maps.event.addListener(marker, 'mouseout', () => {
+    infoWindow.close()
   })
   return marker
 }

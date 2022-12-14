@@ -14,8 +14,18 @@ const List: React.FC<ListProps> = ({ placeName, lat, lng }) => {
   const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
 
+  const listClickHandler = () => {
+    if (mapApi) {
+      const content = kakaoService.overlayContainer(placeName)
+      kakaoService.overlay.setPosition(center)
+      kakaoService.overlay.setContent(content)
+      kakaoService.overlay.setMap(mapApi)
+      mapApi.panTo(center)
+    }
+  }
+
   return (
-    <ConBox>
+    <ConBox onClick={listClickHandler}>
       <Title>
         <h2>{placeName}</h2>
         <div className="star_box">

@@ -64,11 +64,35 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = (name: string) => {
-  return `<div class="overlay" >
-  custom overlay ${name}
-  <a href="https://www.naver.com">네이버로가기</a>
-</div>`
+const overlayContainer = (placeName: string) => {
+  const storeBrand = placeName.split(' ')[0]
+  const brandimg = getBrandImg(storeBrand)
+  return `
+  <div class="overlay" >
+     <header>
+      <img src=${brandimg ?? funlogImg} alt="brand logo"/>
+       <h2>${placeName}</h2>
+     </header>
+    <div class="star-review">
+      <div class="star">
+        <img src=${star} alt="star image"/>4.6
+      </div>
+      <div class="review-count">
+      리뷰 23개
+      </div> 
+    </div>
+    <div class="store-info">
+      <div class="address">
+      <img src=${pin} alt="pin image"/><p>서울시 어쩌구 무슨무슨로 2-13</p>
+      </div>
+      <div class="phone">
+      <img src=${phone} alt="phone image"/><p>02-525-2525</p>
+      </div>
+    </div>
+    <div class="detail-view">
+    <a href="http://localhost:3000/stores/1">상세보기</a>
+    </div>
+  </div>`
 }
 
 const kakaoServie = {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useAppDispatch } from '@stores/store'
 import { getData, removeData } from '@stores/map/mapSlice'
 import {
@@ -7,8 +7,11 @@ import {
   infoWindow,
   kakao,
 } from '@services/kakao'
-import { MapWrap, ControlBtns } from './MapContainer.styles'
+import { MapContext } from '@context/MapContext'
+
 import Map from '@components/Map/Map'
+
+import { MapWrap, ControlBtns } from './MapContainer.styles'
 
 interface MapPropsType {
   keyword: string
@@ -21,16 +24,14 @@ enum SearchType {
 
 const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   const dispatch = useAppDispatch()
+  const { setMapApi, setMarkers, deleteMarkers, mapApi } =
+    useContext(MapContext)
   const mapRef = useRef<HTMLDivElement | null>(null)
   // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
     lat: 37.54699,
     lng: 127.09598,
   })
-  // kakao map 객체 저장
-  const [mapApi, setMapApi] = useState<kakao.maps.Map | null>(null)
-  // 검색으로 생성된 마커 저장
-  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([])
 
   // 처음 들어왔을 때
   useEffect(() => {

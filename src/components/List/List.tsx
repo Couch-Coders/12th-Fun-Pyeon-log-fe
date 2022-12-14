@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import kakaoService from '@services/kakaoService'
+import { MapContext } from '@context/MapContext'
 import { StarFilled } from '@ant-design/icons'
 import { ConBox, Title, Content } from './List.styles'
 
 interface ListProps {
   placeName: string
+  lat: number
+  lng: number
 }
 
-const List: React.FC<ListProps> = ({ placeName }) => {
+const List: React.FC<ListProps> = ({ placeName, lat, lng }) => {
+  const { mapApi } = useContext(MapContext)
+  const center = new kakao.maps.LatLng(lat, lng)
+
   return (
     <ConBox>
       <Title>

@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-export const ReviewWrapper = styled.section`
+export const StoreWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 50px 0;
 `
-export const ReviewMapWrapper = styled.div`
+export const StoreMapWrapper = styled.div`
   margin-top: 20px;
   width: 80%;
   min-width: 1000px;

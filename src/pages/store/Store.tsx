@@ -1,11 +1,11 @@
-import { ReviewWrapper, ReviewMapWrapper } from './Review.styles'
+import { StoreWrapper, StoreMapWrapper } from './Store.styles'
 import React, { useState, useEffect, useRef } from 'react'
-import ReviewBasicInfo from '@components/Review/ReviewBasicInfo/ReviewBasicInfo'
-import ReviewList from '@components/Review/ReviewListContainer/ReviewListContainer'
+import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
+import ReviewList from '@components/StoreDisplay/ReviewListContainer/ReviewListContainer'
 import Map from '@components/Map/Map'
 import { displayMe } from '@services/kakao'
 
-const Review = () => {
+const Store = () => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
     lat: 37.54699,
@@ -27,14 +27,14 @@ const Review = () => {
   }, [])
 
   return (
-    <ReviewWrapper>
-      <ReviewBasicInfo />
+    <StoreWrapper>
+      <StoreBasicInfo />
       <ReviewList />
-      <ReviewMapWrapper>
+      <StoreMapWrapper>
         <Map ref={mapRef} />
-      </ReviewMapWrapper>
-    </ReviewWrapper>
+      </StoreMapWrapper>
+    </StoreWrapper>
   )
 }
 
-export default Review
+export default Store

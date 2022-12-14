@@ -7,9 +7,9 @@ import {
   ConvInfo,
   KeywordBox,
   StarPoint,
-} from './ReviewBasicInfo.styles'
+} from './StoreBasicInfo.styles'
 
-const ReviewBasicInfo = () => {
+const StoreBasicInfo = () => {
   return (
     <InfoContainer>
       <ConvImgWrapper>
@@ -55,4 +55,4 @@ const ReviewBasicInfo = () => {
   )
 }
 
-export default ReviewBasicInfo
+export default StoreBasicInfo

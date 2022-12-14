@@ -71,10 +71,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const map = new kakao.maps.Map(mapContainer, mapOption)
     setMapApi(map)
 
-    const myMaker = displayMe(map, center)
-    setMarkers((prevState) => {
-      return [...prevState, myMaker]
-    })
+    const myMarker = displayMe(map, center)
+    setMarkers(myMarker)
     searchStore(SearchType.CATEGORY, '', map)
   }
 
@@ -132,9 +130,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       const bounds = new kakao.maps.LatLngBounds()
       for (let i = 0; i < data.length; i++) {
         const marker = displayMarkerInfoWindow(data[i], map)
-        setMarkers((prevState) => {
-          return [...prevState, marker]
-        })
+        setMarkers(marker)
         bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
       }
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
@@ -152,25 +148,16 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
     if (mapApi) {
-      const myMaker = displayMe(mapApi, locPosition)
-      setMarkers((prevState) => {
-        return [...prevState, myMaker]
-      })
+      const myMarker = displayMe(mapApi, locPosition)
+      setMarkers(myMarker)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
   }
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = () => {
-    if (markers.length < 1) {
-      alert('No Marker in here')
-      return
-    }
-    markers.forEach((markerInfo) => {
-      markerInfo.setMap(null)
-    })
     infoWindow.close()
-    setMarkers([])
+    deleteMarkers()
   }
 
   const searchFromHereHandler = () => {

@@ -14,10 +14,10 @@ const BrandBox = () => {
     <div>
       <Title>브랜드</Title>
       <ul>
-        {brands.map((brand, idx) => (
+        {BRANDS.map((brand, idx) => (
           <BrandList
             ref={(el) => (brandRef.current[idx] = el)}
-            key={idx}
+            key={brand}
             onClick={() => onClick(idx)}
           >
             {brand}

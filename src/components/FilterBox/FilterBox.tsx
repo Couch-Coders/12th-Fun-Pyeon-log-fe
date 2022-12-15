@@ -1,8 +1,11 @@
-import React from 'react'
-import Brand from '@components/Brand/Brand'
-import KeywordBox from '@components/Keyword/KeywordBox'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import FunButton from '@styles/FunButton'
-import { FilterWrapper } from './FilterBox.styles'
+import Select from '@styles/Select/Select'
+import { RootState } from '@stores/store'
+import { sortData } from '@stores/map/mapSlice'
+import { BRANDS, FACILITIES, MOOD, PRODUCT } from '@utils/constants'
+import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 
 const Filter = () => {
   return (

@@ -1,23 +1,30 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { getUserThunk } from './authThunk'
-
-export interface UserType {
-  token: string
-  email: string
-  displayName: string
-}
-
-interface UserStateType {
-  user: UserType | null
-  loading: boolean
-  error: string
-}
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { UserStateType, UserType } from './authType'
+import AuthService from '@services/authService'
+import { AxiosError } from 'axios'
 
 const initialState: UserStateType = {
   user: null,
   loading: false,
   error: '',
 }
+
+export const getUserThunk = createAsyncThunk(
+  'authSlice/getUser',
+  async (token: string, thunkApi) => {
+    try {
+      const res = await AuthService.signIn({ token })
+      const displayName = res.data.split('@')[0]
+      return { email: res.data, token, displayName }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return thunkApi.rejectWithValue(error.message)
+      } else {
+        throw error
+      }
+    }
+  }
+)
 
 const authSlice = createSlice({
   name: 'user',

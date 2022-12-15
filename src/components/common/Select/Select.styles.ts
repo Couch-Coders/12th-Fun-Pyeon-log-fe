@@ -66,21 +66,24 @@ export const SelectBox = styled.div`
   }
 
   &.keyword {
+    margin-bottom: 20px;
     p {
-      text-align: right;
+      text-align: center;
       font-weight: 700;
       width: 10%;
-      margin-right: 15px;
+      margin-right: 10px;
     }
 
     ul {
       display: flex;
+      border-left: 1px solid ${(props) => props.theme.colors.checkBoxDesc};
+      padding-left: 20px;
       li {
         color: ${(props) => props.theme.colors.checkBoxDesc};
         border: 1px solid ${(props) => props.theme.colors.checkBoxDesc};
         border-radius: 5px;
         padding: 5px;
-        margin-right: 5px;
+        margin-right: 10px;
         cursor: pointer;
 
         &.on {

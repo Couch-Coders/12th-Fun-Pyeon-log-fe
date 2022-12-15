@@ -58,7 +58,11 @@ const Map = () => {
           </SortBtn>
         </ListTop>
 
-        {isFiltering ? <FilterBox /> : <ListBox />}
+        {isFiltering ? (
+          <FilterBox setIsFiltering={setIsFiltering} />
+        ) : (
+          <ListBox />
+        )}
       </ListView>
 
       <MapContainer keyword={keyword} />

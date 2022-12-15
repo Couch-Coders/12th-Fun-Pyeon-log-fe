@@ -33,7 +33,8 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
       markerInfo.setMap(null)
     })
     setNewMarkers([])
-  }, [newMarkers])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const value = {
     mapApi: map,

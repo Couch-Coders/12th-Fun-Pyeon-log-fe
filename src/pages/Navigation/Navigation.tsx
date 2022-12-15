@@ -32,8 +32,6 @@ const Navigation = () => {
     }
   }
 
-  console.log(user)
-
   return (
     <>
       <NavCon>

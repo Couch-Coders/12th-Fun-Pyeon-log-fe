@@ -30,3 +30,5 @@ export const BRANDS = [
   '미니스톱',
   '기타',
 ]
+
+export const STAR_COUNT = [0, 1, 2, 3, 4]

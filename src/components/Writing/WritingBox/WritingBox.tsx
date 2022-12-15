@@ -12,12 +12,33 @@ import {
   WritingBoxWrapper,
 } from './WritingBox.styles'
 
+interface ReviewType {
+  reviewContent: string
+  starCount: number
+  keywords: string[]
+}
+
 const WritingBox = () => {
   const navigate = useNavigate()
+  const [review, setReview] = useState<ReviewType>({
+    reviewContent: '',
+    starCount: 0,
+    keywords: [],
+  })
 
   const [starCount, setStarCount] = useState(0)
   const [selected, setSelected] = useState<string[]>([])
   const [reviewContent, setReviewContent] = useState('')
+
+  const submitReview = () => {
+    setReview({
+      ...review,
+      reviewContent,
+      starCount,
+      keywords: selected,
+    })
+    // console.log(review)
+  }
 
   return (
     <WritingBoxWrapper>
@@ -57,7 +78,7 @@ const WritingBox = () => {
           className="opposite"
           onClick={() => navigate('/')} // 추후 수정
         />
-        <FunButton name={'게시하기'} />
+        <FunButton name={'게시하기'} onClick={submitReview} />
       </BtnBox>
     </WritingBoxWrapper>
   )

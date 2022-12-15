@@ -30,7 +30,11 @@ export const BtnBox = styled.div`
   }
 `
 export const Keywords = styled.div`
-  width: 80%;
+  width: 85%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
   > div {
     display: flex;

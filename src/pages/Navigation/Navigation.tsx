@@ -31,6 +31,9 @@ const Navigation = () => {
       }
     }
   }
+
+  console.log(user)
+
   return (
     <>
       <NavCon>
@@ -47,10 +50,7 @@ const Navigation = () => {
         ) : user ? (
           <LogoutCon>
             <Avatar>
-              <img
-                src="https://lh3.googleusercontent.com/a/AEdFTp4oKPFW_6nqYPabxkYl1wZ8zvdbYIvb7Ndo7nJh=s96-c"
-                alt=""
-              />
+              <img src={user.imgUrl} alt="user avatar" />
             </Avatar>
             <p>{user.displayName}</p>
             <FunButton name={'Logout'} onClick={signOutHandler} />

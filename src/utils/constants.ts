@@ -32,3 +32,9 @@ export const BRANDS = [
 ]
 
 export const STAR_COUNT = [0, 1, 2, 3, 4]
+
+export const ITEMS = [
+  { title: '제품', keywordArray: PRODUCT },
+  { title: '분위기', keywordArray: MOOD },
+  { title: '편의시설', keywordArray: FACILITIES },
+]

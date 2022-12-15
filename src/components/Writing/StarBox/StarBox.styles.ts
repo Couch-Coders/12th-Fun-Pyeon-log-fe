@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 
 export const Stars = styled.div`
-  width: 20%;
+  width: 15%;
+  min-width: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  margin-right: 50px;
 
   p {
     font-weight: 700;

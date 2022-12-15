@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import Store from '@pages/store/Store'
 import { auth } from '@services/firebaseAuth'
 import { onAuthStateChanged } from 'firebase/auth'
-import { getUserThunk } from '@stores/auth/authThunk'
+import { getUserThunk } from '@stores/auth/authSlice'
 import { useAppDispatch } from '@stores/store'
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
       }
     })
     return unsubscribe
-  }, [])
+  }, [dispatch])
 
   return (
     <Routes>

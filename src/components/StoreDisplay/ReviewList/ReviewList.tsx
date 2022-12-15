@@ -7,13 +7,15 @@ import {
   ReviewWirter,
   ReviewEditButton,
 } from './ReviewList.styles'
+import { useSelector } from 'react-redux'
+import { RootState } from '@stores/store'
 
 interface ReviewType {
   reviewContent: string
-  createdDate: string
+  createdDate: Date
   starCount: number
   keywords: string[]
-  userId: number
+  userId: string
 }
 
 const ReviewList: React.FC<ReviewType> = ({

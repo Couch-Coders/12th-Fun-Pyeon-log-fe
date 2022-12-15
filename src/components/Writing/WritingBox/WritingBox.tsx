@@ -76,7 +76,7 @@ const WritingBox = () => {
         <FunButton
           name={'취소'}
           className="opposite"
-          onClick={() => navigate('/')} // 추후 수정
+          onClick={() => navigate(-1)}
         />
         <FunButton name={'게시하기'} onClick={submitReview} />
       </BtnBox>

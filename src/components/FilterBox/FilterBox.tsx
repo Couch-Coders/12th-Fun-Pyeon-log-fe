@@ -4,7 +4,7 @@ import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
 import { RootState } from '@stores/store'
 import { sortData } from '@stores/map/mapSlice'
-import { BRANDS, FACILITIES, MOOD, PRODUCT } from '@utils/constants'
+import { BRANDS, ITEMS } from '@utils/constants'
 import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 
 interface filterProps {
@@ -38,7 +38,7 @@ const Filter = ({ setIsFiltering }: filterProps) => {
       <div>
         <Title>브랜드</Title>
         <Select
-          keyword={BRANDS}
+          keywordArray={BRANDS}
           selected={selectBrand}
           setSelected={setSelectBrand}
           selectType={'brand'}
@@ -47,27 +47,19 @@ const Filter = ({ setIsFiltering }: filterProps) => {
 
       <KeywordGroup>
         <Title>키워드</Title>
-        <Select
-          title="제품"
-          keyword={PRODUCT}
-          selected={selectKeyword}
-          setSelected={setSelectKeyword}
-          selectType={'checkbox'}
-        />
-        <Select
-          title="분위기"
-          keyword={MOOD}
-          selected={selectKeyword}
-          setSelected={setSelectKeyword}
-          selectType={'checkbox'}
-        />
-        <Select
-          title="편의시설"
-          keyword={FACILITIES}
-          selected={selectKeyword}
-          setSelected={setSelectKeyword}
-          selectType={'checkbox'}
-        />
+
+        <>
+          {ITEMS.map((el) => (
+            <Select
+              key={el.title}
+              title={el.title}
+              keywordArray={el.keywordArray}
+              selected={selectKeyword}
+              setSelected={setSelectKeyword}
+              selectType={'checkbox'}
+            />
+          ))}
+        </>
       </KeywordGroup>
 
       <FunButton

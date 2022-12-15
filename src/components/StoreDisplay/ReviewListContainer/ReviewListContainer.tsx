@@ -8,6 +8,7 @@ import {
   NameNCount,
   ListContainer,
 } from './ReviewListContainer.styles'
+import { useNavigate } from 'react-router-dom'
 
 const reviewData = [
   {
@@ -86,6 +87,7 @@ const reviewData = [
 
 const ReviewListContainer = () => {
   const [reviews, setReviews] = useState(reviewData)
+  const navigate = useNavigate()
 
   return (
     <ReviewListWrapper>
@@ -98,7 +100,11 @@ const ReviewListContainer = () => {
           </div>
         </NameNCount>
         <div className="button">
-          <FunButton buttonType={BUTTON_TYPE_CLASSES.base} name={'작성하기'} />
+          <FunButton
+            buttonType={BUTTON_TYPE_CLASSES.base}
+            name={'작성하기'}
+            onClick={() => navigate('/write')} // 추후 확인
+          />
         </div>
       </ReviewTop>
       <ListContainer>

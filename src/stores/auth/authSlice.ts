@@ -13,9 +13,14 @@ export const getUserThunk = createAsyncThunk(
   'authSlice/getUser',
   async (token: string, thunkApi) => {
     try {
-      const res = await AuthService.signIn({ token })
-      const displayName = res.data.split('@')[0]
-      return { email: res.data, token, displayName }
+      const userData = await AuthService.signIn({ token })
+      const displayName = userData.email.split('@')[0]
+      return {
+        email: userData.email,
+        token,
+        displayName,
+        imgUrl: userData.userImageUrl,
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         return thunkApi.rejectWithValue(error.message)

@@ -43,6 +43,5 @@ const mapSlice = createSlice({
   },
 })
 
-// export { getMapThunk }
 export const { getData, removeData } = mapSlice.actions
 export default mapSlice.reducer

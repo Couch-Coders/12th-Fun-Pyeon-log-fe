@@ -21,4 +21,6 @@ const signOut = async ({ token }: SignInParam) => {
   return res
 }
 
-export const authService = { signIn, signOut }
+const AuthService = { signIn, signOut }
+
+export default AuthService

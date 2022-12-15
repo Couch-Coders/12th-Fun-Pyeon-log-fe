@@ -25,8 +25,9 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'preferred-import', 'prettier'],
+  plugins: ['react', 'preferred-import', 'prettier', 'react-hooks'],
   rules: {
+    'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/consistent-type-definitions': 'warn',

@@ -14,6 +14,16 @@ export const BaseBtn = styled.button`
   :hover {
     background-color: rgba(125, 83, 214, 0.8);
   }
+
+  &.opposite {
+    color: ${(props) => props.theme.colors.purple};
+    background-color: white;
+    border: 1px solid ${(props) => props.theme.colors.purple};
+
+    :hover {
+      background-color: rgba(125, 83, 214, 0.1);
+    }
+  }
 `
 
 export const GoogleSignInBtn = styled.button`

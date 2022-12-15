@@ -37,7 +37,7 @@ const WritingBox = () => {
       starCount,
       keywords: selected,
     })
-    // console.log(review)
+    console.log(review)
   }
 
   return (

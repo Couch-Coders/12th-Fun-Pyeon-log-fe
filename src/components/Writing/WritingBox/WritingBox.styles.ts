@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const WritingBoxWrapper = styled.div`
+export const WritingBoxWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 80%;

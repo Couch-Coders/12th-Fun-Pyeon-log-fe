@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export const Wrapper = styled.section`
+export const Wrapper = styled.article`
   display: flex;
   flex-direction: row;
 `
-export const ListView = styled.div`
+export const ListView = styled.section`
   position: relative;
   z-index: 2;
   width: 25vw;

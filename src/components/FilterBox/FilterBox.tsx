@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FunButton from '@styles/FunButton'
-import Select from '@styles/Select/Select'
+import Select from '@components/common/Select/Select'
 import { RootState } from '@stores/store'
 import { sortData } from '@stores/map/mapSlice'
 import { BRANDS, FACILITIES, MOOD, PRODUCT } from '@utils/constants'

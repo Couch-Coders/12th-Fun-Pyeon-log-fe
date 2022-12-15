@@ -28,7 +28,7 @@ function App() {
       <Route path="/" element={<Navigation />}>
         <Route path="/" element={<Main />} />
         <Route path="/stores/:storeId" element={<Store />} />
-        <Route path="/write" element={<Write />} />
+        <Route path="/stores/:storeId/write" element={<Write />} />
       </Route>
     </Routes>
   )

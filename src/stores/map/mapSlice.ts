@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 // import { getMapThunk } from './mapThunk'
-import { MapState } from './mapType'
+import { MapData, MapState } from './mapType'
 
 const initialState: MapState = {
   data: [],
@@ -21,6 +21,12 @@ const mapSlice = createSlice({
     },
     removeData: (state) => {
       state.data = []
+    },
+    sortData: (
+      state,
+      action: PayloadAction<kakao.maps.services.PlacesSearchResultItem[]>
+    ) => {
+      state.data = action.payload
     },
   },
   extraReducers(builder) {
@@ -43,5 +49,6 @@ const mapSlice = createSlice({
   },
 })
 
-export const { getData, removeData } = mapSlice.actions
+// export { getMapThunk }
+export const { getData, removeData, sortData } = mapSlice.actions
 export default mapSlice.reducer

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const MapWrap = styled.div`
+export const MapWrap = styled.section`
   position: relative;
   width: 100%;
 

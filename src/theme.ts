@@ -15,7 +15,7 @@ const colors = {
   checkBox: '#ECECEC',
   checkBoxDesc: '#969696',
 
-  keywordBg: 'rgba(125, 83, 214, 0.07)',
+  reviewkeywordBg: 'rgba(125, 83, 214, 0.07)',
   reviewKeyword: '#8A8A8A',
   reviewBg: '#F5F5F5',
 }

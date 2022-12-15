@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ReviewListWrapper = styled.div`
+export const ReviewListWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 80%;

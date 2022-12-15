@@ -26,7 +26,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'preferred-import', 'prettier', 'react-hooks'],
+  plugins: ['react', 'preferred-import', 'prettier', 'react-hooks'],
   rules: {
+    'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'react-hooks/exhaustive-deps': 'warn',

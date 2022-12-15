@@ -8,6 +8,7 @@ import {
   NameNCount,
   ListContainer,
 } from './ReviewListContainer.styles'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '@stores/store'
 import { ReviewType } from '@stores/review/reviewType'
@@ -88,7 +89,17 @@ const reviewData = [
 ]
 
 const ReviewListContainer = () => {
+  const { storeId } = useParams()
   const [reviewList, setReviewList] = useState(reviewData)
+  const navigate = useNavigate()
+
+  const moveToWrite = () => {
+    if (storeId) {
+      navigate(`/stores/${storeId}/write`)
+    } else {
+      navigate('/')
+    }
+  }
 
   // 서버 통신이 되면 바뀔 부분
   // const [reviewList, setReviewList] = useState<ReviewType[]>([])
@@ -111,7 +122,11 @@ const ReviewListContainer = () => {
           </div>
         </NameNCount>
         <div className="button">
-          <FunButton buttonType={BUTTON_TYPE_CLASSES.base} name={'작성하기'} />
+          <FunButton
+            buttonType={BUTTON_TYPE_CLASSES.base}
+            name={'작성하기'}
+            onClick={moveToWrite}
+          />
         </div>
       </ReviewTop>
       <ListContainer>

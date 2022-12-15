@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const InfoContainer = styled.div`
+export const InfoContainer = styled.section`
   display: flex;
   position: relative;
   height: 170px;

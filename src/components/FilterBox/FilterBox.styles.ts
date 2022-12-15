@@ -19,3 +19,15 @@ export const Title = styled.h2`
   margin-left: 10px;
   margin-bottom: 10px;
 `
+
+export const KeywordGroup = styled.div`
+  > div {
+    padding: 5px 15px;
+    margin-bottom: 5px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+`

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { googleSignOut } from '@services/firebaseAuth'
-import { authService } from '@services/authService'
+import AuthService from '@services/authService'
 import { RootState } from '@stores/store'
 import { setUser } from '@stores/auth/authSlice'
 
@@ -23,7 +23,7 @@ const Navigation = () => {
     googleSignOut()
     if (user) {
       try {
-        await authService.signOut({ token: user.token })
+        await AuthService.signOut({ token: user.token })
         console.log('signOutSuccess')
         dispatch(setUser(null))
       } catch (e) {

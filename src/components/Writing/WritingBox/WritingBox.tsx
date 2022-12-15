@@ -4,7 +4,7 @@ import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
-import { FACILITIES, MOOD, PRODUCT } from '@utils/constants'
+import { ITEMS } from '@utils/constants'
 import {
   BtnBox,
   KeyBox,
@@ -46,27 +46,18 @@ const WritingBox = () => {
         <StarBox setStarCount={setStarCount} />
 
         <Keywords>
-          <Select
-            title={'제품'}
-            keyword={PRODUCT}
-            selected={selected}
-            setSelected={setSelected}
-            selectType={'keyword'}
-          />
-          <Select
-            title={'분위기'}
-            keyword={MOOD}
-            selected={selected}
-            setSelected={setSelected}
-            selectType={'keyword'}
-          />
-          <Select
-            title={'편의시설'}
-            keyword={FACILITIES}
-            selected={selected}
-            setSelected={setSelected}
-            selectType={'keyword'}
-          />
+          <>
+            {ITEMS.map((el) => (
+              <Select
+                key={el.title}
+                title={el.title}
+                keywordArray={el.keywordArray}
+                selected={selected}
+                setSelected={setSelected}
+                selectType={'keyword'}
+              />
+            ))}
+          </>
         </Keywords>
       </KeyBox>
 

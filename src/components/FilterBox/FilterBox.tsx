@@ -7,11 +7,14 @@ import { sortData } from '@stores/map/mapSlice'
 import { BRANDS, FACILITIES, MOOD, PRODUCT } from '@utils/constants'
 import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 
-const Filter = () => {
+interface filterProps {
+  setIsFiltering: (isFiltering: boolean) => void
+}
+
+const Filter = ({ setIsFiltering }: filterProps) => {
   const [selectBrand, setSelectBrand] = useState<string[]>([])
   const [selectKeyword, setSelectKeyword] = useState<string[]>([])
 
-  /*
   const mapData = useSelector((state: RootState) => state.map.data)
   const dispatch = useDispatch()
 
@@ -27,8 +30,8 @@ const Filter = () => {
     const newData = mapData.filter(isIncluded)
     console.log(newData)
     dispatch(sortData(newData))
+    setIsFiltering(false)
   }
-  */
 
   return (
     <FilterWrapper>
@@ -70,7 +73,7 @@ const Filter = () => {
       <FunButton
         name={'찾아보기'}
         style={{ width: '100%', minHeight: '30px', fontWeight: '700' }}
-        // onClick={() => sortStore()}
+        onClick={() => sortStore()}
       />
     </FilterWrapper>
   )

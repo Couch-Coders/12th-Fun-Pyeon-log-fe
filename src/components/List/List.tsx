@@ -8,9 +8,10 @@ interface ListProps {
   placeName: string
   lat: number
   lng: number
+  storeId: string
 }
 
-const List: React.FC<ListProps> = ({ placeName, lat, lng }) => {
+const List: React.FC<ListProps> = ({ placeName, lat, lng, storeId }) => {
   const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
 

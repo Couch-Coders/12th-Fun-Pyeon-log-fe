@@ -4,7 +4,7 @@ import { SelectBox } from './Select.styles'
 
 interface KeywordProps {
   title?: string
-  keyword: string[]
+  keywordArray: string[]
   selected: string[]
   setSelected: (selected: string[]) => void
   selectType: 'brand' | 'keyword' | 'checkbox'
@@ -12,7 +12,7 @@ interface KeywordProps {
 
 const Select: React.FC<KeywordProps> = ({
   title,
-  keyword,
+  keywordArray,
   selected,
   setSelected,
   selectType,
@@ -32,7 +32,7 @@ const Select: React.FC<KeywordProps> = ({
     <SelectBox className={selectType}>
       {title ? <p>{title}</p> : ''}
       <ul>
-        {keyword.map((item) => (
+        {keywordArray.map((item) => (
           <li
             key={item}
             onClick={() => {

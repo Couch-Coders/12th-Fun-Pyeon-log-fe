@@ -18,13 +18,9 @@ const StarBox = ({ setStarCount }: StarProps) => {
     setClicked(clickState)
   }
 
-  const count = () => {
+  useEffect(() => {
     const score = clicked.filter(Boolean).length
     setStarCount(score)
-  }
-
-  useEffect(() => {
-    count()
   }, [clicked])
 
   return (

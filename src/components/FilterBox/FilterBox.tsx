@@ -33,17 +33,36 @@ const Filter = ({ setIsFiltering }: filterProps) => {
   }
 
   const sortStore = () => {
-    console.log(selectBrand)
-    console.log(selectKeyword)
+    console.log(selectBrand, selectKeyword)
 
-    const isIncluded = (data: kakao.maps.services.PlacesSearchResultItem) => {
-      for (let idx = 0; idx < selectBrand.length; idx++) {
-        if (data.place_name.includes(selectBrand[idx])) return true
-      }
+    deleteMarkers()
+    let newData: kakao.maps.services.PlacesSearchResultItem[]
+
+    if (selectBrand.length === 0) {
+      newData = mapList
+    } else if (selectBrand.includes('기타')) {
+      newData = mapData.filter((data) =>
+        selectBrand.includes(data.place_name.split(' ')[0])
+      )
+      const etcData = mapData.filter(
+        (data) =>
+          !['GS25', 'CU', '세븐일레븐', '이마트24', '미니스톱'].includes(
+            data.place_name.split(' ')[0]
+          )
+      )
+      newData = [...newData, ...etcData]
+    } else {
+      newData = mapData.filter((data) =>
+        selectBrand.includes(data.place_name.split(' ')[0])
+      )
     }
-    const newData = mapData.filter(isIncluded)
-    console.log(newData)
+
     dispatch(sortData(newData))
+    sortCallBack(newData)
+
+    sessionStorage.setItem('brand', JSON.stringify(selectBrand))
+    sessionStorage.setItem('keyword', JSON.stringify(selectKeyword))
+
     setIsFiltering(false)
   }
 

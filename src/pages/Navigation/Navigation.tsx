@@ -11,6 +11,7 @@ import Spinner from '@styles/Spinner'
 import FunButton from '@styles/FunButton'
 import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
+import { AxiosError } from 'axios'
 
 const Navigation = () => {
   const navigate = useNavigate()
@@ -26,8 +27,11 @@ const Navigation = () => {
         await AuthService.signOut({ token: user.token })
         console.log('signOutSuccess')
         dispatch(setUser(null))
-      } catch (e) {
-        console.log(e)
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          console.log('Axios Error ', error.message)
+        }
+        console.log(error)
       }
     }
   }

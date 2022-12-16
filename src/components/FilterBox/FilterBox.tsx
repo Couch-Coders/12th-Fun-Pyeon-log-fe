@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
@@ -6,12 +6,15 @@ import { RootState } from '@stores/store'
 import { sortData } from '@stores/map/mapSlice'
 import { BRANDS, ITEMS } from '@utils/constants'
 import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
+import kakaoServie from '@services/kakaoService'
+import { MapContext } from '@context/MapContext'
 
 interface filterProps {
   setIsFiltering: (isFiltering: boolean) => void
 }
 
 const Filter = ({ setIsFiltering }: filterProps) => {
+  const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
   const [selectBrand, setSelectBrand] = useState<string[]>([])
   const [selectKeyword, setSelectKeyword] = useState<string[]>([])
 

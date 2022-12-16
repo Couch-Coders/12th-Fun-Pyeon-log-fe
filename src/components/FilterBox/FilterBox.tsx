@@ -11,7 +11,7 @@ interface filterProps {
   setIsFiltering: (isFiltering: boolean) => void
 }
 
-const Filter = ({ setIsFiltering }: filterProps) => {
+const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const [selectBrand, setSelectBrand] = useState<string[]>([])
   const [selectKeyword, setSelectKeyword] = useState<string[]>([])
 

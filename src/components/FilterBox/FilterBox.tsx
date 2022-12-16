@@ -17,6 +17,15 @@ const Filter = ({ setIsFiltering }: filterProps) => {
 
   const mapData = useSelector((state: RootState) => state.map.data)
   const dispatch = useDispatch()
+  // 위 서치로 받아온 data를 다루는 콜백함수
+  const sortCallBack = (data: kakao.maps.services.PlacesSearchResultItem[]) => {
+    if (mapApi) {
+      for (let i = 0; i < data.length; i++) {
+        const marker = kakaoServie.displayMarkerInfoWindow(data[i], mapApi)
+        setMarkers(marker)
+      }
+    }
+  }
 
   const sortStore = () => {
     console.log(selectBrand)

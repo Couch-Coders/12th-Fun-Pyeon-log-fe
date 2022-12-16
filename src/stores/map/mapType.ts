@@ -12,6 +12,7 @@ export interface MapData {
 
 export interface MapState {
   data: kakao.maps.services.PlacesSearchResultItem[]
+  sortData: kakao.maps.services.PlacesSearchResultItem[]
   loading: boolean
   error: boolean
 }

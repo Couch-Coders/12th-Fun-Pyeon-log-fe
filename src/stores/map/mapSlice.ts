@@ -4,6 +4,7 @@ import { MapData, MapState } from './mapType'
 
 const initialState: MapState = {
   data: [],
+  sortData: [],
   loading: false,
   error: false,
 }

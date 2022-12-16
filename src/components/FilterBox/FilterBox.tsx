@@ -15,11 +15,13 @@ interface filterProps {
 
 const Filter = ({ setIsFiltering }: filterProps) => {
   const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
-  const [selectBrand, setSelectBrand] = useState<string[]>([])
-  const [selectKeyword, setSelectKeyword] = useState<string[]>([])
-
   const mapData = useSelector((state: RootState) => state.map.data)
   const dispatch = useDispatch()
+
+  const [selectBrand, setSelectBrand] = useState<string[]>([])
+  const [selectKeyword, setSelectKeyword] = useState<string[]>([])
+  const [mapList, setMapList] = useState(mapData)
+
   // 위 서치로 받아온 data를 다루는 콜백함수
   const sortCallBack = (data: kakao.maps.services.PlacesSearchResultItem[]) => {
     if (mapApi) {

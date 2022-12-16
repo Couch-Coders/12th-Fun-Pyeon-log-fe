@@ -53,18 +53,23 @@ const ReviewListContainer = () => {
           />
         </div>
       </ReviewTop>
-      <ListContainer>
-        {reviewList.map((review) => (
-          <ReviewList
-            key={review.reviewId}
-            starCount={review.starCount}
-            createdDate={review.createdDate}
-            keywords={review.keywords}
-            reviewContent={review.reviewContent}
-            userId={review.user}
-          />
-        ))}
-      </ListContainer>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <ListContainer>
+          {reviewList.map((review) => (
+            <ReviewList
+              key={review.reviewEntryNo}
+              reviewId={review.reviewEntryNo}
+              starCount={review.starCount}
+              createdDate={review.createdDate}
+              keywords={review.keywords}
+              reviewContent={review.reviewContent}
+              userId={review.userEmail}
+            />
+          ))}
+        </ListContainer>
+      )}
     </ReviewListWrapper>
   )
 }

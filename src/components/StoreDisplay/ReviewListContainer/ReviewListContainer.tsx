@@ -29,15 +29,11 @@ const ReviewListContainer = () => {
     }
   }
 
-  // 서버 통신이 되면 바뀔 부분
-  // const [reviewList, setReviewList] = useState<ReviewType[]>([])
-  // const reviews = useSelector((state: RootState) => state.review.reviews)
-
-  // useEffect(() => {
-  //   if (reviews.length) {
-  //     setReviewList(reviews)
-  //   }
-  // }, [reviews])
+  useEffect(() => {
+    if (reviews.length) {
+      setReviewList(reviews)
+    }
+  }, [reviews])
 
   return (
     <ReviewListWrapper>

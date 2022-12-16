@@ -12,11 +12,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '@stores/store'
 import { ReviewType } from '@stores/review/reviewType'
+import Spinner from '@styles/Spinner'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
-  const [reviewList, setReviewList] = useState(reviewData)
   const navigate = useNavigate()
+  const [reviewList, setReviewList] = useState<ReviewType[]>([])
+  const reviews = useSelector((state: RootState) => state.review.reviews)
+  const loading = useSelector((state: RootState) => state.review.loading)
 
   const moveToWrite = () => {
     if (storeId) {

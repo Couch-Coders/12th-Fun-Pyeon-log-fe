@@ -61,7 +61,6 @@ const authSlice = createSlice({
       (state, action: PayloadAction<UserType>) => {
         state.user = action.payload
         state.loading = false
-        state.error = ''
       }
     )
     builder.addCase(getUserThunk.rejected, (state, action) => {
@@ -74,7 +73,6 @@ const authSlice = createSlice({
     builder.addCase(logOutUserThunk.fulfilled, (state) => {
       state.user = null
       state.loading = false
-      state.error = ''
     })
     builder.addCase(logOutUserThunk.rejected, (state, action) => {
       state.loading = false

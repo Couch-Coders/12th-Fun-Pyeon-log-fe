@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useAppDispatch } from '@stores/store'
-import { getData, removeData } from '@stores/map/mapSlice'
+import { getData, removeData, sortData } from '@stores/map/mapSlice'
 import kakaoServie from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 
@@ -121,6 +121,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     if (status === kakao.maps.services.Status.OK) {
       // mapData dispatch -> 나중에 서버와 연결한 데이터를 받아올 action
       dispatch(getData(data))
+      dispatch(sortData(data))
       // 새로 지도의 영역 설정
       const bounds = new kakao.maps.LatLngBounds()
       for (let i = 0; i < data.length; i++) {

@@ -66,6 +66,15 @@ const Filter = ({ setIsFiltering }: filterProps) => {
     setIsFiltering(false)
   }
 
+  const sortInit = () => {
+    dispatch(sortData(mapList))
+    sortCallBack(mapData)
+
+    setSelectBrand([])
+    setSelectKeyword([])
+
+    sessionStorage.clear()
+  }
   return (
     <FilterWrapper>
       <FunButton

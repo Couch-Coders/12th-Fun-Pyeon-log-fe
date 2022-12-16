@@ -1,38 +1,27 @@
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { googleSignOut } from '@services/firebaseAuth'
-import AuthService from '@services/authService'
-import { RootState } from '@stores/store'
-import { setUser } from '@stores/auth/authSlice'
+import { RootState, useAppDispatch } from '@stores/store'
+import { logOutUserThunk } from '@stores/auth/authSlice'
 
 import LoginModal from '@components/LoginModal/LoginModal'
 import Spinner from '@styles/Spinner'
 import FunButton from '@styles/FunButton'
 import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
 import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
-import { AxiosError } from 'axios'
 
 const Navigation = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)
   const loading = useSelector((state: RootState) => state.user.loading)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   const signOutHandler = async () => {
-    googleSignOut()
     if (user) {
-      try {
-        await AuthService.signOut({ token: user.token })
-        console.log('signOutSuccess')
-        dispatch(setUser(null))
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.log('Axios Error ', error.message)
-        }
-        console.log(error)
-      }
+      googleSignOut()
+      dispatch(logOutUserThunk())
     }
   }
 

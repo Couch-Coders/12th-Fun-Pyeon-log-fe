@@ -7,10 +7,11 @@ interface SignInParam {
 }
 
 const signIn = async ({ token }: SignInParam) => {
+  console.log(token)
   const response = await axios.get('/users/me', {
     headers: { Authorization: `${token}` },
   })
-
+  console.log(response)
   return response.data
 }
 

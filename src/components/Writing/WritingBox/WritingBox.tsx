@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
@@ -12,32 +12,39 @@ import {
   WritingBoxWrapper,
 } from './WritingBox.styles'
 
-interface ReviewType {
-  reviewContent: string
-  starCount: number
-  keywords: string[]
-}
+import { RootState, useAppDispatch } from '@stores/store'
+import { createReview } from '@stores/review/reivewSlice'
+import { useSelector } from 'react-redux'
+import Spinner from '@styles/Spinner'
+import { WriteType } from '@stores/review/reviewType'
 
 const WritingBox = () => {
   const navigate = useNavigate()
-  const [review, setReview] = useState<ReviewType>({
-    reviewContent: '',
-    starCount: 0,
-    keywords: [],
-  })
+  const dispatch = useAppDispatch()
+  const { storeId } = useParams()
+  const loading = useSelector((state: RootState) => state.review.loading)
 
   const [starCount, setStarCount] = useState(0)
   const [selected, setSelected] = useState<string[]>([])
   const [reviewContent, setReviewContent] = useState('')
 
   const submitReview = () => {
-    setReview({
-      ...review,
-      reviewContent,
-      starCount,
-      keywords: selected,
-    })
-    console.log(review)
+    if (reviewContent.length === 0) {
+      return alert('리뷰를 작성해주세요')
+    }
+    if (storeId) {
+      const reviewData: WriteType = {
+        reviewContent,
+        starCount,
+        keywords: selected,
+      }
+      console.log(reviewData)
+      dispatch(createReview({ reviewData, storeId })).then(() => navigate(-1))
+    }
+  }
+  // 로딩 UI 수정
+  if (loading) {
+    return <Spinner />
   }
 
   return (
@@ -69,6 +76,7 @@ const WritingBox = () => {
           className="opposite"
           onClick={() => navigate(-1)}
         />
+
         <FunButton name={'게시하기'} onClick={submitReview} />
       </BtnBox>
     </WritingBoxWrapper>

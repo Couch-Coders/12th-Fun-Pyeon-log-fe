@@ -75,6 +75,17 @@ const Filter = ({ setIsFiltering }: filterProps) => {
 
     sessionStorage.clear()
   }
+
+  useEffect(() => {
+    const brandData = sessionStorage.getItem('brand')
+    const keywordData = sessionStorage.getItem('keyword')
+
+    if (!brandData || !keywordData) return
+
+    setSelectBrand(JSON.parse(brandData))
+    setSelectKeyword(JSON.parse(keywordData))
+  }, [])
+
   return (
     <FilterWrapper>
       <FunButton

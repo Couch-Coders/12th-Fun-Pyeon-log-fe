@@ -15,11 +15,9 @@ const signIn = async ({ token }: SignInParam) => {
   return response.data
 }
 
-const signOut = async ({ token }: SignInParam) => {
-  const response = await axios.delete('/users/me', {
-    headers: { Authorization: `${token}` },
-  })
-  return response.data
+const signOut = async () => {
+  const response = await axios.delete('/users/me')
+  return response
 }
 
 const AuthService = { signIn, signOut }

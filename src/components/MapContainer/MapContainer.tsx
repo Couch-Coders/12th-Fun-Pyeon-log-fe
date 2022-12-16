@@ -161,6 +161,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
     if (mapApi) {
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
+
+    sessionStorage.clear()
   }
 
   return (

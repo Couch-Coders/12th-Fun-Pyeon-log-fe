@@ -35,6 +35,12 @@ const Filter = ({ setIsFiltering }: filterProps) => {
 
   return (
     <FilterWrapper>
+      <FunButton
+        name={'초기화'}
+        onClick={sortInit}
+        className="initBtn opposite"
+      />
+
       <div>
         <Title>브랜드</Title>
         <Select

@@ -17,7 +17,6 @@ function App() {
       if (user) {
         const token: string = await user.getIdToken()
         dispatch(getUserThunk(token))
-        console.log(user)
       }
     })
     return unsubscribe

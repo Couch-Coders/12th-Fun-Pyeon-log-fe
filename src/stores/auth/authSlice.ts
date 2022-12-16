@@ -31,18 +31,30 @@ export const getUserThunk = createAsyncThunk(
   }
 )
 
+export const logOutUserThunk = createAsyncThunk(
+  'authSlice/logOutUser',
+  async (_, thunkApi) => {
+    try {
+      const userData = await AuthService.signOut()
+      console.log(userData)
+      return
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return thunkApi.rejectWithValue(error.message)
+      } else {
+        throw error
+      }
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setUser: (state, action: PayloadAction<UserType | null>) => {
-      state.user = action.payload
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(getUserThunk.pending, (state, action) => {
       state.loading = true
-      state.error = ''
     })
     builder.addCase(
       getUserThunk.fulfilled,
@@ -56,8 +68,19 @@ const authSlice = createSlice({
       state.loading = false
       state.error = action.error.message ?? ''
     })
+    builder.addCase(logOutUserThunk.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(logOutUserThunk.fulfilled, (state) => {
+      state.user = null
+      state.loading = false
+      state.error = ''
+    })
+    builder.addCase(logOutUserThunk.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message ?? ''
+    })
   },
 })
 
-export const { setUser } = authSlice.actions
 export default authSlice.reducer

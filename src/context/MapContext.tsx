@@ -28,13 +28,12 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     setNewMarkers((prev) => [...prev, newMarker])
   }, [])
 
-  const deleteMarkers = useCallback(() => {
+  const deleteMarkers = () => {
     newMarkers.forEach((markerInfo) => {
       markerInfo.setMap(null)
     })
     setNewMarkers([])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
 
   const value = {
     mapApi: map,

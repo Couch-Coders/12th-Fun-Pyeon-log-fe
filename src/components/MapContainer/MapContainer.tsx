@@ -154,7 +154,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
         searchStore(SearchType.KEYWORD, keyword, mapApi)
       }
     }
-  }, [mapApi, keyword, removeMarkerNInfo, searchStore])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapApi, keyword, searchStore])
 
   //  지도를 사용자의 위치로 이동하는 함수
   const moveToCenter = () => {

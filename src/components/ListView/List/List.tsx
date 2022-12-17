@@ -17,7 +17,7 @@ const List: React.FC<ListProps> = ({ placeName, lat, lng, storeId }) => {
 
   const listClickHandler = () => {
     if (mapApi) {
-      const content = kakaoService.overlayContainer(placeName)
+      const content = kakaoService.overlayContainer(placeName, storeId)
       kakaoService.overlay.setPosition(center)
       kakaoService.overlay.setContent(content)
       kakaoService.overlay.setMap(mapApi)

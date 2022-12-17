@@ -13,11 +13,20 @@ const initialState: ConvState = {
 // 검색된 전체 편의점에 대한 정보 가져오기
 export const fetchAllStores = createAsyncThunk(
   'convStore/fetchAllStores',
-  async (storeIds: string[], thunkApi) => {
+  async (mapData: kakao.maps.services.PlacesSearchResultItem[], thunkApi) => {
     try {
+      const storeIds = mapData.map((result) => result.id)
       const stores = await StoreService.getAllStore(storeIds)
-      console.log(stores)
-      return stores
+
+      const storeData = stores.map((data) => {
+        const matchStore = mapData.filter(
+          (store) => store.id === data.storeId
+        )[0]
+
+        return { ...data, ...matchStore }
+      })
+
+      return storeData
     } catch (error) {
       if (error instanceof AxiosError) {
         return thunkApi.rejectWithValue(error.message)

@@ -32,7 +32,7 @@ const displayMarkerInfoWindow = (
   })
   const name = String(data.place_name)
   const content = `<div style="padding:5px;font-size:12px;">${name}</div>`
-  const overlayContent = overlayContainer(name)
+  const overlayContent = overlayContainer(name, data.id)
 
   // 마커에 클릭이벤트를 등록합니다
   kakao.maps.event.addListener(marker, 'click', function () {
@@ -79,7 +79,7 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = (placeName: string, stroeId?: string) => {
+const overlayContainer = (placeName: string, stroeId: string) => {
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -105,7 +105,7 @@ const overlayContainer = (placeName: string, stroeId?: string) => {
       </div>
     </div>
     <div class="detail-view">
-    <a href="http://localhost:3000/stores/${stroeId ?? '1'}">상세보기</a>
+    <a href="http://localhost:3000/stores/${stroeId}">상세보기</a>
     </div>
   </div>`
 }

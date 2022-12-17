@@ -10,6 +10,7 @@ import { useAppDispatch } from '@stores/store'
 import { getData, removeData } from '@stores/map/mapSlice'
 import KakaoServie from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
+import { fetchAllStores } from '@stores/conv/convSlice'
 
 import Map from '@components/Map/Map'
 
@@ -46,8 +47,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
         // mapData dispatch -> 나중에 서버와 연결한 데이터를 받아올 action
         dispatch(getData(data))
         // 위에꺼 말고 서버와 통신해서 편의점 정보 받아올 액션
-        // const storeIds = data.map((result) => result.id)
-        // dispatch(fetchAllStores(storeIds))
+
+        dispatch(fetchAllStores(data))
         // 새로 지도의 영역 설정
         const bounds = new kakao.maps.LatLngBounds()
         for (let i = 0; i < data.length; i++) {
@@ -112,7 +113,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       setMarkers(myMarker)
       searchStore(SearchType.CATEGORY, '', map)
     },
-    [searchStore, setMarkers, setMapApi]
+    [setMarkers, setMapApi, searchStore]
   )
 
   // 처음 들어왔을 때

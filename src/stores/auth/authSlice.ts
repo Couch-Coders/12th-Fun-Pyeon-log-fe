@@ -35,9 +35,7 @@ export const logOutUserThunk = createAsyncThunk(
   'authSlice/logOutUser',
   async (_, thunkApi) => {
     try {
-      const userData = await AuthService.signOut()
-      console.log(userData)
-      return
+      return await AuthService.signOut()
     } catch (error) {
       if (error instanceof AxiosError) {
         return thunkApi.rejectWithValue(error.message)

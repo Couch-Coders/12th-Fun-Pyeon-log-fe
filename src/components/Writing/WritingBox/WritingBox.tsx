@@ -32,14 +32,21 @@ const WritingBox = () => {
     if (reviewContent.length === 0) {
       return alert('리뷰를 작성해주세요')
     }
+
     if (storeId) {
       const reviewData: WriteType = {
         reviewContent,
         starCount,
         keywords: selected,
       }
-      console.log(reviewData)
-      dispatch(createReview({ reviewData, storeId })).then(() => navigate(-1))
+
+      if (isEdit && reviewId) {
+        dispatch(updateReview({ reviewData, storeId, reviewId })).then(() =>
+          navigate(-1)
+        )
+      } else {
+        dispatch(createReview({ reviewData, storeId })).then(() => navigate(-1))
+      }
     }
   }
   // 로딩 UI 수정

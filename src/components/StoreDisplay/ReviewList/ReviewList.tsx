@@ -8,30 +8,43 @@ import {
   ReviewEditButton,
 } from './ReviewList.styles'
 import { useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
+import { RootState, useAppDispatch } from '@stores/store'
+import { deleteReview, fetchAllReviews } from '@stores/review/reivewSlice'
+import { useParams } from 'react-router-dom'
 
 interface ReviewType {
+  reviewId: number
   reviewContent: string
-  createdDate: Date
+  createdDate: string
   starCount: number
   keywords: string[]
   userId: string
 }
 
 const ReviewList: React.FC<ReviewType> = ({
+  reviewId,
   createdDate,
   reviewContent,
   starCount,
   keywords,
   userId,
 }) => {
-  const user = useSelector((state: RootState) => state.user.user)
+  const { storeId } = useParams()
   const [isWideView, setIsWideView] = useState<boolean>(false)
-  // createdDate 가 UTC 기준으로 들어올 경우 값을 조정해야함
-  const date = createdDate.toISOString().split('T')[0]
-
+  const dispatch = useAppDispatch()
+  const user = useSelector((state: RootState) => state.user.user)
+  const date = createdDate.split('T')[0]
+  const displayName = userId.split('@')[0]
   const onWideViewHandler = () => {
     setIsWideView(!isWideView)
+  }
+
+  const deleteRevieHandler = () => {
+    if (storeId) {
+      dispatch(deleteReview({ storeId, reviewId })).then(() => {
+        dispatch(fetchAllReviews(storeId))
+      })
+    }
   }
 
   return (
@@ -41,7 +54,7 @@ const ReviewList: React.FC<ReviewType> = ({
           <button>
             <EditOutlined />
           </button>
-          <button>
+          <button onClick={deleteRevieHandler}>
             <DeleteOutlined />
           </button>
         </ReviewEditButton>
@@ -67,7 +80,7 @@ const ReviewList: React.FC<ReviewType> = ({
         </KeywordBox>
 
         <ReviewWirter>
-          <p className="user">편의점 매니아</p>
+          <p className="user">{displayName}</p>
           <p className="day">{date}</p>
         </ReviewWirter>
       </ListInfo>

@@ -1,10 +1,10 @@
 export interface ReviewType {
-  reviewId: string
+  reviewEntryNo: number
   reviewContent: string
   starCount: number
-  createdDate: Date
+  createdDate: string
   storeId: string
-  user: string
+  userEmail: string
   keywords: string[]
 }
 
@@ -12,4 +12,10 @@ export interface ReviewState {
   reviews: ReviewType[]
   loading: boolean
   error: string
+}
+
+export interface WriteType {
+  reviewContent: string
+  starCount: number
+  keywords: string[]
 }

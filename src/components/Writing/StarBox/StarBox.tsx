@@ -7,7 +7,7 @@ interface StarProps {
   setStarCount: (starCount: number) => void
 }
 
-const StarBox = ({ setStarCount }: StarProps) => {
+const StarBox: React.FC<StarProps> = ({ setStarCount }) => {
   const [clicked, setClicked] = useState([false, false, false, false, false])
 
   const clickStar = (idx: number) => {

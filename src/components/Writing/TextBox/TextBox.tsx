@@ -5,7 +5,7 @@ interface TextProps {
   setReviewContent: (reviewContent: string) => void
 }
 
-const TextBox = ({ setReviewContent }: TextProps) => {
+const TextBox: React.FC<TextProps> = ({ setReviewContent }) => {
   return (
     <TextWrapper>
       <p>

@@ -19,7 +19,7 @@ const Edit = () => {
       setOriginReview(selectedReview)
     } else {
       alert('잘못된 접근입니다.')
-      navigate('/')
+      navigate('/', { replace: true })
     }
   }, [])
 

@@ -17,16 +17,22 @@ import {
   WritingBoxWrapper,
 } from './WritingBox.styles'
 
+interface EditProps {
+  isEdit?: boolean
+  originReview?: ReviewType
+}
 
-const WritingBox = () => {
+const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { storeId } = useParams()
   const loading = useSelector((state: RootState) => state.review.loading)
 
-  const [starCount, setStarCount] = useState(0)
+  const [starCount, setStarCount] = useState<number>(0)
   const [selected, setSelected] = useState<string[]>([])
-  const [reviewContent, setReviewContent] = useState('')
+  const [reviewContent, setReviewContent] = useState<string>('')
+
+  const reviewId = originReview?.reviewEntryNo
 
   const submitReview = () => {
     if (reviewContent.length === 0) {
@@ -66,7 +72,7 @@ const WritingBox = () => {
   return (
     <WritingBoxWrapper>
       <KeyBox>
-        <StarBox setStarCount={setStarCount} />
+        <StarBox starCount={starCount} setStarCount={setStarCount} />
 
         <Keywords>
           <>
@@ -84,7 +90,10 @@ const WritingBox = () => {
         </Keywords>
       </KeyBox>
 
-      <TextBox setReviewContent={setReviewContent} />
+      <TextBox
+        reviewContent={reviewContent}
+        setReviewContent={setReviewContent}
+      />
 
       <BtnBox>
         <FunButton
@@ -93,7 +102,10 @@ const WritingBox = () => {
           onClick={() => navigate(-1)}
         />
 
-        <FunButton name={'게시하기'} onClick={submitReview} />
+        <FunButton
+          name={isEdit ? '수정하기' : '게시하기'}
+          onClick={submitReview}
+        />
       </BtnBox>
     </WritingBoxWrapper>
   )

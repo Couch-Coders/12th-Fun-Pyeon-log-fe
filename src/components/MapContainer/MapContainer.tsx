@@ -62,7 +62,7 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
         console.log(`error ${status}`)
       }
     },
-    [dispatch, setMarkers]
+    []
   )
 
   // 검색 함수 kakao map을 인자로 받아와 작동한다.

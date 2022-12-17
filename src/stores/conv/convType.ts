@@ -7,6 +7,7 @@ export interface ConvType extends kakao.maps.services.PlacesSearchResultItem {
 
 export interface ConvState {
   stores: ConvType[]
+  sortedStores: ConvType[]
   selectedStore: ConvType | null
   loading: boolean
   error: string

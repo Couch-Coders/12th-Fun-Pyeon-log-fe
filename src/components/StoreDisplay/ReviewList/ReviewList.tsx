@@ -35,6 +35,7 @@ const ReviewList: React.FC<ReviewType> = ({
 }) => {
   const { storeId } = useParams()
   const [isWideView, setIsWideView] = useState<boolean>(false)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)
   const date = createdDate.split('T')[0]
@@ -52,11 +53,16 @@ const ReviewList: React.FC<ReviewType> = ({
     }
   }
 
+  const editHandler = () => {
+    dispatch(selectReview(reviewId))
+    navigate(`edit/${reviewId}`)
+  }
+
   return (
     <ListContainer isWide={isWideView}>
       {userId === user?.email && (
         <ReviewEditButton>
-          <button>
+          <button onClick={editHandler}>
             <EditOutlined />
           </button>
           <button onClick={deleteRevieHandler}>

@@ -49,6 +49,15 @@ const WritingBox = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (isEdit && originReview) {
+      setStarCount(originReview.starCount)
+      setSelected(originReview.keywords)
+      setReviewContent(originReview.reviewContent)
+    }
+  }, [isEdit, originReview])
+
   // 로딩 UI 수정
   if (loading) {
     return <Spinner />

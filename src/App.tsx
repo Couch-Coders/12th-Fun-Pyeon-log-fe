@@ -8,6 +8,7 @@ import { auth } from '@services/firebaseAuth'
 import { onAuthStateChanged } from 'firebase/auth'
 import { getUserThunk } from '@stores/auth/authSlice'
 import { useAppDispatch } from '@stores/store'
+import Edit from '@pages/Edit/Edit'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/stores/:storeId" element={<Store />} />
         <Route path="/stores/:storeId/write" element={<Write />} />
+        <Route path="/stores/:storeId/edit/:reviewId" element={<Edit />} />
       </Route>
     </Routes>
   )

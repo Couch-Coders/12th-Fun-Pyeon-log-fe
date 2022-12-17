@@ -9,8 +9,12 @@ import {
 } from './ReviewList.styles'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@stores/store'
-import { deleteReview, fetchAllReviews } from '@stores/review/reivewSlice'
-import { useParams } from 'react-router-dom'
+import {
+  deleteReview,
+  fetchAllReviews,
+  selectReview,
+} from '@stores/review/reivewSlice'
+import { useNavigate, useParams } from 'react-router-dom'
 
 interface ReviewType {
   reviewId: number

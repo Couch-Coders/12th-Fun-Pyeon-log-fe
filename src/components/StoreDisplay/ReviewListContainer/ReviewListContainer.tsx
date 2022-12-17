@@ -20,6 +20,7 @@ const ReviewListContainer = () => {
   const [reviewList, setReviewList] = useState<ReviewType[]>([])
   const reviews = useSelector((state: RootState) => state.review.reviews)
   const loading = useSelector((state: RootState) => state.review.loading)
+  const user = useSelector((state: RootState) => state.user.user)
 
   const moveToWrite = () => {
     if (storeId) {
@@ -45,13 +46,15 @@ const ReviewListContainer = () => {
             <p>{reviewList.length}</p>
           </div>
         </NameNCount>
-        <div className="button">
-          <FunButton
-            buttonType={BUTTON_TYPE_CLASSES.base}
-            name={'작성하기'}
-            onClick={moveToWrite}
-          />
-        </div>
+        {user && (
+          <div className="button">
+            <FunButton
+              buttonType={BUTTON_TYPE_CLASSES.base}
+              name={'작성하기'}
+              onClick={moveToWrite}
+            />
+          </div>
+        )}
       </ReviewTop>
       {loading ? (
         <Spinner />

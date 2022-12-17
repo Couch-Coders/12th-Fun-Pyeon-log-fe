@@ -13,7 +13,7 @@ export const WritingBoxWrapper = styled.section`
 `
 export const KeyBox = styled.div`
   width: 100%;
-  height: 250px;
+  min-height: 250px;
   background-color: ${(props) => props.theme.colors.reviewkeywordBg};
   border-radius: 10px;
   padding: 20px;

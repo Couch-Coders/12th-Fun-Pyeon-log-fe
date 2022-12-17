@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import FunButton from '@styles/FunButton'
+import { useSelector } from 'react-redux'
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
+import Spinner from '@styles/Spinner'
+import FunButton from '@styles/FunButton'
+import { RootState, useAppDispatch } from '@stores/store'
+import { createReview, updateReview } from '@stores/review/reivewSlice'
+import { ReviewType, WriteType } from '@stores/review/reviewType'
 import { ITEMS } from '@utils/constants'
 import {
   BtnBox,
@@ -12,11 +17,6 @@ import {
   WritingBoxWrapper,
 } from './WritingBox.styles'
 
-import { RootState, useAppDispatch } from '@stores/store'
-import { createReview } from '@stores/review/reivewSlice'
-import { useSelector } from 'react-redux'
-import Spinner from '@styles/Spinner'
-import { WriteType } from '@stores/review/reviewType'
 
 const WritingBox = () => {
   const navigate = useNavigate()

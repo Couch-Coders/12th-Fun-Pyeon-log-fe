@@ -40,6 +40,7 @@ const ReviewList: React.FC<ReviewType> = ({
   }
 
   const deleteRevieHandler = () => {
+    window.confirm('리뷰를 삭제 하시겠습니까?')
     if (storeId) {
       dispatch(deleteReview({ storeId, reviewId })).then(() => {
         dispatch(fetchAllReviews(storeId))

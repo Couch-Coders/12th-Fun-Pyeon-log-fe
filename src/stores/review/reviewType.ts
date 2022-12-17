@@ -10,6 +10,7 @@ export interface ReviewType {
 
 export interface ReviewState {
   reviews: ReviewType[]
+  selectedReview?: ReviewType | null
   loading: boolean
   error: string
 }

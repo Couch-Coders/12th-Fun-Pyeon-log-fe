@@ -1,3 +1,4 @@
+import { ConvType } from '@stores/conv/convType'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -7,7 +8,7 @@ const API_URL = '/stores/'
 const getAllStore = async (storeId: string[]) => {
   const params = { id: [...storeId] }
 
-  const response = await axios.get(API_URL, {
+  const response = await axios.get<ConvType[]>(API_URL, {
     params,
     paramsSerializer: {
       serialize: ({ id }) => qs.stringify({ id }, { arrayFormat: 'repeat' }),

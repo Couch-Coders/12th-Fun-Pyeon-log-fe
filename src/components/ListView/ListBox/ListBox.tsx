@@ -3,16 +3,16 @@ import List from '@components/ListView/List/List'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@stores/store'
 import { ListWrapper, SortBtns, ResultBox } from './ListBox.styles'
+import { ConvType } from '@stores/conv/convType'
 
 const ListBox = () => {
-  const mapData = useSelector((state: RootState) => state.map.data)
-  const sortData = useSelector((state: RootState) => state.map.sortData)
-  const [mapList, setMapList] =
-    useState<kakao.maps.services.PlacesSearchResultItem[]>(mapData)
+  const stores = useSelector((state: RootState) => state.conv.stores)
+  const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
+  const [convList, setConvList] = useState<ConvType[]>(stores)
 
   useEffect(() => {
-    setMapList(sortData)
-  }, [sortData])
+    setConvList(sortedConv)
+  }, [sortedConv])
 
   return (
     <ListWrapper>
@@ -23,15 +23,19 @@ const ListBox = () => {
       </SortBtns>
 
       <ResultBox>
-        {mapList.length === 0 ? (
+        {convList.length === 0 ? (
           <p className="noResult">검색 결과가 없습니다.</p>
         ) : (
-          mapList.map((map) => (
+          convList.map((store) => (
             <List
-              key={map.id}
-              placeName={map.place_name}
-              lat={+map.y}
-              lng={+map.x}
+              key={store.id}
+              starCount={store.starCount}
+              keywords={store.keywordList}
+              reviewCount={store.reviewCount}
+              placeName={store.place_name}
+              lat={+store.y}
+              lng={+store.x}
+              storeId={store.id}
             />
           ))
         )}

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { googleSignOut } from '@services/firebaseAuth'
-import { authService } from '@services/authService'
-import { RootState } from '@stores/store'
-import { setUser } from '@stores/auth/authSlice'
+import { RootState, useAppDispatch } from '@stores/store'
+import { logOutUserThunk } from '@stores/auth/authSlice'
 
 import LoginModal from '@components/LoginModal/LoginModal'
 import Spinner from '@styles/Spinner'
@@ -14,23 +13,19 @@ import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
 
 const Navigation = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)
   const loading = useSelector((state: RootState) => state.user.loading)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   const signOutHandler = async () => {
-    googleSignOut()
     if (user) {
-      try {
-        await authService.signOut({ token: user.token })
-        console.log('signOutSuccess')
-        dispatch(setUser(null))
-      } catch (e) {
-        console.log(e)
-      }
+      googleSignOut()
+      dispatch(logOutUserThunk())
     }
+    navigate('/', { replace: true })
   }
+
   return (
     <>
       <NavCon>
@@ -47,10 +42,7 @@ const Navigation = () => {
         ) : user ? (
           <LogoutCon>
             <Avatar>
-              <img
-                src="https://lh3.googleusercontent.com/a/AEdFTp4oKPFW_6nqYPabxkYl1wZ8zvdbYIvb7Ndo7nJh=s96-c"
-                alt=""
-              />
+              <img src={user.imgUrl} alt="user avatar" />
             </Avatar>
             <p>{user.displayName}</p>
             <FunButton name={'Logout'} onClick={signOutHandler} />

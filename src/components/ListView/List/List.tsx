@@ -8,15 +8,26 @@ interface ListProps {
   placeName: string
   lat: number
   lng: number
+  storeId: string
+  starCount: number
+  keywords: string[]
+  reviewCount: number
 }
 
-const List: React.FC<ListProps> = ({ placeName, lat, lng }) => {
+const List: React.FC<ListProps> = ({
+  placeName,
+  lat,
+  lng,
+  storeId,
+  starCount,
+  reviewCount,
+  keywords,
+}) => {
   const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
-
   const listClickHandler = () => {
     if (mapApi) {
-      const content = kakaoService.overlayContainer(placeName)
+      const content = kakaoService.overlayContainer(placeName, storeId)
       kakaoService.overlay.setPosition(center)
       kakaoService.overlay.setContent(content)
       kakaoService.overlay.setMap(mapApi)
@@ -30,24 +41,22 @@ const List: React.FC<ListProps> = ({ placeName, lat, lng }) => {
         <h2>{placeName}</h2>
         <div className="star_box">
           <StarFilled />
-          <span>4.7</span>
+          <span>{starCount}</span>
         </div>
       </Title>
 
       <Content>
         <ul>
-          <li>
-            <span>제품이 다양해요</span>
-          </li>
-          <li>
-            <span>트렌디한 상품이 많아요</span>
-          </li>
-          <li>
-            <span>접근성이 좋아요</span>
-          </li>
+          {keywords
+            .filter((_, idx) => idx < 3)
+            .map((keyword, idx) => (
+              <li key={idx}>
+                <span>{keyword}</span>
+              </li>
+            ))}
         </ul>
 
-        <span className="review">리뷰 40개</span>
+        <span className="review">리뷰 {reviewCount}개</span>
       </Content>
     </ConBox>
   )

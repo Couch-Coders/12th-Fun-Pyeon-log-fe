@@ -30,7 +30,7 @@ const Select: React.FC<KeywordProps> = ({
 
   return (
     <SelectBox className={selectType}>
-      {title ? <p>{title}</p> : ''}
+      {title && <p>{title}</p>}
       <ul>
         {keywordArray.map((item) => (
           <li
@@ -40,7 +40,7 @@ const Select: React.FC<KeywordProps> = ({
             }}
             className={selected.includes(item) ? 'on' : ''}
           >
-            {selectType === 'checkbox' ? <CheckSquareFilled /> : ''}
+            {selectType === 'checkbox' && <CheckSquareFilled />}
             <span className="desc">{item}</span>
           </li>
         ))}

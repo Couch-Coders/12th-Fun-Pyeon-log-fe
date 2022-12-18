@@ -3,27 +3,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
 import { RootState } from '@stores/store'
-import { sortData } from '@stores/map/mapSlice'
+import { setSortStores } from '@stores/conv/convSlice'
 import { BRANDS, ITEMS } from '@utils/constants'
 import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 import kakaoServie from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
+import { ConvType } from '@stores/conv/convType'
 
 interface filterProps {
   setIsFiltering: (isFiltering: boolean) => void
 }
 
-const Filter = ({ setIsFiltering }: filterProps) => {
+const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
-  const mapData = useSelector((state: RootState) => state.map.data)
+  const stores = useSelector((state: RootState) => state.conv.stores)
   const dispatch = useDispatch()
-
   const [selectBrand, setSelectBrand] = useState<string[]>([])
   const [selectKeyword, setSelectKeyword] = useState<string[]>([])
-  const [mapList, setMapList] = useState(mapData)
+  const [convList, setConvList] = useState(stores)
 
   // 위 서치로 받아온 data를 다루는 콜백함수
-  const sortCallBack = (data: kakao.maps.services.PlacesSearchResultItem[]) => {
+  const sortCallBack = (data: ConvType[]) => {
     if (mapApi) {
       for (let i = 0; i < data.length; i++) {
         const marker = kakaoServie.displayMarkerInfoWindow(data[i], mapApi)
@@ -33,18 +33,16 @@ const Filter = ({ setIsFiltering }: filterProps) => {
   }
 
   const sortStore = () => {
-    console.log(selectBrand, selectKeyword)
-
     deleteMarkers()
-    let newData: kakao.maps.services.PlacesSearchResultItem[]
+    let newData: ConvType[]
 
     if (selectBrand.length === 0) {
-      newData = mapList
+      newData = convList
     } else if (selectBrand.includes('기타')) {
-      newData = mapData.filter((data) =>
+      newData = stores.filter((data) =>
         selectBrand.includes(data.place_name.split(' ')[0])
       )
-      const etcData = mapData.filter(
+      const etcData = stores.filter(
         (data) =>
           !['GS25', 'CU', '세븐일레븐', '이마트24', '미니스톱'].includes(
             data.place_name.split(' ')[0]
@@ -52,12 +50,13 @@ const Filter = ({ setIsFiltering }: filterProps) => {
       )
       newData = [...newData, ...etcData]
     } else {
-      newData = mapData.filter((data) =>
+      newData = stores.filter((data) =>
         selectBrand.includes(data.place_name.split(' ')[0])
       )
     }
+    console.log(newData)
 
-    dispatch(sortData(newData))
+    dispatch(setSortStores(newData))
     sortCallBack(newData)
 
     sessionStorage.setItem('brand', JSON.stringify(selectBrand))
@@ -67,8 +66,8 @@ const Filter = ({ setIsFiltering }: filterProps) => {
   }
 
   const sortInit = () => {
-    dispatch(sortData(mapList))
-    sortCallBack(mapData)
+    dispatch(setSortStores(convList))
+    sortCallBack(stores)
 
     setSelectBrand([])
     setSelectKeyword([])

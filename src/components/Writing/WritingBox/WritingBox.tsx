@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import FunButton from '@styles/FunButton'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
+import Spinner from '@styles/Spinner'
+import FunButton from '@styles/FunButton'
+import { RootState, useAppDispatch } from '@stores/store'
+import { createReview, updateReview } from '@stores/review/reivewSlice'
+import { ReviewType, WriteType } from '@stores/review/reviewType'
 import { ITEMS } from '@utils/constants'
 import {
   BtnBox,
@@ -12,38 +17,62 @@ import {
   WritingBoxWrapper,
 } from './WritingBox.styles'
 
-interface ReviewType {
-  reviewContent: string
-  starCount: number
-  keywords: string[]
+interface EditProps {
+  isEdit?: boolean
+  originReview?: ReviewType
 }
 
-const WritingBox = () => {
+const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
   const navigate = useNavigate()
-  const [review, setReview] = useState<ReviewType>({
-    reviewContent: '',
-    starCount: 0,
-    keywords: [],
-  })
+  const dispatch = useAppDispatch()
+  const { storeId } = useParams()
+  const loading = useSelector((state: RootState) => state.review.loading)
 
-  const [starCount, setStarCount] = useState(0)
+  const [starCount, setStarCount] = useState<number>(0)
   const [selected, setSelected] = useState<string[]>([])
-  const [reviewContent, setReviewContent] = useState('')
+  const [reviewContent, setReviewContent] = useState<string>('')
+
+  const reviewId = originReview?.reviewEntryNo
 
   const submitReview = () => {
-    setReview({
-      ...review,
-      reviewContent,
-      starCount,
-      keywords: selected,
-    })
-    console.log(review)
+    if (reviewContent.length === 0) {
+      return alert('리뷰를 작성해주세요')
+    }
+
+    if (storeId) {
+      const reviewData: WriteType = {
+        reviewContent,
+        starCount,
+        keywords: selected,
+      }
+
+      if (isEdit && reviewId) {
+        dispatch(updateReview({ reviewData, storeId, reviewId })).then(() =>
+          navigate(-1)
+        )
+      } else {
+        dispatch(createReview({ reviewData, storeId })).then(() => navigate(-1))
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (isEdit && originReview) {
+      setStarCount(originReview.starCount)
+      setSelected(originReview.keywords)
+      setReviewContent(originReview.reviewContent)
+    }
+  }, [isEdit, originReview])
+
+  // 로딩 UI 수정
+  if (loading) {
+    return <Spinner />
   }
 
   return (
     <WritingBoxWrapper>
       <KeyBox>
-        <StarBox setStarCount={setStarCount} />
+        <StarBox starCount={starCount} setStarCount={setStarCount} />
 
         <Keywords>
           <>
@@ -61,7 +90,10 @@ const WritingBox = () => {
         </Keywords>
       </KeyBox>
 
-      <TextBox setReviewContent={setReviewContent} />
+      <TextBox
+        reviewContent={reviewContent}
+        setReviewContent={setReviewContent}
+      />
 
       <BtnBox>
         <FunButton
@@ -69,7 +101,11 @@ const WritingBox = () => {
           className="opposite"
           onClick={() => navigate(-1)}
         />
-        <FunButton name={'게시하기'} onClick={submitReview} />
+
+        <FunButton
+          name={isEdit ? '수정하기' : '게시하기'}
+          onClick={submitReview}
+        />
       </BtnBox>
     </WritingBoxWrapper>
   )

@@ -25,8 +25,6 @@ const ReviewListContainer = () => {
   const moveToWrite = () => {
     if (storeId) {
       navigate(`/stores/${storeId}/write`)
-    } else {
-      navigate('/')
     }
   }
 
@@ -46,15 +44,14 @@ const ReviewListContainer = () => {
             <p>{reviewList.length}</p>
           </div>
         </NameNCount>
-        {user && (
-          <div className="button">
-            <FunButton
-              buttonType={BUTTON_TYPE_CLASSES.base}
-              name={'작성하기'}
-              onClick={moveToWrite}
-            />
-          </div>
-        )}
+        <div className="button">
+          <FunButton
+            buttonType={BUTTON_TYPE_CLASSES.base}
+            name={'작성하기'}
+            className={user ? '' : 'disabled'}
+            onClick={moveToWrite}
+          />
+        </div>
       </ReviewTop>
       {loading ? (
         <Spinner />

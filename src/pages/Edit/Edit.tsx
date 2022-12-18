@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
 import WritingBox from '@components/Writing/WritingBox/WritingBox'
 import { ReviewType } from '@stores/review/reviewType'
@@ -8,6 +8,7 @@ import { RootState } from '@stores/store'
 import { StoreWrapper } from '@pages/store/Store.styles'
 
 const Edit = () => {
+  const { storeId } = useParams()
   const navigate = useNavigate()
   const [originReview, setOriginReview] = useState<ReviewType>()
   const selectedReview = useSelector(
@@ -17,9 +18,9 @@ const Edit = () => {
   useEffect(() => {
     if (selectedReview) {
       setOriginReview(selectedReview)
-    } else {
+    } else if (storeId) {
       alert('잘못된 접근입니다.')
-      navigate('/', { replace: true })
+      navigate(`/stores/${storeId}`)
     }
   }, [])
 

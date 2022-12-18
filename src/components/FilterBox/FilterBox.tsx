@@ -32,8 +32,7 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
     }
   }
 
-  const sortStore = () => {
-    deleteMarkers()
+  const sortBrand = () => {
     let newData: ConvType[]
 
     if (selectBrand.length === 0) {
@@ -54,10 +53,33 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
         selectBrand.includes(data.place_name.split(' ')[0])
       )
     }
-    console.log(newData)
+    return newData
+  }
 
-    dispatch(setSortStores(newData))
-    sortCallBack(newData)
+  const sortKeyword = (newData: ConvType[]) => {
+    let sortResult
+
+    if (selectKeyword.length === 0) {
+      sortResult = newData
+    } else {
+      sortResult = newData.filter((data) =>
+        data.keywordList.some((keyword) => selectKeyword.includes(keyword))
+      )
+    }
+
+    return sortResult
+  }
+
+  const sortStore = () => {
+    deleteMarkers()
+
+    const newData = sortBrand()
+    const sortResult = sortKeyword(newData)
+
+    dispatch(setSortStores(sortResult))
+    sortCallBack(sortResult)
+
+    // console.log(sortResult)
 
     sessionStorage.setItem('brand', JSON.stringify(selectBrand))
     sessionStorage.setItem('keyword', JSON.stringify(selectKeyword))

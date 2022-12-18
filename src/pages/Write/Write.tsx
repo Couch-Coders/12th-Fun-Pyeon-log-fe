@@ -4,16 +4,17 @@ import WritingBox from '@components/Writing/WritingBox/WritingBox'
 import { StoreWrapper } from '@pages/store/Store.styles'
 import { useSelector } from 'react-redux'
 import { RootState } from '@stores/store'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Write = () => {
+  const { storeId } = useParams()
   const user = useSelector((state: RootState) => state.user.user)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!user) {
-      alert('잘못된 접근입니다.')
-      navigate('/', { replace: true })
+    if (!user && storeId) {
+      alert('로그인 후 이용 가능합니다.')
+      navigate(`/stores/${storeId}`)
     }
   }, [])
 

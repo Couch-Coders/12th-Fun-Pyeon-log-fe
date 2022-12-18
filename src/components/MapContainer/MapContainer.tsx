@@ -69,6 +69,9 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   // 검색 함수 kakao map을 인자로 받아와 작동한다.
   const searchStore = useCallback(
     (searchType: SearchType, searchTerm: string, mapApi: kakao.maps.Map) => {
+      // 펼쳐진 오버레이 삭제
+      KakaoServie.overlay.setMap(null)
+
       const ps = new kakao.maps.services.Places()
       const lat = mapApi.getCenter().getLat()
       const lng = mapApi.getCenter().getLng()

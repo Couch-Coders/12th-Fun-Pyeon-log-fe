@@ -4,6 +4,7 @@ import miniMarker from '../assets/brandMaker/ministopMaker.png'
 import sevenMarker from '../assets/brandMaker/sevenMaker.png'
 import emartMarker from '../assets/brandMaker/emartMaker.png'
 import funMarker from '../assets/brandMaker/funlogMaker.png'
+import myMarker from '../assets/brandMaker/myMarker.svg'
 import gsImg from '../assets/convImg/gs.png'
 import cuImg from '../assets/convImg/cu.png'
 import emartImg from '../assets/convImg/emart.png'
@@ -21,8 +22,8 @@ export enum CUSTOM_MARKER_CLASS {
 // 사용자 개인 마커 샘플이미지
 export const customMarkerImage = {
   myMarkerImg: new kakao.maps.MarkerImage(
-    'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-    new kakao.maps.Size(31, 35)
+    myMarker,
+    new kakao.maps.Size(20, 20)
   ),
   gsMarkerImg: new kakao.maps.MarkerImage(
     GsMarker,

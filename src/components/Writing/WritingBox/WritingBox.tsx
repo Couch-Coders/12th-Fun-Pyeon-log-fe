@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import { useSelector } from 'react-redux'
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
@@ -10,6 +11,8 @@ import { RootState, useAppDispatch } from '@stores/store'
 import { createReview, updateReview } from '@stores/review/reivewSlice'
 import { ReviewType, WriteType } from '@stores/review/reviewType'
 import { ITEMS } from '@utils/constants'
+import FunButton from '@styles/FunButton'
+
 import {
   BtnBox,
   KeyBox,
@@ -26,7 +29,6 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { storeId } = useParams()
-  const loading = useSelector((state: RootState) => state.review.loading)
 
   const [starCount, setStarCount] = useState<number>(0)
   const [selected, setSelected] = useState<string[]>([])
@@ -68,6 +70,7 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
   if (loading) {
     return <Spinner />
   }
+
 
   return (
     <WritingBoxWrapper>

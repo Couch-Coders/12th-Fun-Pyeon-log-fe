@@ -54,7 +54,8 @@ const MapContainer = () => {
 
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
-        KakaoServie.displayMyLocation(map, newLatLan)
+        const myMarker = KakaoServie.displayMyLocation(map, newLatLan)
+        setMarkers(myMarker)
 
         dispatch(fetchAllStores({ mapData: data, map }))
       } else {
@@ -110,11 +111,9 @@ const MapContainer = () => {
       const map = new kakao.maps.Map(mapContainer, mapOption)
       setMapApi(map)
 
-      const myMarker = KakaoServie.displayMyLocation(map, center)
-      setMarkers(myMarker)
       searchStore(SearchType.CATEGORY, '', map)
     },
-    [setMarkers, setMapApi, searchStore]
+    [setMapApi, searchStore]
   )
 
   // 처음 들어왔을 때

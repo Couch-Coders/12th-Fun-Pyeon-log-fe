@@ -7,18 +7,19 @@ interface SignInParam {
 }
 
 const signIn = async ({ token }: SignInParam) => {
-  const res = await axios.get('/users/me', {
+  console.log(token)
+  const response = await axios.get('/users/me', {
     headers: { Authorization: `${token}` },
   })
-
-  return res
+  console.log(response)
+  return response.data
 }
 
-const signOut = async ({ token }: SignInParam) => {
-  const res = await axios.delete('/users/me', {
-    headers: { Authorization: `${token}` },
-  })
-  return res
+const signOut = async () => {
+  const response = await axios.delete('/users/me')
+  return response
 }
 
-export const authService = { signIn, signOut }
+const AuthService = { signIn, signOut }
+
+export default AuthService

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useCallback, useState } from 'react'
 
 interface MapContextType {
   mapApi: kakao.maps.Map | null
@@ -20,12 +20,14 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
   const [map, setMap] = useState<kakao.maps.Map | null>(null)
   const [newMarkers, setNewMarkers] = useState<kakao.maps.Marker[]>([])
 
-  const setMapApi = (newMap: kakao.maps.Map) => {
+  const setMapApi = useCallback((newMap: kakao.maps.Map) => {
     setMap(newMap)
-  }
-  const setMarkers = (newMarker: kakao.maps.Marker) => {
+  }, [])
+
+  const setMarkers = useCallback((newMarker: kakao.maps.Marker) => {
     setNewMarkers((prev) => [...prev, newMarker])
-  }
+  }, [])
+
   const deleteMarkers = () => {
     newMarkers.forEach((markerInfo) => {
       markerInfo.setMap(null)

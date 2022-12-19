@@ -7,13 +7,15 @@ import {
   ReviewWirter,
   ReviewEditButton,
 } from './ReviewList.styles'
+import { useSelector } from 'react-redux'
+import { RootState } from '@stores/store'
 
 interface ReviewType {
   reviewContent: string
-  createdDate: string
+  createdDate: Date
   starCount: number
   keywords: string[]
-  userId: number
+  userId: string
 }
 
 const ReviewList: React.FC<ReviewType> = ({
@@ -23,7 +25,10 @@ const ReviewList: React.FC<ReviewType> = ({
   keywords,
   userId,
 }) => {
+  const user = useSelector((state: RootState) => state.user.user)
   const [isWideView, setIsWideView] = useState<boolean>(false)
+  // createdDate 가 UTC 기준으로 들어올 경우 값을 조정해야함
+  const date = createdDate.toISOString().split('T')[0]
 
   const onWideViewHandler = () => {
     setIsWideView(!isWideView)
@@ -31,7 +36,7 @@ const ReviewList: React.FC<ReviewType> = ({
 
   return (
     <ListContainer isWide={isWideView}>
-      {userId === 1 && (
+      {userId === user?.email && (
         <ReviewEditButton>
           <button>
             <EditOutlined />
@@ -63,7 +68,7 @@ const ReviewList: React.FC<ReviewType> = ({
 
         <ReviewWirter>
           <p className="user">편의점 매니아</p>
-          <p className="day">{createdDate}</p>
+          <p className="day">{date}</p>
         </ReviewWirter>
       </ListInfo>
     </ListContainer>

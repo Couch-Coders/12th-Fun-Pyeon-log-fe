@@ -6,7 +6,7 @@ import Store from '@pages/store/Store'
 import Write from '@pages/Write/Write'
 import { auth } from '@services/firebaseAuth'
 import { onAuthStateChanged } from 'firebase/auth'
-import { getUserThunk } from '@stores/auth/authThunk'
+import { getUserThunk } from '@stores/auth/authSlice'
 import { useAppDispatch } from '@stores/store'
 
 function App() {
@@ -17,11 +17,10 @@ function App() {
       if (user) {
         const token: string = await user.getIdToken()
         dispatch(getUserThunk(token))
-        console.log(user)
       }
     })
     return unsubscribe
-  }, [])
+  }, [dispatch])
 
   return (
     <Routes>

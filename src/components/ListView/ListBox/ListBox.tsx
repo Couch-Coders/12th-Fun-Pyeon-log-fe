@@ -24,6 +24,7 @@ const ListBox = () => {
               placeName={map.place_name}
               lat={+map.y}
               lng={+map.x}
+              storeId={map.id}
             />
           ))
         )}

@@ -5,7 +5,6 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
-import axios from 'axios'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -21,18 +20,6 @@ const app = initializeApp(firebaseConfig)
 export const auth = getAuth()
 const provider = new GoogleAuthProvider()
 
-export const googleSignIn = async () => {
-  const res = await signInWithPopup(auth, provider)
-  return res
-  // const token: string = await res.user.getIdToken()
-  // console.log(token)
-  // const res2 = await axios.delete('/users', {
-  //   headers: { Authorization: `${token}` },
-  // })
-  // console.log(res2)
-}
+export const googleSignIn = async () => await signInWithPopup(auth, provider)
 
-export const googleSignOut = async () => {
-  const res = await signOut(auth)
-  console.log(res)
-}
+export const googleSignOut = async () => await signOut(auth)

@@ -36,4 +36,10 @@ export const GoogleSignInBtn = styled.button`
   border-radius: 5px;
   padding: 15px 5px;
   cursor: pointer;
+  transition: all 0.5s;
+
+  :hover {
+    color: white;
+    background-color: ${(props) => props.theme.colors.purple};
+  }
 `

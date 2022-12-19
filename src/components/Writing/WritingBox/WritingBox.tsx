@@ -1,28 +1,26 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import FunButton from '@styles/FunButton'
+
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
+import { WriteType } from '@stores/review/reviewType'
+import { useAppDispatch } from '@stores/store'
+import { createReview } from '@stores/review/reivewSlice'
+
 import { ITEMS } from '@utils/constants'
+import FunButton from '@styles/FunButton'
+
 import {
   BtnBox,
   KeyBox,
   Keywords,
   WritingBoxWrapper,
 } from './WritingBox.styles'
-
-import { RootState, useAppDispatch } from '@stores/store'
-import { createReview } from '@stores/review/reivewSlice'
-import { useSelector } from 'react-redux'
-import Spinner from '@styles/Spinner'
-import { WriteType } from '@stores/review/reviewType'
-
 const WritingBox = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { storeId } = useParams()
-  const loading = useSelector((state: RootState) => state.review.loading)
 
   const [starCount, setStarCount] = useState(0)
   const [selected, setSelected] = useState<string[]>([])
@@ -41,10 +39,6 @@ const WritingBox = () => {
       console.log(reviewData)
       dispatch(createReview({ reviewData, storeId })).then(() => navigate(-1))
     }
-  }
-  // 로딩 UI 수정
-  if (loading) {
-    return <Spinner />
   }
 
   return (

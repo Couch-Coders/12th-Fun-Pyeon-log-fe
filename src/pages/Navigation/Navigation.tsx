@@ -8,8 +8,14 @@ import { logOutUserThunk } from '@stores/auth/authSlice'
 import LoginModal from '@components/LoginModal/LoginModal'
 import Spinner from '@styles/Spinner'
 import FunButton from '@styles/FunButton'
-import { ReactComponent as Funlogo } from '../../assets/fun-pyeon-logo.svg'
-import { NavCon, LogoCon, Avatar, LogoutCon } from './Navigation.styles'
+import { ReactComponent as Funlogo } from '../../assets/funlog.svg'
+import {
+  NavCon,
+  LogoCon,
+  Avatar,
+  LogoutCon,
+  LoadingContainer,
+} from './Navigation.styles'
 
 const Navigation = () => {
   const navigate = useNavigate()
@@ -37,7 +43,9 @@ const Navigation = () => {
         </LogoCon>
 
         {loading ? (
-          <Spinner />
+          <LoadingContainer>
+            <Spinner />
+          </LoadingContainer>
         ) : user ? (
           <LogoutCon>
             <Avatar>
@@ -54,7 +62,6 @@ const Navigation = () => {
             }}
           />
         )}
-
         {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
       </NavCon>
 

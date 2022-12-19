@@ -70,9 +70,6 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   // 검색 함수 kakao map을 인자로 받아와 작동한다.
   const searchStore = useCallback(
     (searchType: SearchType, searchTerm: string, mapApi: kakao.maps.Map) => {
-      // 펼쳐진 오버레이 삭제
-      KakaoServie.overlay.setMap(null)
-
       const ps = new kakao.maps.services.Places()
       const lat = mapApi.getCenter().getLat()
       const lng = mapApi.getCenter().getLng()
@@ -147,6 +144,8 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
+    // 펼쳐진 오버레이 삭제
+    KakaoServie.overlay.setMap(null)
     deleteMarkers()
   }, [deleteMarkers])
 

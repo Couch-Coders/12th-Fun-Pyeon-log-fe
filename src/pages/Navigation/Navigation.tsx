@@ -26,8 +26,8 @@ const Navigation = () => {
 
   const signOutHandler = async () => {
     if (user) {
-      googleSignOut()
-      dispatch(logOutUserThunk())
+      await googleSignOut()
+      await dispatch(logOutUserThunk())
     }
     navigate('/', { replace: true })
   }

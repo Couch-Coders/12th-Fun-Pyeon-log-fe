@@ -144,7 +144,6 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
-    KakaoServie.infoWindow.close()
     deleteMarkers()
   }, [deleteMarkers])
 

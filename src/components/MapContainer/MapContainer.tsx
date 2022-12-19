@@ -5,27 +5,23 @@ import React, {
   useContext,
   useCallback,
 } from 'react'
-import { useAppDispatch } from '@stores/store'
-
-import { getData, removeData } from '@stores/map/mapSlice'
+import { useSelector } from 'react-redux'
+import { RootState, useAppDispatch } from '@stores/store'
+import { saveSearchWord } from '@stores/sort/sortSlice'
 import KakaoServie from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 import { fetchAllStores } from '@stores/conv/convSlice'
-
 import Map from '@components/Map/Map'
-
 import { MapWrap, ControlBtns } from './MapContainer.styles'
 
-interface MapPropsType {
-  keyword: string
-}
 // 카카오 서치 함수 구분용 타입
 enum SearchType {
   KEYWORD = 'KEYWORD',
   CATEGORY = 'CATEGORY',
 }
 
-const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
+const MapContainer = () => {
+  const searchWord = useSelector((state: RootState) => state.sort.searchWord)
   const dispatch = useAppDispatch()
   const { setMapApi, setMarkers, deleteMarkers, mapApi } =
     useContext(MapContext)
@@ -44,22 +40,24 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
       map: kakao.maps.Map
     ) => {
       if (status === kakao.maps.services.Status.OK) {
-        // mapData dispatch -> 나중에 서버와 연결한 데이터를 받아올 action
-        dispatch(getData(data))
-        // 위에꺼 말고 서버와 통신해서 편의점 정보 받아올 액션
-
-        dispatch(fetchAllStores(data))
         // 새로 지도의 영역 설정
         const bounds = new kakao.maps.LatLngBounds()
         for (let i = 0; i < data.length; i++) {
           const marker = KakaoServie.displayMarkerInfoWindow(data[i], map)
           setMarkers(marker)
-          bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
+          bounds.extend(
+            new kakao.maps.LatLng(Number(data[i].y), Number(data[i].x))
+          )
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds)
+
+        // 센터 찾아서 가운데 위치 찾고 마커 표시
+        const newLatLan = map.getCenter()
+        KakaoServie.displayMyLocation(map, newLatLan)
+
+        dispatch(fetchAllStores({ mapData: data, map }))
       } else {
-        dispatch(removeData())
         console.log(`error ${status}`)
       }
     },
@@ -153,16 +151,17 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
-      if (keyword.length !== 0) {
+      if (searchWord.length !== 0) {
         removeMarkerNInfo()
-        searchStore(SearchType.KEYWORD, keyword, mapApi)
+        searchStore(SearchType.KEYWORD, searchWord, mapApi)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapApi, keyword, searchStore])
+  }, [mapApi, searchWord, searchStore])
 
   //  지도를 사용자의 위치로 이동하는 함수
   const moveToCenter = () => {
+    dispatch(saveSearchWord(''))
     removeMarkerNInfo()
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
@@ -175,11 +174,11 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
   }
 
   const searchFromHereHandler = () => {
+    dispatch(saveSearchWord(''))
     removeMarkerNInfo()
     if (mapApi) {
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
-    // sessionStorage.clear()
   }
 
   return (

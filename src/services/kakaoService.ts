@@ -70,14 +70,14 @@ const displayMyLocation = (
     image: customMarkerImage.myMarkerImg,
   })
 
-  const content = `<div class="infoOverlay me">YOU</div>`
+  const content = '<div class="infoOverlay me">YOU</div>'
   overlay.setContent(content)
   overlay.setPosition(locPosition)
   overlay.setMap(map)
 
   // 지도 중심좌표를 접속위치로 변경합니다
   map.setCenter(locPosition)
-  // map.setLevel(3, { animate: true })
+
   return marker
 }
 

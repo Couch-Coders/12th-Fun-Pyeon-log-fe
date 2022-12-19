@@ -1,14 +1,8 @@
-const getReviewEditUrl = (reviewId: number) => {
-  return `edit/${reviewId}`
-}
+const getReviewEditUrl = (reviewId: number) => `/edit/${reviewId}`
 
-const getReviewWriteUrl = (storeId: string) => {
-  return `/stores/${storeId}/write`
-}
+const getReviewWriteUrl = (storeId: string) => `/stores/${storeId}/write`
 
-const getStoreUrl = (storeId: string) => {
-  return `stores/${storeId}`
-}
+const getStoreUrl = (storeId: string) => `/stores/${storeId}`
 
 const URLUtill = {
   getReviewEditUrl,

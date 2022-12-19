@@ -123,14 +123,32 @@ list-style: none;
 
     a{
       text-decoration: none;
-      background-color:  ${(props) => props.theme.colors.purple};
+      background-color: ${(props) => props.theme.colors.purple};
       color: white;
       padding: 5px 20px;
       border-radius: 5px;
     }
   }
+}
 
+.infoOverlay {
+  position: absolute;
+   left: 14px; 
+   bottom: 0px; 
 
+  padding:5px;
+  font-size:12px;
+  background-color: white; 
+  border: 1px solid #D9D9D9; 
+  border-radius: 10px; 
+
+  &.me {
+    left: -17px; 
+    bottom: 22px;
+
+    padding: 3px 5px;
+    font-weight: bold;
+  }
 }
 
 

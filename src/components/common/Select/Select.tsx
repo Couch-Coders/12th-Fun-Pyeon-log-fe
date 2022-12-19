@@ -18,14 +18,14 @@ const Select: React.FC<KeywordProps> = ({
   selectType,
 }) => {
   const selectToggle = (selected: string[], item: string) => {
-    let newArray
-    if (!selected.includes(item)) {
-      newArray = [...selected, item]
-      setSelected(newArray)
-    } else {
-      newArray = selected.filter((e) => e !== item)
-      setSelected(newArray)
-    }
+    const newArray = (() => {
+      if (!selected.includes(item)) {
+        return [...selected, item]
+      } else {
+        return selected.filter((e) => e !== item)
+      }
+    })()
+    setSelected(newArray)
   }
 
   return (

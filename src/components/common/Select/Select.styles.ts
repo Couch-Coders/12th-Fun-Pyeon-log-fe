@@ -76,6 +76,7 @@ export const SelectBox = styled.div`
 
     ul {
       display: flex;
+      flex-wrap: wrap;
       border-left: 1px solid ${(props) => props.theme.colors.checkBoxDesc};
       padding-left: 20px;
       li {
@@ -83,6 +84,7 @@ export const SelectBox = styled.div`
         border: 1px solid ${(props) => props.theme.colors.checkBoxDesc};
         border-radius: 5px;
         padding: 5px;
+        margin: 2px 0;
         margin-right: 10px;
         cursor: pointer;
 

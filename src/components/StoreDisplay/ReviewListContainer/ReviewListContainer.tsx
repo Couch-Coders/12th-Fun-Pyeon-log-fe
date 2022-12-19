@@ -21,12 +21,11 @@ const ReviewListContainer = () => {
   const [reviewList, setReviewList] = useState<ReviewType[]>([])
   const reviews = useSelector((state: RootState) => state.review.reviews)
   const loading = useSelector((state: RootState) => state.review.loading)
+  const user = useSelector((state: RootState) => state.user.user)
 
   const moveToWrite = () => {
     if (storeId) {
       navigate(`/stores/${storeId}/write`)
-    } else {
-      navigate('/')
     }
   }
 
@@ -50,6 +49,7 @@ const ReviewListContainer = () => {
           <FunButton
             buttonType={BUTTON_TYPE_CLASSES.base}
             name={'작성하기'}
+            className={user ? '' : 'disabled'}
             onClick={moveToWrite}
           />
         </div>

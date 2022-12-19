@@ -2,10 +2,11 @@ import React from 'react'
 import { TextWrapper } from './TextBox.styles'
 
 interface TextProps {
+  reviewContent: string
   setReviewContent: (reviewContent: string) => void
 }
 
-const TextBox: React.FC<TextProps> = ({ setReviewContent }) => {
+const TextBox: React.FC<TextProps> = ({ reviewContent, setReviewContent }) => {
   return (
     <TextWrapper>
       <p>
@@ -14,6 +15,7 @@ const TextBox: React.FC<TextProps> = ({ setReviewContent }) => {
       </p>
       <textarea
         maxLength={500}
+        value={reviewContent}
         onChange={(e) => setReviewContent(e.target.value)}
       />
     </TextWrapper>

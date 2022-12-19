@@ -5,6 +5,7 @@ import ReviewService from '@services/reviewService'
 
 const initialState: ReviewState = {
   reviews: [],
+  selectedReview: null,
   loading: false,
   error: '',
 }
@@ -78,7 +79,13 @@ export const deleteReview = createAsyncThunk(
 const reviewSlice = createSlice({
   name: 'review',
   initialState,
-  reducers: {},
+  reducers: {
+    selectReview: (state, action) => {
+      state.selectedReview = state.reviews.find(
+        (item) => item.reviewEntryNo === Number(action.payload)
+      )
+    },
+  },
   extraReducers(builder) {
     builder.addCase(fetchAllReviews.pending, (state) => {
       state.loading = true
@@ -127,5 +134,5 @@ const reviewSlice = createSlice({
   },
 })
 
-// export const {} = reviewSlice.actions
+export const { selectReview } = reviewSlice.actions
 export default reviewSlice.reducer

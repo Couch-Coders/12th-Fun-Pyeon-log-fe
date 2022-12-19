@@ -9,8 +9,12 @@ import {
 } from './ReviewList.styles'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@stores/store'
-import { deleteReview, fetchAllReviews } from '@stores/review/reivewSlice'
-import { useParams } from 'react-router-dom'
+import {
+  deleteReview,
+  fetchAllReviews,
+  selectReview,
+} from '@stores/review/reivewSlice'
+import { useNavigate, useParams } from 'react-router-dom'
 
 interface ReviewType {
   reviewId: number
@@ -31,6 +35,7 @@ const ReviewList: React.FC<ReviewType> = ({
 }) => {
   const { storeId } = useParams()
   const [isWideView, setIsWideView] = useState<boolean>(false)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)
   const date = createdDate.split('T')[0]
@@ -40,6 +45,7 @@ const ReviewList: React.FC<ReviewType> = ({
   }
 
   const deleteRevieHandler = () => {
+    window.confirm('리뷰를 삭제 하시겠습니까?')
     if (storeId) {
       dispatch(deleteReview({ storeId, reviewId })).then(() => {
         dispatch(fetchAllReviews(storeId))
@@ -47,11 +53,16 @@ const ReviewList: React.FC<ReviewType> = ({
     }
   }
 
+  const editHandler = () => {
+    dispatch(selectReview(reviewId))
+    navigate(`edit/${reviewId}`)
+  }
+
   return (
     <ListContainer isWide={isWideView}>
       {userId === user?.email && (
         <ReviewEditButton>
-          <button>
+          <button onClick={editHandler}>
             <EditOutlined />
           </button>
           <button onClick={deleteRevieHandler}>

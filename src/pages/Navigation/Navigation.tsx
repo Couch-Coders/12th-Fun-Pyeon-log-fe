@@ -29,6 +29,7 @@ const Navigation = () => {
       googleSignOut()
       dispatch(logOutUserThunk())
     }
+    navigate('/', { replace: true })
   }
 
   return (

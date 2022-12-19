@@ -12,6 +12,14 @@ export const ReviewTop = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+
+  .button {
+    .disabled {
+      color: ${(props) => props.theme.colors.checkBoxDesc};
+      background-color: ${(props) => props.theme.colors.checkBox};
+      border: none;
+    }
+  }
 `
 
 export const NameNCount = styled.div`

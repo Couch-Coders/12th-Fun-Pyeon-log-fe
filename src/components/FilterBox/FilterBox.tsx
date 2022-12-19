@@ -19,16 +19,12 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const dispatch = useDispatch()
 
   const sortStore = () => {
-    console.log(selectBrand)
-    console.log(selectKeyword)
-
     const isIncluded = (data: kakao.maps.services.PlacesSearchResultItem) => {
       for (let idx = 0; idx < selectBrand.length; idx++) {
         if (data.place_name.includes(selectBrand[idx])) return true
       }
     }
     const newData = mapData.filter(isIncluded)
-    console.log(newData)
     dispatch(sortData(newData))
     setIsFiltering(false)
   }

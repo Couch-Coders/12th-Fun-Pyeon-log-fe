@@ -14,6 +14,7 @@ import {
   ListContainer,
 } from './ReviewListContainer.styles'
 import LoadingWithLogo from '@styles/LoadingWithLogo'
+import URLUtill from '@utils/urlUtill'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
@@ -25,7 +26,7 @@ const ReviewListContainer = () => {
 
   const moveToWrite = () => {
     if (storeId) {
-      navigate(`/stores/${storeId}/write`)
+      navigate(URLUtill.getReviewWriteUrl(storeId))
     }
   }
 

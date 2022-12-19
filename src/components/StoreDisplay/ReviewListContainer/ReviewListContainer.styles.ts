@@ -51,6 +51,7 @@ export const NameNCount = styled.div`
 `
 
 export const ListContainer = styled.div`
+  position: relative;
   height: 450px;
   border: 1px solid #d9d9d9;
 

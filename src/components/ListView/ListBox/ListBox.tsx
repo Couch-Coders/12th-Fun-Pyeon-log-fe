@@ -17,9 +17,15 @@ const ListBox = () => {
   return (
     <ListWrapper>
       <SortBtns>
-        <li className="active">가까운순</li>
-        <li>별점 높은순</li>
-        <li>리뷰 많은순</li>
+        {SORT_LIST.map((sort) => (
+          <li
+            key={sort.type}
+            className={select === sort.type ? 'active' : ''}
+            onClick={() => toggleBtn(sort.type)}
+          >
+            {sort.title}
+          </li>
+        ))}
       </SortBtns>
 
       <ResultBox>

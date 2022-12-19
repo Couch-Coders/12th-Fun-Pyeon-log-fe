@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '@stores/store'
+import { ReviewType } from '@stores/review/reviewType'
 import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
+
 import { PlusOutlined } from '@ant-design/icons'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
 import {
@@ -8,11 +13,7 @@ import {
   NameNCount,
   ListContainer,
 } from './ReviewListContainer.styles'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
-import { ReviewType } from '@stores/review/reviewType'
-import Spinner from '@styles/Spinner'
+import LoadingWithLogo from '@styles/LoadingWithLogo'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
@@ -53,23 +54,20 @@ const ReviewListContainer = () => {
           />
         </div>
       </ReviewTop>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <ListContainer>
-          {reviewList.map((review) => (
-            <ReviewList
-              key={review.reviewEntryNo}
-              reviewId={review.reviewEntryNo}
-              starCount={review.starCount}
-              createdDate={review.createdDate}
-              keywords={review.keywords}
-              reviewContent={review.reviewContent}
-              userId={review.userEmail}
-            />
-          ))}
-        </ListContainer>
-      )}
+      <ListContainer>
+        {loading && <LoadingWithLogo />}
+        {reviewList.map((review) => (
+          <ReviewList
+            key={review.reviewEntryNo}
+            reviewId={review.reviewEntryNo}
+            starCount={review.starCount}
+            createdDate={review.createdDate}
+            keywords={review.keywords}
+            reviewContent={review.reviewContent}
+            userId={review.userEmail}
+          />
+        ))}
+      </ListContainer>
     </ReviewListWrapper>
   )
 }

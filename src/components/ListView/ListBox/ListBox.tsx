@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import List from '@components/ListView/List/List'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '@stores/store'
 import { ListWrapper, SortBtns, ResultBox } from './ListBox.styles'
 import { ConvType } from '@stores/conv/convType'
+import { SORT_LIST } from '@utils/constants'
+import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
+import { saveSortType } from '@stores/sort/sortSlice'
 
 const ListBox = () => {
-  const stores = useSelector((state: RootState) => state.conv.stores)
   const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
-  const [convList, setConvList] = useState<ConvType[]>(stores)
+  const sortType = useSelector((state: RootState) => state.sort.sortType)
+  const [convList, setConvList] = useState<ConvType[]>([])
+  const dispatch = useDispatch()
+  const [select, setSelect] = useState(SORT_LIST[0].type)
+
+  const toggleBtn = (type: string) => {
+    setSelect(type)
+    dispatch(saveSortType(type))
+    if (type === 'star') dispatch(starSort())
+    if (type === 'review') dispatch(reviewSort())
+    if (type === 'distance') dispatch(distanceSort())
+  }
 
   useEffect(() => {
     setConvList(sortedConv)
+
+    if (convList.length !== 0) {
+      toggleBtn(sortType)
+    }
   }, [sortedConv])
 
   return (

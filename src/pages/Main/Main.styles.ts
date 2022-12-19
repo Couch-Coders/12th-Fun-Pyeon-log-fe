@@ -5,8 +5,9 @@ export const Wrapper = styled.article`
   flex-direction: row;
 `
 export const ListView = styled.section`
+  background-color: white;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 25vw;
   min-width: 250px;
   max-width: 300px;

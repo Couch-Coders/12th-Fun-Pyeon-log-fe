@@ -43,7 +43,7 @@ const MapContainer = () => {
         // 새로 지도의 영역 설정
         const bounds = new kakao.maps.LatLngBounds()
         for (let i = 0; i < data.length; i++) {
-          const marker = KakaoServie.displayMarkerInfoWindow(data[i], map)
+          const marker = KakaoServie.displayMarkerOverlay(data[i], map)
           setMarkers(marker)
           bounds.extend(
             new kakao.maps.LatLng(Number(data[i].y), Number(data[i].x))

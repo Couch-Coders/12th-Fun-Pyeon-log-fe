@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-
-import { useSelector } from 'react-redux'
 import Select from '@components/common/Select/Select'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
-import Spinner from '@styles/Spinner'
 import FunButton from '@styles/FunButton'
-import { RootState, useAppDispatch } from '@stores/store'
+import { useAppDispatch } from '@stores/store'
 import { createReview, updateReview } from '@stores/review/reivewSlice'
 import { ReviewType, WriteType } from '@stores/review/reviewType'
 import { ITEMS } from '@utils/constants'
-import FunButton from '@styles/FunButton'
 
 import {
   BtnBox,
@@ -36,7 +32,7 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
 
   const reviewId = originReview?.reviewEntryNo
 
-  const submitReview = () => {
+  const submitReview = async () => {
     if (reviewContent.length === 0) {
       return alert('리뷰를 작성해주세요')
     }
@@ -49,11 +45,11 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
       }
 
       if (isEdit && reviewId) {
-        dispatch(updateReview({ reviewData, storeId, reviewId })).then(() =>
-          navigate(-1)
-        )
+        await dispatch(updateReview({ reviewData, storeId, reviewId }))
+        navigate(-1)
       } else {
-        dispatch(createReview({ reviewData, storeId })).then(() => navigate(-1))
+        await dispatch(createReview({ reviewData, storeId }))
+        navigate(-1)
       }
     }
   }
@@ -65,12 +61,6 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
       setReviewContent(originReview.reviewContent)
     }
   }, [isEdit, originReview])
-
-  // 로딩 UI 수정
-  if (loading) {
-    return <Spinner />
-  }
-
 
   return (
     <WritingBoxWrapper>

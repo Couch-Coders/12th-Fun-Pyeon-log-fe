@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import ErrorService from '@services/errorService'
 import StoreService from '@services/storeService'
 import { calcDistance } from '@utils/calc'
 import { AxiosError } from 'axios'
@@ -26,11 +27,10 @@ export const fetchAllStores = createAsyncThunk(
     try {
       const storeIds = mapData.map((result) => result.id)
       const stores = await StoreService.getAllStore(storeIds)
-      console.log(stores)
       const storeData = stores.map((data) => {
-        const matchStore = mapData.filter(
+        const [matchStore] = mapData.filter(
           (store) => store.id === data.storeId
-        )[0]
+        )
 
         const customDistance = calcDistance(
           map,
@@ -48,11 +48,8 @@ export const fetchAllStores = createAsyncThunk(
         )
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )
@@ -66,11 +63,8 @@ export const fetchStoreInfo = createAsyncThunk(
       console.log(storeInfo)
       return storeInfo
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )

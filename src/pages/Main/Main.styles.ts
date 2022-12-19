@@ -41,6 +41,7 @@ export const SearchBox = styled.div`
     min-width: 120px;
     padding: 0 10px;
     border: none;
+    outline: none;
   }
 
   button {

@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { ReviewState, ReviewType, WriteType } from './reviewType'
-import { AxiosError } from 'axios'
+
 import ReviewService from '@services/reviewService'
+import ErrorService from '@services/errorService'
 
 const initialState: ReviewState = {
   reviews: [],
@@ -16,11 +17,8 @@ export const fetchAllReviews = createAsyncThunk(
     try {
       return await ReviewService.getAllReviews(storeId)
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )
@@ -32,11 +30,8 @@ export const createReview = createAsyncThunk(
     try {
       return await ReviewService.createReview(reviewData, storeId)
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )
@@ -51,11 +46,8 @@ export const updateReview = createAsyncThunk(
     try {
       return await ReviewService.updateReview(reviewData, storeId, reviewId)
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )
@@ -67,11 +59,8 @@ export const deleteReview = createAsyncThunk(
     try {
       return await ReviewService.deleteReview(storeId, reviewId)
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )

@@ -15,6 +15,7 @@ import {
   selectReview,
 } from '@stores/review/reivewSlice'
 import { useNavigate, useParams } from 'react-router-dom'
+import URLUtill from '@utils/urlUtill'
 
 interface ReviewType {
   reviewId: number
@@ -38,24 +39,23 @@ const ReviewList: React.FC<ReviewType> = ({
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)
-  const date = createdDate.split('T')[0]
-  const displayName = userId.split('@')[0]
+  const [date] = createdDate.split('T')
+  const [displayName] = userId.split('@')
   const onWideViewHandler = () => {
     setIsWideView(!isWideView)
   }
 
-  const deleteRevieHandler = () => {
+  const deleteRevieHandler = async () => {
     window.confirm('리뷰를 삭제 하시겠습니까?')
     if (storeId) {
-      dispatch(deleteReview({ storeId, reviewId })).then(() => {
-        dispatch(fetchAllReviews(storeId))
-      })
+      await dispatch(deleteReview({ storeId, reviewId }))
+      await dispatch(fetchAllReviews(storeId))
     }
   }
 
   const editHandler = () => {
     dispatch(selectReview(reviewId))
-    navigate(`edit/${reviewId}`)
+    navigate(URLUtill.getReviewEditUrl(reviewId))
   }
 
   return (

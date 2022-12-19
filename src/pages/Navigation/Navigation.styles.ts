@@ -20,7 +20,8 @@ export const NavCon = styled.header`
 export const LogoCon = styled.div`
   cursor: pointer;
   svg {
-    height: 45px;
+    height: 50px;
+    width: 225px;
   }
 `
 export const Avatar = styled.div`
@@ -42,4 +43,7 @@ export const LogoutCon = styled.div`
   gap: 1rem;
 
   font-size: 20px;
+`
+export const LoadingContainer = styled.div`
+  width: 5.5rem;
 `

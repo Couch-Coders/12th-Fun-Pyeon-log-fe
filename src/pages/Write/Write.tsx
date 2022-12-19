@@ -5,21 +5,25 @@ import { StoreWrapper } from '@pages/store/Store.styles'
 import { useSelector } from 'react-redux'
 import { RootState } from '@stores/store'
 import { useNavigate, useParams } from 'react-router-dom'
+import LoadingWithLogo from '@styles/LoadingWithLogo'
+import URLUtill from '@utils/urlUtill'
 
 const Write = () => {
   const { storeId } = useParams()
   const user = useSelector((state: RootState) => state.user.user)
+  const loading = useSelector((state: RootState) => state.review.loading)
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!user && storeId) {
       alert('로그인 후 이용 가능합니다.')
-      navigate(`/stores/${storeId}`)
+      navigate(URLUtill.getStoreUrl(storeId))
     }
   }, [])
 
   return (
     <StoreWrapper>
+      {loading && <LoadingWithLogo />}
       <StoreBasicInfo />
       <WritingBox />
     </StoreWrapper>

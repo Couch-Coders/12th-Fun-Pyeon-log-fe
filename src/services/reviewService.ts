@@ -1,24 +1,18 @@
 import { ReviewType, WriteType } from '@stores/review/reviewType'
 import axios from 'axios'
-const API_URL = '/stores/'
 
 const getAllReviews = async (storeId: string) => {
   const params = { page: 0, size: 10 }
-  const response = await axios.get<ReviewType[]>(
-    API_URL + storeId + `/reviews`,
-    { params }
-  )
+  const response = await axios.get<ReviewType[]>(`/stores/${storeId}/reviews`, {
+    params,
+  })
   return response.data
 }
 
 const createReview = async (reviewData: WriteType, storeId: string) => {
-  const response = await axios.post(
-    API_URL + storeId + `/reviews`,
-    reviewData,
-    {
-      withCredentials: true,
-    }
-  )
+  const response = await axios.post(`/stores/${storeId}/reviews`, reviewData, {
+    withCredentials: true,
+  })
   return response.data
 }
 
@@ -28,7 +22,7 @@ const updateReview = async (
   reviewId: number
 ) => {
   const response = await axios.put(
-    API_URL + `${storeId}/reviews/${reviewId}`,
+    `/stores/${storeId}/reviews/${reviewId}`,
     reviewData,
     {
       withCredentials: true,
@@ -39,7 +33,7 @@ const updateReview = async (
 
 const deleteReview = async (storeId: string, reviewId: number) => {
   const response = await axios.delete(
-    API_URL + `${storeId}/reviews/${reviewId}`,
+    `/stores/${storeId}/reviews/${reviewId}`,
     {
       withCredentials: true,
     }

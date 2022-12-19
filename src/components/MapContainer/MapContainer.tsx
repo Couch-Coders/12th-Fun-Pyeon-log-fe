@@ -144,7 +144,8 @@ const MapContainer = () => {
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
-    KakaoServie.infoWindow.close()
+    // 펼쳐진 오버레이 삭제
+    KakaoServie.overlay.setMap(null)
     deleteMarkers()
   }, [deleteMarkers])
 

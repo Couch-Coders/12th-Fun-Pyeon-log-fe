@@ -47,13 +47,11 @@ const List: React.FC<ListProps> = ({
 
       <Content>
         <ul>
-          {keywords
-            .filter((_, idx) => idx < 3)
-            .map((keyword, idx) => (
-              <li key={idx}>
-                <span>{keyword}</span>
-              </li>
-            ))}
+          {keywords.slice(0, 3).map((keyword) => (
+            <li key={keyword}>
+              <span>{keyword}</span>
+            </li>
+          ))}
         </ul>
 
         <span className="review">리뷰 {reviewCount}개</span>

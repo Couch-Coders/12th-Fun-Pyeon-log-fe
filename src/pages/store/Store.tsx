@@ -40,14 +40,20 @@ const Store = () => {
         )
       } else {
         const mapOption = {
-          center: new kakao.maps.LatLng(+selectedStore.y, +selectedStore.x), // 지도의 중심좌표
+          center: new kakao.maps.LatLng(
+            Number(selectedStore.y),
+            Number(selectedStore.x)
+          ), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
         }
         const map = new kakao.maps.Map(mapContainer, mapOption)
         // 임의의 편의점 위치에 마커 생성
         kakaoServie.displayMyLocation(
           map,
-          new kakao.maps.LatLng(+selectedStore.y, +selectedStore.x)
+          new kakao.maps.LatLng(
+            Number(selectedStore.y),
+            Number(selectedStore.x)
+          )
         )
       }
     }

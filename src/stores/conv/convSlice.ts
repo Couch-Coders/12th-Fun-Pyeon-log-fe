@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import ErrorService from '@services/errorService'
 import StoreService from '@services/storeService'
-import { AxiosError } from 'axios'
 import { ConvState, ConvType } from './convType'
 
 const initialState: ConvState = {
@@ -19,11 +18,10 @@ export const fetchAllStores = createAsyncThunk(
     try {
       const storeIds = mapData.map((result) => result.id)
       const stores = await StoreService.getAllStore(storeIds)
-      console.log(stores)
       const storeData = stores.map((data) => {
-        const matchStore = mapData.filter(
+        const [matchStore] = mapData.filter(
           (store) => store.id === data.storeId
-        )[0]
+        )
 
         return { ...data, ...matchStore }
       })

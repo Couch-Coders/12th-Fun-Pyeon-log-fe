@@ -3,6 +3,7 @@ export interface ConvType extends kakao.maps.services.PlacesSearchResultItem {
   starCount: number
   reviewCount: number
   keywordList: string[]
+  customDistance: number
 }
 
 export interface ConvState {

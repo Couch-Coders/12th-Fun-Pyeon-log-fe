@@ -9,6 +9,7 @@ import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 import kakaoServie from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 import { ConvType } from '@stores/conv/convType'
+import { saveBrand, saveKeyword } from '@stores/sort/sortSlice'
 
 interface filterProps {
   setIsFiltering: (isFiltering: boolean) => void
@@ -17,9 +18,11 @@ interface filterProps {
 const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
   const stores = useSelector((state: RootState) => state.conv.stores)
+  const brandData = useSelector((state: RootState) => state.sort.brandData)
+  const keywordData = useSelector((state: RootState) => state.sort.keywordData)
   const dispatch = useDispatch()
-  const [selectBrand, setSelectBrand] = useState<string[]>([])
-  const [selectKeyword, setSelectKeyword] = useState<string[]>([])
+  const [selectBrand, setSelectBrand] = useState<string[]>(brandData)
+  const [selectKeyword, setSelectKeyword] = useState<string[]>(keywordData)
   const [convList, setConvList] = useState(stores)
 
   // 위 서치로 받아온 data를 다루는 콜백함수
@@ -79,10 +82,8 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
     dispatch(setSortStores(sortResult))
     sortCallBack(sortResult)
 
-    // console.log(sortResult)
-
-    sessionStorage.setItem('brand', JSON.stringify(selectBrand))
-    sessionStorage.setItem('keyword', JSON.stringify(selectKeyword))
+    dispatch(saveBrand(selectBrand))
+    dispatch(saveKeyword(selectKeyword))
 
     setIsFiltering(false)
   }
@@ -94,18 +95,9 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
     setSelectBrand([])
     setSelectKeyword([])
 
-    sessionStorage.clear()
+    dispatch(saveBrand([]))
+    dispatch(saveKeyword([]))
   }
-
-  useEffect(() => {
-    const brandData = sessionStorage.getItem('brand')
-    const keywordData = sessionStorage.getItem('keyword')
-
-    if (!brandData || !keywordData) return
-
-    setSelectBrand(JSON.parse(brandData))
-    setSelectKeyword(JSON.parse(keywordData))
-  }, [])
 
   return (
     <FilterWrapper>

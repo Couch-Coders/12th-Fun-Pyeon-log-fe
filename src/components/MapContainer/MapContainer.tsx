@@ -48,16 +48,17 @@ const MapContainer: React.FC<MapPropsType> = ({ keyword }) => {
         dispatch(getData(data))
         // 위에꺼 말고 서버와 통신해서 편의점 정보 받아올 액션
 
-        dispatch(fetchAllStores(data))
         // 새로 지도의 영역 설정
         const bounds = new kakao.maps.LatLngBounds()
         for (let i = 0; i < data.length; i++) {
-          const marker = KakaoServie.displayMarkerInfoWindow(data[i], map)
+          const marker = KakaoServie.displayMarkerOverlay(data[i], map)
           setMarkers(marker)
           bounds.extend(new kakao.maps.LatLng(+data[i].y, +data[i].x))
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds)
+
+        dispatch(fetchAllStores(data))
       } else {
         dispatch(removeData())
         console.log(`error ${status}`)

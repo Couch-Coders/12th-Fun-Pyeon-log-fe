@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { UserStateType, UserType } from './authType'
 import AuthService from '@services/authService'
-import { AxiosError } from 'axios'
+import ErrorService from '@services/errorService'
 
 const initialState: UserStateType = {
   user: null,
@@ -22,11 +22,8 @@ export const getUserThunk = createAsyncThunk(
         imgUrl: userData.userImageUrl,
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )
@@ -37,11 +34,8 @@ export const logOutUserThunk = createAsyncThunk(
     try {
       return await AuthService.signOut()
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )

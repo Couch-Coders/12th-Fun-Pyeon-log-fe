@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import ErrorService from '@services/errorService'
 import StoreService from '@services/storeService'
 import { AxiosError } from 'axios'
 import { ConvState, ConvType } from './convType'
@@ -29,11 +30,8 @@ export const fetchAllStores = createAsyncThunk(
 
       return storeData
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )
@@ -47,11 +45,8 @@ export const fetchStoreInfo = createAsyncThunk(
       console.log(storeInfo)
       return storeInfo
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return thunkApi.rejectWithValue(error.message)
-      } else {
-        throw error
-      }
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
     }
   }
 )

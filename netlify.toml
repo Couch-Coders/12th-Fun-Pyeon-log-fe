@@ -1,12 +1,6 @@
 [[redirects]]
-  from = "/stores/*"
-  to = "https://jlvadtrbkq.us16.qoddiapp.com/stores/:splat"  
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/users/*"
-  to = "https://jlvadtrbkq.us16.qoddiapp.com/users/:splat"  
+  from = "/api/*"
+  to = "https://jlvadtrbkq.us16.qoddiapp.com/:splat"  
   status = 200
   force = true
 

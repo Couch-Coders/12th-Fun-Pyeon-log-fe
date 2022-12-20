@@ -112,7 +112,7 @@ const overlayContainer = (placeName: string, stroeId: string) => {
   </div>`
 }
 
-const KakaoServie = {
+const KakaoService = {
   displayMarkerOverlay,
   displayMyLocation,
   overlayContainer,
@@ -120,4 +120,4 @@ const KakaoServie = {
   overlay,
 }
 
-export default KakaoServie
+export default KakaoService

@@ -1,4 +1,5 @@
-const getReviewEditUrl = (reviewId: number) => `/edit/${reviewId}`
+const getReviewEditUrl = (storeId: string, reviewId: number) =>
+  `/stores/${storeId}/edit/${reviewId}`
 
 const getReviewWriteUrl = (storeId: string) => `/stores/${storeId}/write`
 

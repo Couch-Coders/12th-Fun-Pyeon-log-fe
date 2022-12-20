@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, useAppDispatch } from '@stores/store'
 import { ReviewType } from '@stores/review/reviewType'
 import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
 
@@ -15,14 +15,23 @@ import {
 } from './ReviewListContainer.styles'
 import LoadingWithLogo from '@styles/LoadingWithLogo'
 import URLUtill from '@utils/urlUtill'
+import { fetchAllReviews } from '@stores/review/reivewSlice'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
   const navigate = useNavigate()
-  const [reviewList, setReviewList] = useState<ReviewType[]>([])
   const reviews = useSelector((state: RootState) => state.review.reviews)
   const loading = useSelector((state: RootState) => state.review.loading)
   const user = useSelector((state: RootState) => state.user.user)
+  const selectedStore = useSelector(
+    (state: RootState) => state.conv.selectedStore
+  )
+  const reviewCount = selectedStore?.reviewCount
+  const [reviewList, setReviewList] = useState<ReviewType[]>(reviews)
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState(0)
+
+  const dispatch = useAppDispatch()
 
   const moveToWrite = () => {
     if (storeId) {
@@ -30,11 +39,32 @@ const ReviewListContainer = () => {
     }
   }
 
+  // useEffect(() => {
+  //   console.log(reviews)
+
+  //   if (reviews.length) {
+  //     setReviewList(reviews)
+  //   }
+  // }, [reviews])
+
   useEffect(() => {
-    if (reviews.length) {
-      setReviewList(reviews)
+    if (storeId) {
+      dispatch(fetchAllReviews({ storeId, page }))
+      setReviewList([...reviewList, ...reviews])
     }
-  }, [reviews])
+    console.log(reviews)
+  }, [page])
+
+  useEffect(() => {
+    if (reviewCount) setPageCount(Math.ceil(reviewCount / 2))
+  }, [reviewCount])
+
+  // const viewMore = () => {
+  //   console.log(page)
+
+  //   if (storeId) dispatch(fetchAllReviews({ storeId, page: page }))
+
+  // }
 
   return (
     <ReviewListWrapper>

@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 
 const axiosErrorHandler = (error: any) => {
   if (error instanceof AxiosError) {
-    return error
+    return error.message
   }
   throw error
 }

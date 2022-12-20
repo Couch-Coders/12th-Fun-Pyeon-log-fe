@@ -13,7 +13,6 @@ import {
   NameNCount,
   ListContainer,
 } from './ReviewListContainer.styles'
-import LoadingWithLogo from '@styles/LoadingWithLogo'
 import URLUtill from '@utils/urlUtill'
 
 const ReviewListContainer = () => {
@@ -21,7 +20,7 @@ const ReviewListContainer = () => {
   const navigate = useNavigate()
   const [reviewList, setReviewList] = useState<ReviewType[]>([])
   const reviews = useSelector((state: RootState) => state.review.reviews)
-  const loading = useSelector((state: RootState) => state.review.loading)
+
   const user = useSelector((state: RootState) => state.user.user)
 
   const moveToWrite = () => {
@@ -56,7 +55,6 @@ const ReviewListContainer = () => {
         </div>
       </ReviewTop>
       <ListContainer>
-        {loading && <LoadingWithLogo />}
         {reviewList.map((review) => (
           <ReviewList
             key={review.reviewEntryNo}

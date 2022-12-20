@@ -4,10 +4,11 @@ import { GlobalStyle } from './global.styles'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store } from '@stores/store'
+import { store, persistor } from '@stores/store'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
 import MapProvider from '@context/MapContext'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -16,10 +17,12 @@ root.render(
     <BrowserRouter>
       <MapProvider>
         <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <App />
-          </ThemeProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <ThemeProvider theme={theme}>
+              <GlobalStyle />
+              <App />
+            </ThemeProvider>
+          </PersistGate>
         </Provider>
       </MapProvider>
     </BrowserRouter>

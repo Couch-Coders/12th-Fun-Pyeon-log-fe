@@ -110,7 +110,6 @@ const MapContainer = () => {
       }
       const map = new kakao.maps.Map(mapContainer, mapOption)
       setMapApi(map)
-
       searchStore(SearchType.CATEGORY, '', map)
     },
     [setMapApi, searchStore]
@@ -167,8 +166,7 @@ const MapContainer = () => {
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
     if (mapApi) {
-      const myMarker = KakaoService.displayMyLocation(mapApi, locPosition)
-      setMarkers(myMarker)
+      mapApi.setCenter(locPosition)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
   }

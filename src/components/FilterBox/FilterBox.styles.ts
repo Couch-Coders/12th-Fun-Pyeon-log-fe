@@ -5,12 +5,23 @@ export const FilterWrapper = styled.div`
   padding: 20px 10px;
   overflow-y: scroll;
 
+  position: relative;
   display: flex;
   flex-direction: column;
 
   > div {
     border-bottom: 1px solid ${(props) => props.theme.colors.filterBorder};
     padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .initBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    font-weight: 700;
+    border: none;
     margin-bottom: 20px;
   }
 `

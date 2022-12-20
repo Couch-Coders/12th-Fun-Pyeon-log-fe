@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import ErrorService from '@services/errorService'
 import StoreService from '@services/storeService'
+import { calcDistance } from '@utils/calc'
+import { AxiosError } from 'axios'
 import { ConvState, ConvType } from './convType'
 
 const initialState: ConvState = {
@@ -14,7 +16,14 @@ const initialState: ConvState = {
 // 검색된 전체 편의점에 대한 정보 가져오기
 export const fetchAllStores = createAsyncThunk(
   'convStore/fetchAllStores',
-  async (mapData: kakao.maps.services.PlacesSearchResultItem[], thunkApi) => {
+  async (
+    mapInfo: {
+      mapData: kakao.maps.services.PlacesSearchResult
+      map: kakao.maps.Map
+    },
+    thunkApi
+  ) => {
+    const { mapData, map } = mapInfo
     try {
       const storeIds = mapData.map((result) => result.id)
       const stores = await StoreService.getAllStore(storeIds)
@@ -23,10 +32,21 @@ export const fetchAllStores = createAsyncThunk(
           (store) => store.id === data.storeId
         )
 
-        return { ...data, ...matchStore }
+        const customDistance = calcDistance(
+          map,
+          Number(matchStore.y),
+          Number(matchStore.x)
+        )
+        return { ...data, ...matchStore, customDistance }
       })
 
-      return storeData
+      if (storeData[0].distance) {
+        return storeData.sort((a, b) => Number(a.distance) - Number(b.distance))
+      } else {
+        return storeData.sort(
+          (a, b) => Number(a.customDistance) - Number(b.customDistance)
+        )
+      }
     } catch (error) {
       const message = ErrorService.axiosErrorHandler(error)
       return thunkApi.rejectWithValue(message)
@@ -55,6 +75,21 @@ const convSlice = createSlice({
   reducers: {
     setSortStores: (state, action: PayloadAction<ConvType[]>) => {
       state.sortedStores = action.payload
+    },
+    reviewSort: (state) => {
+      state.sortedStores.sort((a, b) => b.reviewCount - a.reviewCount)
+    },
+    starSort: (state) => {
+      state.sortedStores.sort((a, b) => b.starCount - a.starCount)
+    },
+    distanceSort: (state) => {
+      if (state.sortedStores[0].distance) {
+        state.sortedStores.sort(
+          (a, b) => Number(a.distance) - Number(b.distance)
+        )
+      } else if (state.sortedStores[0].customDistance) {
+        state.sortedStores.sort((a, b) => a.customDistance - b.customDistance)
+      }
     },
   },
   extraReducers(builder) {
@@ -90,6 +125,7 @@ const convSlice = createSlice({
   },
 })
 
-export const { setSortStores } = convSlice.actions
+export const { setSortStores, reviewSort, starSort, distanceSort } =
+  convSlice.actions
 
 export default convSlice.reducer

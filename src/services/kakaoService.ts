@@ -68,12 +68,15 @@ const displayMyLocation = (
   const marker = new kakao.maps.Marker({
     map,
     position: locPosition,
-    image: storeBrand
-      ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
-      : customMarkerImage.myMarkerImg,
+    image:
+      storeBrand && storeBrand.length > 0
+        ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
+        : customMarkerImage.myMarkerImg,
   })
 
-  const content = `<div class="infoOverlay ${storeBrand ? ' ' : 'me'}>YOU</div>`
+  const content = `<div class="infoOverlay ${
+    storeBrand ? ' ' : 'me'
+  }">YOU</div>`
   overlay.setContent(content)
   overlay.setPosition(locPosition)
   overlay.setMap(map)
@@ -85,6 +88,7 @@ const displayMyLocation = (
 }
 
 const overlayContainer = (placeName: string, storeId: string) => {
+  const currentUrl = String(document.location)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -110,7 +114,7 @@ const overlayContainer = (placeName: string, storeId: string) => {
       </div>
     </div>
     <div class="detail-view">
-      <a href="https://friendly-bonbon-2516bc.netlify.app/stores/${storeId}">상세보기</a>
+      <a href="${currentUrl}stores/${storeId}">상세보기</a>
     </div>
   </div>`
 }

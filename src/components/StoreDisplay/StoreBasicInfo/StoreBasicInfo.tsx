@@ -38,7 +38,7 @@ const StoreBasicInfo = () => {
 
   useLayoutEffect(() => {
     if (selectedStore) {
-      const [placeName] = selectedStore.place_name.split(' ')
+      const [placeName] = selectedStore.place_name.split(' ', 1)
       setStoreInfo((prevState) => {
         return {
           prevState,
@@ -69,9 +69,9 @@ const StoreBasicInfo = () => {
         </p>
         <KeywordBox>
           <ul>
-            {storeInfo.keywordList.slice(0, 5).map((keyword) => {
-              return <KeywordBadge key={keyword}>{keyword}</KeywordBadge>
-            })}
+            {storeInfo.keywordList.slice(0, 5).map((keyword) => (
+              <KeywordBadge key={keyword}>{keyword}</KeywordBadge>
+            ))}
           </ul>
         </KeywordBox>
       </ConvInfo>

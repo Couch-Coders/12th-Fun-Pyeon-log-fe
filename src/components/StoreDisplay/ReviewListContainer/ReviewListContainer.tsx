@@ -43,7 +43,7 @@ const ReviewListContainer = () => {
           <h1>REVIEW</h1>
           <div className="count">
             <PlusOutlined />
-            <p>{reviewList.length}</p>
+            <p>{selectedStore?.reviewCount}</p>
           </div>
         </NameNCount>
         <div className="button">

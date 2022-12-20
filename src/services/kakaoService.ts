@@ -74,9 +74,9 @@ const displayMyLocation = (
         : customMarkerImage.myMarkerImg,
   })
 
-  const content = `<div class="infoOverlay ${
-    storeBrand ? ' ' : 'me'
-  }">YOU</div>`
+  const content = `<div class="infoOverlay ${storeBrand ? ' ' : 'me'}">${
+    storeBrand ? ' ' : 'YOU'
+  }</div>`
   overlay.setContent(content)
   overlay.setPosition(locPosition)
   overlay.setMap(map)

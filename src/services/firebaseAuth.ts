@@ -7,14 +7,14 @@ import {
 } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-}
+  apiKey: "AIzaSyDOU_WGKwEGI1Ao9w1DDz6fzEngYNCpI0g",
+  authDomain: "funpyeonlog-be.firebaseapp.com",
+  projectId: "funpyeonlog-be",
+  storageBucket: "funpyeonlog-be.appspot.com",
+  messagingSenderId: "1091175651376",
+  appId: "1:1091175651376:web:64eef9b8cec19dff5e35f5",
+  measurementId: "G-Q49C8T2XDN"
+};
 
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth()

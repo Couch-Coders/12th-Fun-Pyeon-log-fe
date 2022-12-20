@@ -62,7 +62,7 @@ const Store = () => {
   useEffect(() => {
     if (storeId) {
       dispatch(fetchStoreInfo(storeId))
-      dispatch(fetchAllReviews(storeId))
+      // dispatch(fetchAllReviews({ storeId, page: 1 }))
     }
   }, [storeId, dispatch])
 

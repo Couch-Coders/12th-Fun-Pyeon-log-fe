@@ -64,7 +64,9 @@ const StoreBasicInfo = () => {
           </span>
           <span>
             <PhoneFilled />
-            {storeInfo.phone}
+            {storeInfo.phone.length > 0
+              ? storeInfo.phone
+              : '전화번호가 없습니다.'}
           </span>
         </p>
         <KeywordBox>

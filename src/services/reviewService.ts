@@ -1,8 +1,8 @@
 import { ReviewType, WriteType } from '@stores/review/reviewType'
 import axios from 'axios'
 
-const getAllReviews = async (storeId: string) => {
-  const params = { page: 0, size: 10 }
+const getAllReviews = async (storeId: string, page = 1) => {
+  const params = { page: `${page}`, size: 2 }
   const response = await axios.get<ReviewType[]>(`/stores/${storeId}/reviews`, {
     params,
   })

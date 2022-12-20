@@ -22,7 +22,7 @@ const displayMarkerOverlay = (
   map: kakao.maps.Map
 ) => {
   //  data에서 브랜드 이름을 빼내고 브랜드에 맞는 이미지를 찾습니다.
-  const storeBrand = data.place_name.split(' ')[0]
+  const [storeBrand] = data.place_name.split(' ')
   const markerImg = getMarkerImg(storeBrand)
   const markerCenter = new kakao.maps.LatLng(+data.y, +data.x)
 
@@ -61,16 +61,19 @@ const displayMarkerOverlay = (
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 const displayMyLocation = (
   map: kakao.maps.Map,
-  locPosition: kakao.maps.LatLng
+  locPosition: kakao.maps.LatLng,
+  storeBrand?: string
 ) => {
   // 마커를 생성합니다
   const marker = new kakao.maps.Marker({
     map,
     position: locPosition,
-    image: customMarkerImage.myMarkerImg,
+    image: storeBrand
+      ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
+      : customMarkerImage.myMarkerImg,
   })
 
-  const content = '<div class="infoOverlay me">YOU</div>'
+  const content = `<div class="infoOverlay ${storeBrand ? ' ' : 'me'}>YOU</div>`
   overlay.setContent(content)
   overlay.setPosition(locPosition)
   overlay.setMap(map)

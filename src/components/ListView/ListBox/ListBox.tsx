@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '@stores/store'
 import { ListWrapper, SortBtns, ResultBox } from './ListBox.styles'
 import { ConvType } from '@stores/conv/convType'
-import { SORT_LIST } from '@utils/constants'
+import { LIST_SORT_ITEMS } from '@utils/constants'
 import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
 import { saveSortType } from '@stores/sort/sortSlice'
 
@@ -13,7 +13,7 @@ const ListBox = () => {
   const sortType = useSelector((state: RootState) => state.sort.sortType)
   const [convList, setConvList] = useState<ConvType[]>([])
   const dispatch = useDispatch()
-  const [select, setSelect] = useState(SORT_LIST[0].type)
+  const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
 
   const toggleBtn = (type: string) => {
     setSelect(type)
@@ -34,7 +34,7 @@ const ListBox = () => {
   return (
     <ListWrapper>
       <SortBtns>
-        {SORT_LIST.map((sort) => (
+        {LIST_SORT_ITEMS.map((sort) => (
           <li
             key={sort.type}
             className={select === sort.type ? 'active' : ''}

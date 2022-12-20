@@ -110,7 +110,6 @@ const MapContainer = () => {
       }
       const map = new kakao.maps.Map(mapContainer, mapOption)
       setMapApi(map)
-
       searchStore(SearchType.CATEGORY, '', map)
     },
     [setMapApi, searchStore]
@@ -151,7 +150,7 @@ const MapContainer = () => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
-      if (searchWord.length !== 0) {
+      if (searchWord.length > 0) {
         removeMarkerNInfo()
         searchStore(SearchType.KEYWORD, searchWord, mapApi)
       }
@@ -167,8 +166,7 @@ const MapContainer = () => {
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
     if (mapApi) {
-      const myMarker = KakaoServie.displayMyLocation(mapApi, locPosition)
-      setMarkers(myMarker)
+      mapApi.setCenter(locPosition)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
   }

@@ -5,7 +5,7 @@ export const calcDistance = (
 ) => {
   const lat1 = map.getCenter().getLat()
   const lng1 = map.getCenter().getLng()
-  function deg2rad(deg: number) {
+  const deg2rad = (deg: number) => {
     return deg * (Math.PI / 180)
   }
 

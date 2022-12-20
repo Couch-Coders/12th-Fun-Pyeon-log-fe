@@ -8,7 +8,7 @@ import React, {
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@stores/store'
 import { saveSearchWord } from '@stores/sort/sortSlice'
-import KakaoServie from '@services/kakaoService'
+import KakaoService from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 import { fetchAllStores } from '@stores/conv/convSlice'
 import Map from '@components/Map/Map'
@@ -43,7 +43,7 @@ const MapContainer = () => {
         // 새로 지도의 영역 설정
         const bounds = new kakao.maps.LatLngBounds()
         for (let i = 0; i < data.length; i++) {
-          const marker = KakaoServie.displayMarkerOverlay(data[i], map)
+          const marker = KakaoService.displayMarkerOverlay(data[i], map)
           setMarkers(marker)
           bounds.extend(
             new kakao.maps.LatLng(Number(data[i].y), Number(data[i].x))
@@ -54,7 +54,7 @@ const MapContainer = () => {
 
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
-        const myMarker = KakaoServie.displayMyLocation(map, newLatLan)
+        const myMarker = KakaoService.displayMyLocation(map, newLatLan)
         setMarkers(myMarker)
 
         dispatch(fetchAllStores({ mapData: data, map }))
@@ -69,7 +69,7 @@ const MapContainer = () => {
   const searchStore = useCallback(
     (searchType: SearchType, searchTerm: string, mapApi: kakao.maps.Map) => {
       // 펼쳐진 오버레이 삭제
-      KakaoServie.overlay.setMap(null)
+      KakaoService.overlay.setMap(null)
 
       const ps = new kakao.maps.services.Places()
       const lat = mapApi.getCenter().getLat()
@@ -144,14 +144,14 @@ const MapContainer = () => {
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
     // 펼쳐진 오버레이 삭제
-    KakaoServie.overlay.setMap(null)
+    KakaoService.overlay.setMap(null)
     deleteMarkers()
   }, [deleteMarkers])
 
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
-      if (searchWord.length !== 0) {
+      if (searchWord.length > 0) {
         removeMarkerNInfo()
         searchStore(SearchType.KEYWORD, searchWord, mapApi)
       }
@@ -167,7 +167,7 @@ const MapContainer = () => {
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
     if (mapApi) {
-      const myMarker = KakaoServie.displayMyLocation(mapApi, locPosition)
+      const myMarker = KakaoService.displayMyLocation(mapApi, locPosition)
       setMarkers(myMarker)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }

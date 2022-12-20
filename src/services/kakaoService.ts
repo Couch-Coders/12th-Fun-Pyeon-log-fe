@@ -81,7 +81,7 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = (placeName: string, stroeId: string) => {
+const overlayContainer = (placeName: string, storeId: string) => {
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -107,12 +107,12 @@ const overlayContainer = (placeName: string, stroeId: string) => {
       </div>
     </div>
     <div class="detail-view">
-      <a href="http://localhost:3000/stores/${stroeId}">상세보기</a>
+      <a href="https://friendly-bonbon-2516bc.netlify.app/stores/${storeId}">상세보기</a>
     </div>
   </div>`
 }
 
-const KakaoServie = {
+const KakaoService = {
   displayMarkerOverlay,
   displayMyLocation,
   overlayContainer,
@@ -120,4 +120,4 @@ const KakaoServie = {
   overlay,
 }
 
-export default KakaoServie
+export default KakaoService

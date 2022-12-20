@@ -6,7 +6,7 @@ import qs from 'qs'
 const getAllStore = async (storeId: string[]) => {
   const params = { id: [...storeId] }
 
-  const response = await axios.get<ConvType[]>('/stores/', {
+  const response = await axios.get<ConvType[]>('/api/stores/', {
     params,
     paramsSerializer: {
       serialize: ({ id }) => qs.stringify({ id }, { arrayFormat: 'repeat' }),
@@ -18,7 +18,7 @@ const getAllStore = async (storeId: string[]) => {
 
 // 하나의 편의점 정보 get
 const getStore = async (storeId: string) => {
-  const response = await axios.get(`/stores/${storeId}`)
+  const response = await axios.get(`/api/stores/${storeId}`)
 
   return response.data
 }

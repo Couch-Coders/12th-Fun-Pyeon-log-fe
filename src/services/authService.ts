@@ -7,7 +7,7 @@ interface SignInParam {
 }
 
 const signIn = async ({ token }: SignInParam) => {
-  const response = await axios.get('/users/me', {
+  const response = await axios.get('/api/users/me', {
     headers: { Authorization: `${token}` },
     withCredentials: true,
   })
@@ -15,7 +15,7 @@ const signIn = async ({ token }: SignInParam) => {
 }
 
 const signOut = async () => {
-  const response = await axios.delete('/users/me', {
+  const response = await axios.delete('/api/users/me', {
     withCredentials: true,
   })
   return response

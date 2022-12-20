@@ -38,3 +38,9 @@ export const ITEMS = [
   { title: '분위기', keywordArray: MOOD },
   { title: '편의시설', keywordArray: FACILITIES },
 ]
+
+export const SORT_LIST = [
+  { type: 'distance', title: '가까운순' },
+  { type: 'star', title: '별점 높은순' },
+  { type: 'review', title: '리뷰 많은순' },
+]

@@ -14,7 +14,7 @@ export const ControlBtns = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 3;
+  z-index: 2;
 
   display: flex;
   justify-content: flex-end;

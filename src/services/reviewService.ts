@@ -3,14 +3,14 @@ import axios from 'axios'
 
 const getAllReviews = async (storeId: string) => {
   const params = { page: 0, size: 10 }
-  const response = await axios.get<ReviewType[]>(`/stores/${storeId}/reviews`, {
+  const response = await axios.get<ReviewType[]>(`/api/stores/${storeId}/reviews`, {
     params,
   })
   return response.data
 }
 
 const createReview = async (reviewData: WriteType, storeId: string) => {
-  const response = await axios.post(`/stores/${storeId}/reviews`, reviewData, {
+  const response = await axios.post(`/api/stores/${storeId}/reviews`, reviewData, {
     withCredentials: true,
   })
   return response.data
@@ -22,7 +22,7 @@ const updateReview = async (
   reviewId: number
 ) => {
   const response = await axios.put(
-    `/stores/${storeId}/reviews/${reviewId}`,
+    `/api/stores/${storeId}/reviews/${reviewId}`,
     reviewData,
     {
       withCredentials: true,
@@ -33,7 +33,7 @@ const updateReview = async (
 
 const deleteReview = async (storeId: string, reviewId: number) => {
   const response = await axios.delete(
-    `/stores/${storeId}/reviews/${reviewId}`,
+    `/api/stores/${storeId}/reviews/${reviewId}`,
     {
       withCredentials: true,
     }

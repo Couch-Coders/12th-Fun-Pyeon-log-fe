@@ -12,13 +12,13 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import mapReducer from './map/mapSlice'
+import sortReducer from './sort/sortSlice'
 import userReducer from './auth/authSlice'
 import reviewReducer from './review/reivewSlice'
 import convReducer from './conv/convSlice'
 
 const rootReducer = combineReducers({
-  map: mapReducer,
+  sort: sortReducer,
   user: userReducer,
   review: reviewReducer,
   conv: convReducer,

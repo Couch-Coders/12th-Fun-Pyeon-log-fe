@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
 import FilterBox from '@components/FilterBox/FilterBox'
 import ListBox from '@components/ListView/ListBox/ListBox'
+import { useDispatch } from 'react-redux'
+import { saveSearchWord } from '@stores/sort/sortSlice'
 
 styled(MapContainer)`
   width: 70vw;
@@ -12,20 +14,20 @@ styled(MapContainer)`
 `
 
 const Map = () => {
-  const [keyword, setKeyword] = useState<string>('')
   const [isFiltering, setIsFiltering] = useState(false)
   const sortBtnRef = useRef<HTMLButtonElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const dispatch = useDispatch()
 
   const updateValue = () => {
     const { current } = inputRef
 
     if (!current) return
-    if (!current.value.trim()) {
+    if (current.value.trim()) {
+      dispatch(saveSearchWord(current.value))
+    } else {
       alert('검색어를 입력해주세요.')
       current.value = ''
-    } else {
-      setKeyword(current.value)
     }
   }
 
@@ -65,7 +67,7 @@ const Map = () => {
         )}
       </ListView>
 
-      <MapContainer keyword={keyword} />
+      <MapContainer />
     </Wrapper>
   )
 }

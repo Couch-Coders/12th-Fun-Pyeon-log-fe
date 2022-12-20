@@ -49,7 +49,7 @@ const ReviewList: React.FC<ReviewType> = ({
     window.confirm('리뷰를 삭제 하시겠습니까?')
     if (storeId) {
       await dispatch(deleteReview({ storeId, reviewId }))
-      await dispatch(fetchAllReviews(storeId))
+      await dispatch(fetchAllReviews({ storeId, page: 1 }))
     }
   }
 

@@ -13,9 +13,13 @@ const initialState: ReviewState = {
 
 export const fetchAllReviews = createAsyncThunk(
   'review/fetchAll',
-  async (storeId: string, thunkApi) => {
+  async (data: { storeId: string; page: number }, thunkApi) => {
+    const { storeId, page } = data
     try {
-      return await ReviewService.getAllReviews(storeId)
+      return await ReviewService.getAllReviews(storeId, page)
+      // return reviews.sort(
+      //   (a, b) => Number(b.reviewEntryNo) - Number(a.reviewEntryNo)
+      // )
     } catch (error) {
       const message = ErrorService.axiosErrorHandler(error)
       return thunkApi.rejectWithValue(message)

@@ -36,20 +36,11 @@ export const Content = styled.div`
   ul {
     display: flex;
     flex-direction: column;
-    justify-content: center;
 
     li {
       margin-bottom: 10px;
-
-      span {
-        background-color: white;
-        font-size: 14px;
-        color: ${(props) => props.theme.colors.purple};
-        background-color: white;
-        border: 1px solid ${(props) => props.theme.colors.purple};
-        border-radius: 5px;
-        padding: 2px 5px;
-        transition: 0.5s;
+      :last-child {
+        margin-bottom: 20px;
       }
     }
   }

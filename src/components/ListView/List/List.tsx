@@ -3,6 +3,7 @@ import kakaoService from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 import { StarFilled } from '@ant-design/icons'
 import { ConBox, Title, Content } from './List.styles'
+import KeywordBadge from '@styles/KeywordBadge'
 
 interface ListProps {
   placeName: string
@@ -48,9 +49,7 @@ const List: React.FC<ListProps> = ({
       <Content>
         <ul>
           {keywords.slice(0, 3).map((keyword) => (
-            <li key={keyword}>
-              <span>{keyword}</span>
-            </li>
+            <KeywordBadge key={keyword}>{keyword}</KeywordBadge>
           ))}
         </ul>
 

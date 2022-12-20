@@ -55,7 +55,7 @@ const ReviewList: React.FC<ReviewType> = ({
 
   const editHandler = () => {
     dispatch(selectReview(reviewId))
-    navigate(URLUtill.getReviewEditUrl(reviewId))
+    if (storeId) navigate(URLUtill.getReviewEditUrl(storeId, reviewId))
   }
 
   return (

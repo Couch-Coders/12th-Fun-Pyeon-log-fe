@@ -68,6 +68,17 @@ const ReviewListContainer = () => {
             userId={review.userEmail}
           />
         ))}
+
+        {page < pageCount && (
+          <FunButton
+            name={'더보기'}
+            className="opposite"
+            onClick={() => {
+              setPage(page + 1)
+              // viewMore()
+            }}
+          />
+        )}
       </ListContainer>
     </ReviewListWrapper>
   )

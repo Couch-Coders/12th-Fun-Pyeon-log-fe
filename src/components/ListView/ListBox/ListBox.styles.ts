@@ -40,4 +40,20 @@ export const SortBtns = styled.ul`
 export const ResultBox = styled.ul`
   height: calc(100% - 30px);
   overflow-x: scroll;
+
+  // 스크롤바
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: rgba(125, 83, 214, 0.7);
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(125, 83, 214, 0.07);
+  }
 `

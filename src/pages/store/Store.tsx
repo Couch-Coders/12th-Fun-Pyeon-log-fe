@@ -34,9 +34,10 @@ const Store = () => {
   useEffect(() => {
     if (mapRef.current) mapRef.current.innerHTML = ''
     const mapContainer = mapRef.current as HTMLDivElement
-    if (selectedStore) {
-      console.log(selectedStore)
-      const [storeBrand] = selectedStore.place_name.split(' ')
+    if (selectedStore?.y) {
+      const [storeBrand] = selectedStore.place_name
+        ? selectedStore.place_name.split(' ', 1)
+        : '펀편log 편의점'.split(' ', 1)
       const mapOption = {
         center: new kakao.maps.LatLng(
           Number(selectedStore.y),

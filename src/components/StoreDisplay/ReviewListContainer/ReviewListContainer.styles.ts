@@ -4,7 +4,7 @@ export const ReviewListWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 80%;
-  min-width: 1000px;
+  min-width: 800px;
   padding: 20px 0;
 `
 
@@ -67,6 +67,12 @@ export const ListContainer = styled.div`
     margin: 20px;
     color: ${(props) => props.theme.colors.purple};
     font-weight: 700;
+  }
+
+  .opposite {
+    /* border: 1px solid transparent; */
+    margin: 10px 0;
+    margin-left: calc(50% - 44px);
   }
 
   overflow-y: scroll;

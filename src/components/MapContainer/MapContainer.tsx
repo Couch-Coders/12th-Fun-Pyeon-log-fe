@@ -6,8 +6,8 @@ import React, {
   useCallback,
 } from 'react'
 import { useSelector } from 'react-redux'
+import { setSearchedCoord, saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
-import { saveSearchWord } from '@stores/sort/sortSlice'
 import KakaoService from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
 import { fetchAllStores } from '@stores/conv/convSlice'
@@ -22,6 +22,9 @@ enum SearchType {
 
 const MapContainer = () => {
   const searchWord = useSelector((state: RootState) => state.sort.searchWord)
+  const searchedCoord = useSelector(
+    (state: RootState) => state.sort.searchedCoord
+  )
   const dispatch = useAppDispatch()
   const { setMapApi, setMarkers, deleteMarkers, mapApi } =
     useContext(MapContext)

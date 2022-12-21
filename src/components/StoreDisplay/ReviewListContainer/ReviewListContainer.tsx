@@ -107,6 +107,9 @@ const ReviewListContainer = () => {
             }}
           />
         )}
+        {(reviewCount as number) === 0 && (
+          <p className="nothing">등록된 리뷰가 없습니다.</p>
+        )}
       </ListContainer>
     </ReviewListWrapper>
   )

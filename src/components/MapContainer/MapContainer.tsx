@@ -85,6 +85,7 @@ const MapContainer = () => {
           searchCallBack(data, status, mapApi)
         )
       } else {
+        dispatch(setSearchedCoord({ lat, lng }))
         //  카테고리 서치 기능
         ps.categorySearch(
           'CS2',
@@ -129,9 +130,25 @@ const MapContainer = () => {
         const lat = position.coords.latitude // 위도
         const lng = position.coords.longitude // 경도
         setMyPosition((prev) => ({ ...prev, lat, lng }))
-        // 받아온 좌표로 지도 center 값 셋팅
-        const center = new kakao.maps.LatLng(lat, lng)
-        drawMap(center)
+        if (searchedCoord) {
+          if (mapRef.current) mapRef.current.innerHTML = ''
+          const mapContainer = mapRef.current as HTMLDivElement
+          const center = new kakao.maps.LatLng(
+            searchedCoord.lat,
+            searchedCoord.lng
+          )
+          const mapOption = {
+            center,
+            level: 4,
+          }
+          const map = new kakao.maps.Map(mapContainer, mapOption)
+          setMapApi(map)
+        } else {
+          // 받아온 좌표로 지도 center 값 셋팅
+          const center = new kakao.maps.LatLng(lat, lng)
+          drawMap(center)
+          dispatch(setSearchedCoord({ lat, lng }))
+        }
       },
       (positionError) => {
         alert(
@@ -139,9 +156,10 @@ const MapContainer = () => {
         )
         const center = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
         drawMap(center)
+        dispatch(setSearchedCoord({ lat: myPosition.lat, lng: myPosition.lng }))
       }
     )
-  }, [drawMap, myPosition.lat, myPosition.lng])
+  }, [])
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {

@@ -17,9 +17,6 @@ export const fetchAllReviews = createAsyncThunk(
     const { storeId, page } = data
     try {
       return await ReviewService.getAllReviews(storeId, page)
-      // return reviews.sort(
-      //   (a, b) => Number(b.reviewEntryNo) - Number(a.reviewEntryNo)
-      // )
     } catch (error) {
       const message = ErrorService.axiosErrorHandler(error)
       return thunkApi.rejectWithValue(message)
@@ -78,6 +75,9 @@ const reviewSlice = createSlice({
         (item) => item.reviewEntryNo === Number(action.payload)
       )
     },
+    initReviews: (state) => {
+      state.reviews = []
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchAllReviews.pending, (state) => {
@@ -87,7 +87,7 @@ const reviewSlice = createSlice({
       fetchAllReviews.fulfilled,
       (state, action: PayloadAction<ReviewType[]>) => {
         state.loading = false
-        state.reviews = action.payload
+        state.reviews = [...state.reviews, ...action.payload]
       }
     )
     builder.addCase(fetchAllReviews.rejected, (state, action) => {
@@ -127,5 +127,5 @@ const reviewSlice = createSlice({
   },
 })
 
-export const { selectReview } = reviewSlice.actions
+export const { selectReview, initReviews } = reviewSlice.actions
 export default reviewSlice.reducer

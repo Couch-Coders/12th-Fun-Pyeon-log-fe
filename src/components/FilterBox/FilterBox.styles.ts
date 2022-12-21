@@ -24,6 +24,22 @@ export const FilterWrapper = styled.div`
     border: none;
     margin-bottom: 20px;
   }
+
+  // 스크롤바
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: rgba(125, 83, 214, 0.7);
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(125, 83, 214, 0.07);
+  }
 `
 export const Title = styled.h2`
   font-weight: 700;

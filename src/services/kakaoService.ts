@@ -33,7 +33,14 @@ const displayMarkerOverlay = (data: ConvType, map: kakao.maps.Map) => {
 
   const name = data.place_name
   const content = `<div class="infoOverlay">${name}</div>`
-  const overlayContent = overlayContainer(name, data.id)
+  const overlayContent = overlayContainer(
+    name,
+    data.id,
+    data.place_name,
+    data.phone,
+    data.reviewCount,
+    data.starCount
+  )
 
   // 마커에 클릭이벤트를 등록합니다
   kakao.maps.event.addListener(marker, 'click', function () {
@@ -85,7 +92,14 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = (placeName: string, storeId: string) => {
+const overlayContainer = (
+  placeName: string,
+  storeId: string,
+  address: string,
+  phoneNumber: string,
+  reviewCount: number,
+  starCount: number
+) => {
   const currentUrl = String(document.location.origin)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
@@ -97,18 +111,20 @@ const overlayContainer = (placeName: string, storeId: string) => {
      </header>
     <div class="star-review">
       <div class="star">
-        <img src=${star} alt="star image"/>4.6
+        <img src=${star} alt="star image"/>${starCount}
       </div>
       <div class="review-count">
-      리뷰 23개
+      리뷰 ${reviewCount}개
       </div> 
     </div>
     <div class="store-info">
       <div class="address">
-      <img src=${pin} alt="pin image"/><p>서울시 어쩌구 무슨무슨로 2-13</p>
+      <img src=${pin} alt="pin image"/><p>${address}</p>
       </div>
       <div class="phone">
-      <img src=${phone} alt="phone image"/><p>02-525-2525</p>
+      <img src=${phone} alt="phone image"/><p>${
+    phoneNumber.length > 0 ? phoneNumber : '전화번호가 없습니다.'
+  }</p>
       </div>
     </div>
     <div class="detail-view">

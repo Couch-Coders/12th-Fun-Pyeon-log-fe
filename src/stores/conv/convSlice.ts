@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import ErrorService from '@services/errorService'
+import KakaoService from '@services/kakaoService'
 import StoreService from '@services/storeService'
-import { RootState } from '@stores/store'
 import { calcDistance } from '@utils/calc'
 import { ConvState, ConvType } from './convType'
 
@@ -55,23 +55,20 @@ export const fetchAllStores = createAsyncThunk(
 )
 
 // 클릭한 한개의 편의점에 대한 정보 가져오기
-export const fetchStoreInfo = createAsyncThunk<
-  ConvType,
-  string,
-  { state: RootState }
->('convStore/fetchStore', async (storeId: string, thunkApi) => {
-  try {
-    const { stores } = thunkApi.getState().conv
-    const storeInfo = await StoreService.getStore(storeId)
-    const [selectStore] = stores.filter(
-      (store) => store.id === storeInfo.storeId
-    )
-    return { ...selectStore, ...storeInfo }
-  } catch (error) {
-    const message = ErrorService.axiosErrorHandler(error)
-    return thunkApi.rejectWithValue(message)
+export const fetchStoreInfo = createAsyncThunk(
+  'convStore/fetchStore',
+  async (storeData: { storeId: string; decodedStore: string }, thunkApi) => {
+    try {
+      const { storeId, decodedStore } = storeData
+      const searchedStore = KakaoService.searchOneStore(decodedStore, storeId)
+      const storeInfo = await StoreService.getStore(storeId)
+      return { ...searchedStore[0], ...storeInfo }
+    } catch (error) {
+      const message = ErrorService.axiosErrorHandler(error)
+      return thunkApi.rejectWithValue(message)
+    }
   }
-})
+)
 
 const convSlice = createSlice({
   name: 'conv',

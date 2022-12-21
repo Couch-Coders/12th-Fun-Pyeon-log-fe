@@ -156,6 +156,14 @@ const MapContainer = () => {
       if (searchWord.length > 0) {
         removeMarkerNInfo()
         searchStore(SearchType.KEYWORD, searchWord, mapApi)
+      } else if (searchWord.length === 0 && searchedCoord) {
+        removeMarkerNInfo()
+        const locPosition = new kakao.maps.LatLng(
+          searchedCoord.lat,
+          searchedCoord.lng
+        )
+        mapApi.setCenter(locPosition)
+        searchStore(SearchType.CATEGORY, '', mapApi)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

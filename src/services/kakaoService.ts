@@ -3,6 +3,7 @@ import star from '../assets/star.png'
 import pin from '../assets/pin.png'
 import phone from '../assets/phone.png'
 import funlogImg from '../assets/convImg/funlog.png'
+import { ConvType } from '@stores/conv/convType'
 
 const { kakao } = window
 
@@ -17,10 +18,7 @@ const infoOverlay = new kakao.maps.CustomOverlay({
 })
 
 // 지도에 마커를 표시하는 함수입니다
-const displayMarkerOverlay = (
-  data: kakao.maps.services.PlacesSearchResultItem,
-  map: kakao.maps.Map
-) => {
+const displayMarkerOverlay = (data: ConvType, map: kakao.maps.Map) => {
   //  data에서 브랜드 이름을 빼내고 브랜드에 맞는 이미지를 찾습니다.
   const [storeBrand] = data.place_name.split(' ')
   const markerImg = getMarkerImg(storeBrand)

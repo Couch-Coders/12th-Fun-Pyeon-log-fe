@@ -44,3 +44,5 @@ export const LIST_SORT_ITEMS = [
   { type: 'star', title: '별점 높은순' },
   { type: 'review', title: '리뷰 많은순' },
 ]
+
+export const REVIEW_SIZE = 10

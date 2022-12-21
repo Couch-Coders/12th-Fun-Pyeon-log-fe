@@ -63,6 +63,12 @@ export const ListContainer = styled.div`
   height: 450px;
   border: 1px solid #d9d9d9;
 
+  > p {
+    margin: 20px;
+    color: ${(props) => props.theme.colors.purple};
+    font-weight: 700;
+  }
+
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

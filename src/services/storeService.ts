@@ -18,7 +18,7 @@ const getAllStore = async (storeId: string[]) => {
 
 // 하나의 편의점 정보 get
 const getStore = async (storeId: string) => {
-  const response = await axios.get(`/api/stores/${storeId}`)
+  const response = await axios.get<ConvType>(`/api/stores/${storeId}`)
 
   return response.data
 }

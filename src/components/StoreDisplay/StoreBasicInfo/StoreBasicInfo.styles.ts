@@ -47,23 +47,8 @@ export const ConvInfo = styled.div`
 `
 
 export const KeywordBox = styled.div`
-  display: flex;
-
   ul {
     display: flex;
-    gap: 10px;
-    li {
-      span {
-        background-color: white;
-        font-size: 14px;
-        font-weight: bold;
-        color: #7d53d6;
-        border: 1px solid #7d53d6;
-        border-radius: 5px;
-        padding: 2px 5px;
-        transition: 0.5s;
-      }
-    }
   }
 `
 

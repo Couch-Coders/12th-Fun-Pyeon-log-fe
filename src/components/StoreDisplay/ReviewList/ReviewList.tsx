@@ -16,6 +16,7 @@ import {
 } from '@stores/review/reivewSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import URLUtill from '@utils/urlUtill'
+import KeywordBadge from '@styles/KeywordBadge'
 
 interface ReviewType {
   reviewId: number
@@ -49,13 +50,14 @@ const ReviewList: React.FC<ReviewType> = ({
     window.confirm('리뷰를 삭제 하시겠습니까?')
     if (storeId) {
       await dispatch(deleteReview({ storeId, reviewId }))
-      await dispatch(fetchAllReviews({ storeId, page: 1 }))
+      // await dispatch(fetchAllReviews({ storeId, page: 0 }))
+      navigate(URLUtill.getStoreUrl(storeId))
     }
   }
 
   const editHandler = () => {
     dispatch(selectReview(reviewId))
-    if (storeId) navigate(URLUtill.getReviewEditUrl(storeId, reviewId))
+    if (storeId) navigate(URLUtill.getReviewEditUrl(reviewId))
   }
 
   return (
@@ -71,22 +73,24 @@ const ReviewList: React.FC<ReviewType> = ({
         </ReviewEditButton>
       )}
       <div className="review" onDoubleClick={onWideViewHandler}>
-        {reviewContent}
+        <span>{reviewContent}</span>
       </div>
       <ListInfo>
         <div className="star_box">
           <StarFilled />
           <span>{starCount}</span>
         </div>
-        <KeywordBox>
+        <KeywordBox isWide={isWideView}>
           <ul>
-            {keywords
-              .filter((_, idx) => idx < 2)
-              .map((keyword, idx) => (
-                <li key={idx}>
-                  <span>{keyword}</span>
-                </li>
-              ))}
+            {isWideView
+              ? keywords.map((keyword) => (
+                  <KeywordBadge key={keyword}>{keyword}</KeywordBadge>
+                ))
+              : keywords
+                  .slice(0, 2)
+                  .map((keyword) => (
+                    <KeywordBadge key={keyword}>{keyword}</KeywordBadge>
+                  ))}
           </ul>
         </KeywordBox>
 

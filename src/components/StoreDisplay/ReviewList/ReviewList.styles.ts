@@ -12,7 +12,7 @@ export const ListContainer = styled.div<ListContainerProps>`
 
   border: 1px solid #d9d9d9;
 
-  padding: 25px 10px 10px;
+  padding: 28px 10px 10px;
 
   .review {
     font-size: 16px;
@@ -21,7 +21,9 @@ export const ListContainer = styled.div<ListContainerProps>`
     height: ${({ isWide }) => (isWide ? '200px' : '73px')};
     overflow-y: scroll;
     transition: height 0.2s ease;
+    white-space: pre-wrap;
     cursor: pointer;
+
     ::-webkit-scrollbar {
       display: none;
     }
@@ -29,8 +31,8 @@ export const ListContainer = styled.div<ListContainerProps>`
 `
 export const ReviewEditButton = styled.div`
   position: absolute;
-  top: 1px;
-  right: 8px;
+  top: 5px;
+  right: 10px;
   display: flex;
 
   :first-child button {
@@ -70,20 +72,13 @@ export const ListInfo = styled.div`
   }
 `
 
-export const KeywordBox = styled.div`
+export const KeywordBox = styled.div<ListContainerProps>`
+  width: 600px;
   ul {
     display: flex;
+    flex-wrap: wrap;
     li {
-      span {
-        background-color: white;
-        font-size: 14px;
-        color: #7d53d6;
-        border: 1px solid #7d53d6;
-        border-radius: 5px;
-        padding: 2px 5px;
-        margin: 0 5px;
-        transition: 0.5s;
-      }
+      margin-bottom: ${({ isWide }) => (isWide ? '10px' : '0')};
     }
   }
 `

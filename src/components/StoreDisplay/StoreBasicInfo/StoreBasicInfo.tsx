@@ -30,7 +30,7 @@ const StoreBasicInfo = () => {
   const [storeInfo, setStoreInfo] = useState<StoreInfo>({
     storeImg: funlogImg,
     place_name: 'FUN편로그 편의점',
-    phone: '  02-525-2525',
+    phone: '02-525-2525',
     address_name: ' 서울시 어쩌구 무슨무슨로 2-1',
     starCount: 3,
     keywordList: ['제품이 다양해요', '매장이 청결해요', '펀편로그 좋아요'],
@@ -38,10 +38,13 @@ const StoreBasicInfo = () => {
 
   useLayoutEffect(() => {
     if (selectedStore) {
-      const [placeName] = selectedStore.place_name.split(' ', 1)
+      console.log(selectedStore)
+      const [placeName] = selectedStore.place_name
+        ? selectedStore.place_name.split(' ', 1)
+        : 'FUN편로그 편의점'.split(' ', 1)
       setStoreInfo((prevState) => {
         return {
-          prevState,
+          ...prevState,
           ...selectedStore,
           storeImg: getBrandImg(placeName) ?? funlogImg,
         }
@@ -64,7 +67,7 @@ const StoreBasicInfo = () => {
           </span>
           <span>
             <PhoneFilled />
-            {storeInfo.phone.length > 0
+            {storeInfo.phone && storeInfo.phone.length > 0
               ? storeInfo.phone
               : '전화번호가 없습니다.'}
           </span>

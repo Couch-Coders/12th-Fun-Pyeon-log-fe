@@ -101,6 +101,7 @@ const overlayContainer = (
   starCount: number
 ) => {
   const currentUrl = String(document.location.origin)
+  const storeEncode = encodeURI(placeName)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -128,7 +129,7 @@ const overlayContainer = (
       </div>
     </div>
     <div class="detail-view">
-      <a href="${currentUrl}/stores/${storeId}">상세보기</a>
+      <a href="${currentUrl}/stores/${storeId}?store=${storeEncode}">상세보기</a>
     </div>
   </div>`
 }

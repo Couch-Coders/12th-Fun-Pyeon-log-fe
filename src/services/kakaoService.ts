@@ -134,10 +134,24 @@ const overlayContainer = (
   </div>`
 }
 
+const searchOneStore = (storeName: string, storeId: string) => {
+  const store: kakao.maps.services.PlacesSearchResult = []
+  const ps = new kakao.maps.services.Places()
+  ps.keywordSearch(storeName, (data, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      const searchedstore = data.filter((store) => store.id === storeId)
+      store.push(...searchedstore)
+    }
+  })
+
+  return store
+}
+
 const KakaoService = {
   displayMarkerOverlay,
   displayMyLocation,
   overlayContainer,
+  searchOneStore,
   kakao,
   overlay,
 }

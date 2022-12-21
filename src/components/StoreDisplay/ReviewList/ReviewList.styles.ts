@@ -9,14 +9,13 @@ export const ListContainer = styled.div<ListContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  border: 1px solid #d9d9d9;
-
+  border-bottom: 1px solid #d9d9d9;
   padding: 28px 10px 10px;
 
   .review {
     font-size: 16px;
-    line-height: 1.2rem;
+    line-height: 1.3rem;
+    letter-spacing: 0.5px;
     margin-bottom: 20px;
     height: ${({ isWide }) => (isWide ? '200px' : '73px')};
     overflow-y: scroll;
@@ -35,9 +34,6 @@ export const ReviewEditButton = styled.div`
   right: 10px;
   display: flex;
 
-  :first-child button {
-    margin-left: 5px;
-  }
   button {
     width: 25px;
     background-color: transparent;
@@ -45,13 +41,33 @@ export const ReviewEditButton = styled.div`
     font-size: 20px;
     font-weight: bold;
 
+    &:first-child {
+      margin-right: 15px;
+    }
+
     cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      border: 1px solid ${(props) => props.theme.colors.checkBox};
+      color: ${(props) => props.theme.colors.checkBoxDesc};
+      border-radius: 5px;
+
+      svg {
+        margin: 5px;
+      }
+    }
 
     :active {
       transform: scale(0.95);
     }
     :hover {
-      color: #4d4d4d;
+      span {
+        color: ${(props) => props.theme.colors.purple};
+      }
     }
   }
 `

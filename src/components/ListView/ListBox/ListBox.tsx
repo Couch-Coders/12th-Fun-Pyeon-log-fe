@@ -7,9 +7,11 @@ import { ConvType } from '@stores/conv/convType'
 import { LIST_SORT_ITEMS } from '@utils/constants'
 import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
 import { saveSortType } from '@stores/sort/sortSlice'
+import LoadingWithLogo from '@styles/LoadingWithLogo'
 
 const ListBox = () => {
   const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
+  const loading = useSelector((state: RootState) => state.conv.loading)
   const sortType = useSelector((state: RootState) => state.sort.sortType)
   const [convList, setConvList] = useState<ConvType[]>([])
   const dispatch = useDispatch()
@@ -46,7 +48,9 @@ const ListBox = () => {
       </SortBtns>
 
       <ResultBox>
-        {convList.length === 0 ? (
+        {loading ? (
+          <LoadingWithLogo />
+        ) : convList.length === 0 ? (
           <p className="noResult">검색 결과가 없습니다.</p>
         ) : (
           convList.map((store) => (

@@ -76,7 +76,20 @@ export const ListContainer = styled.div`
   }
 
   overflow-y: scroll;
+
+  // 스크롤바
   ::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: rgba(125, 83, 214, 0.7);
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(125, 83, 214, 0.07);
   }
 `

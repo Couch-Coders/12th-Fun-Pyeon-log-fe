@@ -15,6 +15,7 @@ import {
 } from './ReviewListContainer.styles'
 import URLUtill from '@utils/urlUtill'
 import { fetchAllReviews } from '@stores/review/reivewSlice'
+import { fetchAllReviews, initReviews } from '@stores/review/reivewSlice'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
@@ -38,21 +39,9 @@ const ReviewListContainer = () => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(reviews)
-
-  //   if (reviews.length) {
-  //     setReviewList(reviews)
-  //   }
-  // }, [reviews])
-
   useEffect(() => {
-    if (storeId) {
-      dispatch(fetchAllReviews({ storeId, page }))
-      setReviewList([...reviewList, ...reviews])
-    }
-    console.log(reviews)
-  }, [page])
+    if (reviews.length > 0) dispatch(initReviews())
+  }, [])
 
   useEffect(() => {
     if (reviewCount) setPageCount(Math.ceil(reviewCount / 2))

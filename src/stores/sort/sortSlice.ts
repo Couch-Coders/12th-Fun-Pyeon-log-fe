@@ -3,7 +3,7 @@ import { ListInfo } from './sortType'
 
 const initialState: ListInfo = {
   searchWord: '',
-  searchLocation: null,
+  searchedCoord: null,
   brandData: [],
   keywordData: [],
   sortType: 'distance',
@@ -16,11 +16,11 @@ const sortSlice = createSlice({
     saveSearchWord: (state, action: PayloadAction<string>) => {
       state.searchWord = action.payload
     },
-    saveSearchLocation: (
+    setSearchedCoord: (
       state,
       action: PayloadAction<{ lat: number; lng: number } | null>
     ) => {
-      state.searchLocation = action.payload
+      state.searchedCoord = action.payload
     },
     saveBrand: (state, action: PayloadAction<string[]>) => {
       state.brandData = action.payload
@@ -39,6 +39,6 @@ export const {
   saveBrand,
   saveKeyword,
   saveSortType,
-  saveSearchLocation,
+  setSearchedCoord,
 } = sortSlice.actions
 export default sortSlice.reducer

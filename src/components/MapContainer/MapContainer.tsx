@@ -46,8 +46,6 @@ const MapContainer = () => {
         // 새로 지도의 영역 설정
         const bounds = new kakao.maps.LatLngBounds()
         for (let i = 0; i < data.length; i++) {
-          const marker = KakaoService.displayMarkerOverlay(data[i], map)
-          setMarkers(marker)
           bounds.extend(
             new kakao.maps.LatLng(Number(data[i].y), Number(data[i].x))
           )
@@ -65,6 +63,7 @@ const MapContainer = () => {
         console.log(`error ${status}`)
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -99,6 +98,7 @@ const MapContainer = () => {
         )
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchCallBack]
   )
 
@@ -159,6 +159,7 @@ const MapContainer = () => {
         dispatch(setSearchedCoord({ lat: myPosition.lat, lng: myPosition.lng }))
       }
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수

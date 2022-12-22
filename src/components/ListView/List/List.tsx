@@ -32,14 +32,14 @@ const List: React.FC<ListProps> = ({
   const center = new kakao.maps.LatLng(lat, lng)
   const listClickHandler = () => {
     if (mapApi) {
-      const content = kakaoService.overlayContainer(
+      const content = kakaoService.overlayContainer({
         placeName,
         storeId,
         address,
         phoneNumber,
         reviewCount,
-        starCount
-      )
+        starCount,
+      })
       kakaoService.overlay.setPosition(center)
       kakaoService.overlay.setContent(content)
       kakaoService.overlay.setMap(mapApi)

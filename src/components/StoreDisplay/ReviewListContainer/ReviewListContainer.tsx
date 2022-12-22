@@ -29,6 +29,7 @@ const ReviewListContainer = () => {
   const reviewCount = selectedStore?.reviewCount
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState(0)
+  const reviewCount = selectedStore?.reviewCount ?? 0
 
   const moveToWrite = () => {
     if (storeId) {
@@ -81,7 +82,7 @@ const ReviewListContainer = () => {
           />
         ))}
 
-        {page < pageCount && (reviewCount as number) > 0 && (
+        {page < pageCount && reviewCount > 0 && (
           <FunButton
             name={'더보기'}
             className="opposite"
@@ -90,7 +91,7 @@ const ReviewListContainer = () => {
             }}
           />
         )}
-        {(reviewCount as number) === 0 && (
+        {reviewCount === 0 && (
           <p className="noReview">등록된 리뷰가 없습니다.</p>
         )}
       </ListContainer>

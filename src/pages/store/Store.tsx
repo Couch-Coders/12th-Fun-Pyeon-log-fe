@@ -29,7 +29,7 @@ const Store = () => {
     const encodedstore = storeParam.get('store')
 
     if (storeId && encodedstore) {
-      const decodedStore = decodeURI(encodedstore)
+      const decodedStore = decodeURIComponent(encodedstore)
       dispatch(fetchStoreInfo({ storeId, decodedStore }))
       dispatch(fetchAllReviews(storeId))
     }

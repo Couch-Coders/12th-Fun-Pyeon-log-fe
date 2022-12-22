@@ -16,6 +16,9 @@ export const TextWrapper = styled.div`
   textarea {
     width: 100%;
     min-height: 250px;
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: 1px;
     background-color: ${(props) => props.theme.colors.reviewBg};
     border: none;
     border-radius: 10px;

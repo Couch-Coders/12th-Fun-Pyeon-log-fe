@@ -37,7 +37,11 @@ const List: React.FC<ListProps> = ({
   }
 
   return (
-    <ConBox onClick={listClickHandler}>
+    <ConBox
+      onClick={() => {
+        listClickHandler()
+      }}
+    >
       <Title>
         <h2>{placeName}</h2>
         <div className="star_box">

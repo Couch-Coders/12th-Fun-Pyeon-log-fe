@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
-import { ReviewType } from '@stores/review/reviewType'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, useAppDispatch } from '@stores/store'
 import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
 
 import { PlusOutlined } from '@ant-design/icons'
@@ -14,14 +13,28 @@ import {
   ListContainer,
 } from './ReviewListContainer.styles'
 import URLUtill from '@utils/urlUtill'
+import { fetchAllReviews, initReviews } from '@stores/review/reivewSlice'
+import { REVIEW_SIZE } from '@utils/constants'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
   const navigate = useNavigate()
-  const [reviewList, setReviewList] = useState<ReviewType[]>([])
+  const dispatch = useAppDispatch()
   const reviews = useSelector((state: RootState) => state.review.reviews)
-
   const user = useSelector((state: RootState) => state.user.user)
+  const selectedStore = useSelector(
+    (state: RootState) => state.conv.selectedStore
+  )
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState(0)
+  const reviewCount = selectedStore?.reviewCount ?? 0
+  const newReviews = reviews.filter((review, idx) => {
+    return (
+      reviews.findIndex((review1, idx1) => {
+        return review.reviewEntryNo === review1.reviewEntryNo
+      }) === idx
+    )
+  })
 
   const moveToWrite = () => {
     if (storeId) {
@@ -30,10 +43,16 @@ const ReviewListContainer = () => {
   }
 
   useEffect(() => {
-    if (reviews.length) {
-      setReviewList(reviews)
-    }
-  }, [reviews])
+    if (reviews.length > 0) dispatch(initReviews())
+  }, [])
+
+  useEffect(() => {
+    if (reviewCount) setPageCount(Math.ceil(reviewCount / REVIEW_SIZE - 1))
+  }, [reviewCount])
+
+  useEffect(() => {
+    if (storeId) dispatch(fetchAllReviews({ storeId, page }))
+  }, [page, storeId, dispatch])
 
   return (
     <ReviewListWrapper>
@@ -42,7 +61,7 @@ const ReviewListContainer = () => {
           <h1>REVIEW</h1>
           <div className="count">
             <PlusOutlined />
-            <p>{reviewList.length}</p>
+            <p>{selectedStore?.reviewCount}</p>
           </div>
         </NameNCount>
         <div className="button">
@@ -54,8 +73,9 @@ const ReviewListContainer = () => {
           />
         </div>
       </ReviewTop>
+
       <ListContainer>
-        {reviewList.map((review) => (
+        {newReviews.map((review) => (
           <ReviewList
             key={review.reviewEntryNo}
             reviewId={review.reviewEntryNo}
@@ -66,6 +86,19 @@ const ReviewListContainer = () => {
             userId={review.userEmail}
           />
         ))}
+
+        {page < pageCount && reviewCount > 0 && (
+          <FunButton
+            name={'더보기'}
+            className="opposite"
+            onClick={() => {
+              setPage(page + 1)
+            }}
+          />
+        )}
+        {reviewCount === 0 && (
+          <p className="noReview">등록된 리뷰가 없습니다.</p>
+        )}
       </ListContainer>
     </ReviewListWrapper>
   )

@@ -20,12 +20,15 @@ export const Title = styled.div`
 
   h2 {
     margin-bottom: 20px;
+    line-height: 1.2;
   }
 
   .star_box {
+    min-width: 50px;
+    margin-left: 10px;
     svg {
       fill: ${(props) => props.theme.colors.star};
-      margin-right: 4px;
+      margin-right: 3px;
     }
   }
 `

@@ -5,7 +5,7 @@ export const InfoContainer = styled.section`
   position: relative;
   height: 170px;
   width: 80%;
-  min-width: 1000px;
+  min-width: 800px;
   padding: 10px 0;
 `
 

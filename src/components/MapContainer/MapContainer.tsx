@@ -28,9 +28,16 @@ const MapContainer = () => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
-    lat: 37.54699,
-    lng: 127.09598,
+    lat: 37.5547,
+    lng: 126.9707,
   })
+  const defaultPosition: {
+    lat: number
+    lng: number
+  } = {
+    lat: 37.5547,
+    lng: 126.9707,
+  }
 
   // 위 서치로 받아온 data를 다루는 콜백함수
   const searchCallBack = useCallback(
@@ -117,28 +124,22 @@ const MapContainer = () => {
 
   // 처음 들어왔을 때
   useEffect(() => {
+    const center = new kakao.maps.LatLng(
+      defaultPosition.lat,
+      defaultPosition.lng
+    )
+    drawMap(center)
+
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser')
     }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude // 위도
-        const lng = position.coords.longitude // 경도
-        setMyPosition((prev) => ({ ...prev, lat, lng }))
-        // 받아온 좌표로 지도 center 값 셋팅
-        const center = new kakao.maps.LatLng(lat, lng)
-        drawMap(center)
-      },
-      (positionError) => {
-        alert(
-          `좌표를 가져오지 못했습니다. 기본위치에서 시작합니다. ${positionError.message}`
-        )
-        const center = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
-        drawMap(center)
-      }
-    )
-  }, [drawMap, myPosition.lat, myPosition.lng])
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude // 위도
+      const lng = position.coords.longitude // 경도
+      setMyPosition({ lat, lng })
+    })
+  }, [drawMap, defaultPosition.lat, defaultPosition.lng])
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
@@ -162,8 +163,12 @@ const MapContainer = () => {
   const moveToCenter = () => {
     dispatch(saveSearchWord(''))
     removeMarkerNInfo()
+
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
+
+    if (myPosition.lat === 37.5547 && myPosition.lng === 126.9707)
+      alert('현재 위치 정보가 없습니다. 기본 위치로 이동합니다.')
 
     if (mapApi) {
       mapApi.setCenter(locPosition)

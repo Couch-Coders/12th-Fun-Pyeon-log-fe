@@ -2,7 +2,7 @@ import { ReviewType, WriteType } from '@stores/review/reviewType'
 import { REVIEW_SIZE } from '@utils/constants'
 import axios from 'axios'
 
-const getAllReviews = async (storeId: string, page = 0) => {
+const getAllReviews = async (storeId: string, page: number) => {
   const params = { page: `${page}`, size: REVIEW_SIZE }
   const response = await axios.get<ReviewType[]>(
     `/api/stores/${storeId}/reviews`,

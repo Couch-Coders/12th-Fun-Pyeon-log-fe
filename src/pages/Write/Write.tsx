@@ -11,13 +11,16 @@ import URLUtill from '@utils/urlUtill'
 const Write = () => {
   const { storeId } = useParams()
   const user = useSelector((state: RootState) => state.user.user)
+  const selectedStore = useSelector(
+    (state: RootState) => state.conv.selectedStore
+  )
   const loading = useSelector((state: RootState) => state.review.loading)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!user && storeId) {
+    if (!user && storeId && selectedStore) {
       alert('로그인 후 이용 가능합니다.')
-      navigate(URLUtill.getStoreUrl(storeId))
+      navigate(URLUtill.getStoreUrl(storeId, selectedStore.place_name))
     }
   }, [])
 

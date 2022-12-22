@@ -7,7 +7,6 @@ import ReviewListContainer from '@components/StoreDisplay/ReviewListContainer/Re
 import Map from '@components/Map/Map'
 import kakaoServie from '@services/kakaoService'
 import { StoreWrapper, StoreMapWrapper } from './Store.styles'
-import { fetchAllReviews } from '@stores/review/reivewSlice'
 import { useSelector } from 'react-redux'
 import LoadingWithLogo from '@styles/LoadingWithLogo'
 
@@ -31,7 +30,6 @@ const Store = () => {
     if (storeId && encodedstore) {
       const decodedStore = decodeURIComponent(encodedstore)
       dispatch(fetchStoreInfo({ storeId, decodedStore }))
-      dispatch(fetchAllReviews(storeId))
     }
   }, [storeId, dispatch, storeParam])
 

@@ -9,9 +9,11 @@ import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
 import { saveSortType } from '@stores/sort/sortSlice'
 import KakaoService from '@services/kakaoService'
 import { MapContext } from '@context/MapContext'
+import LoadingWithLogo from '@styles/LoadingWithLogo'
 
 const ListBox = () => {
   const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
+  const loading = useSelector((state: RootState) => state.conv.loading)
   const sortType = useSelector((state: RootState) => state.sort.sortType)
   const { mapApi, setMarkers } = useContext(MapContext)
   const [convList, setConvList] = useState<ConvType[]>([])
@@ -62,7 +64,9 @@ const ListBox = () => {
       </SortBtns>
 
       <ResultBox>
-        {convList.length === 0 ? (
+        {loading ? (
+          <LoadingWithLogo />
+        ) : convList.length === 0 ? (
           <p className="noResult">검색 결과가 없습니다.</p>
         ) : (
           convList.map((store) => (
@@ -72,8 +76,8 @@ const ListBox = () => {
               keywords={store.keywordList}
               reviewCount={store.reviewCount}
               placeName={store.place_name}
-              lat={+store.y}
-              lng={+store.x}
+              lat={Number(store.y)}
+              lng={Number(store.x)}
               storeId={store.id}
               address={store.address_name}
               phoneNumber={store.phone}

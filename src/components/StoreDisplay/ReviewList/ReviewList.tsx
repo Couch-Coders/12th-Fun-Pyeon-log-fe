@@ -9,11 +9,7 @@ import {
 } from './ReviewList.styles'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@stores/store'
-import {
-  deleteReview,
-  fetchAllReviews,
-  selectReview,
-} from '@stores/review/reivewSlice'
+import { deleteReview, selectReview } from '@stores/review/reivewSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import URLUtill from '@utils/urlUtill'
 import KeywordBadge from '@styles/KeywordBadge'
@@ -47,16 +43,17 @@ const ReviewList: React.FC<ReviewType> = ({
   }
 
   const deleteRevieHandler = async () => {
-    window.confirm('리뷰를 삭제 하시겠습니까?')
-    if (storeId) {
-      await dispatch(deleteReview({ storeId, reviewId }))
-      await dispatch(fetchAllReviews(storeId))
+    if (window.confirm('리뷰를 삭제 하시겠습니까?')) {
+      if (storeId) {
+        await dispatch(deleteReview({ storeId, reviewId }))
+        location.reload()
+      }
     }
   }
 
   const editHandler = () => {
     dispatch(selectReview(reviewId))
-    navigate(URLUtill.getReviewEditUrl(reviewId))
+    if (storeId) navigate(URLUtill.getReviewEditUrl(reviewId))
   }
 
   return (

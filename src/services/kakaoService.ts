@@ -33,14 +33,14 @@ const displayMarkerOverlay = (data: ConvType, map: kakao.maps.Map) => {
 
   const name = data.place_name
   const content = `<div class="infoOverlay">${name}</div>`
-  const overlayContent = overlayContainer(
-    name,
-    data.id,
-    data.place_name,
-    data.phone,
-    data.reviewCount,
-    data.starCount
-  )
+  const overlayContent = overlayContainer({
+    placeName: name,
+    storeId: data.id,
+    address: data.place_name,
+    phoneNumber: data.phone,
+    reviewCount: data.reviewCount,
+    starCount: data.starCount,
+  })
 
   // 마커에 클릭이벤트를 등록합니다
   kakao.maps.event.addListener(marker, 'click', function () {
@@ -92,15 +92,23 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = (
-  placeName: string,
-  storeId: string,
-  address: string,
-  phoneNumber: string,
-  reviewCount: number,
+const overlayContainer = ({
+  placeName,
+  storeId,
+  address,
+  phoneNumber,
+  reviewCount,
+  starCount,
+}: {
+  placeName: string
+  storeId: string
+  address: string
+  phoneNumber: string
+  reviewCount: number
   starCount: number
-) => {
+}) => {
   const currentUrl = String(document.location.origin)
+  const storeEncode = encodeURIComponent(placeName)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -128,15 +136,29 @@ const overlayContainer = (
       </div>
     </div>
     <div class="detail-view">
-      <a href="${currentUrl}/stores/${storeId}">상세보기</a>
+      <a href="${currentUrl}/stores/${storeId}?store=${storeEncode}">상세보기</a>
     </div>
   </div>`
+}
+
+const searchOneStore = (storeName: string, storeId: string) => {
+  const store: kakao.maps.services.PlacesSearchResult = []
+  const ps = new kakao.maps.services.Places()
+  ps.keywordSearch(storeName, (data, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      const searchedstore = data.filter((store) => store.id === storeId)
+      store.push(...searchedstore)
+    }
+  })
+
+  return store
 }
 
 const KakaoService = {
   displayMarkerOverlay,
   displayMyLocation,
   overlayContainer,
+  searchOneStore,
   kakao,
   overlay,
 }

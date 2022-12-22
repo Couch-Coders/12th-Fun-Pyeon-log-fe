@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { fetchStoreInfo } from '@stores/conv/convSlice'
 import { RootState, useAppDispatch } from '@stores/store'
 import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
@@ -13,6 +13,7 @@ import LoadingWithLogo from '@styles/LoadingWithLogo'
 
 const Store = () => {
   const dispatch = useAppDispatch()
+  const [storeParam, setStoreParam] = useSearchParams()
   const { storeId } = useParams<string>()
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
@@ -25,11 +26,14 @@ const Store = () => {
   })
 
   useEffect(() => {
-    if (storeId) {
-      dispatch(fetchStoreInfo(storeId))
+    const encodedstore = storeParam.get('store')
+
+    if (storeId && encodedstore) {
+      const decodedStore = decodeURIComponent(encodedstore)
+      dispatch(fetchStoreInfo({ storeId, decodedStore }))
       dispatch(fetchAllReviews(storeId))
     }
-  }, [storeId, dispatch])
+  }, [storeId, dispatch, storeParam])
 
   useEffect(() => {
     if (mapRef.current) mapRef.current.innerHTML = ''

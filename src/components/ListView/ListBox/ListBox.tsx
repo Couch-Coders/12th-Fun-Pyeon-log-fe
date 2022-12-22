@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import List from '@components/ListView/List/List'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '@stores/store'
@@ -18,13 +18,16 @@ const ListBox = () => {
   const dispatch = useDispatch()
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
 
-  const toggleBtn = (type: string) => {
-    setSelect(type)
-    dispatch(saveSortType(type))
-    if (type === 'star') dispatch(starSort())
-    if (type === 'review') dispatch(reviewSort())
-    if (type === 'distance') dispatch(distanceSort())
-  }
+  const toggleBtn = useCallback(
+    (type: string) => {
+      setSelect(type)
+      dispatch(saveSortType(type))
+      if (type === 'star') dispatch(starSort())
+      if (type === 'review') dispatch(reviewSort())
+      if (type === 'distance') dispatch(distanceSort())
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
     setConvList(sortedConv)
@@ -32,8 +35,7 @@ const ListBox = () => {
     if (convList.length > 0) {
       toggleBtn(sortType)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortedConv])
+  }, [sortedConv, toggleBtn, convList.length, sortType])
 
   useEffect(() => {
     if (sortedConv.length > 0 && mapApi) {

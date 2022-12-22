@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@stores/store'
-import { ReviewType } from '@stores/review/reviewType'
 import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
 
 import { PlusOutlined } from '@ant-design/icons'
@@ -26,10 +25,16 @@ const ReviewListContainer = () => {
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
   )
-  const reviewCount = selectedStore?.reviewCount
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState(0)
   const reviewCount = selectedStore?.reviewCount ?? 0
+  const newReviews = reviews.filter((review, idx) => {
+    return (
+      reviews.findIndex((review1, idx1) => {
+        return review.reviewEntryNo === review1.reviewEntryNo
+      }) === idx
+    )
+  })
 
   const moveToWrite = () => {
     if (storeId) {
@@ -47,7 +52,7 @@ const ReviewListContainer = () => {
 
   useEffect(() => {
     if (storeId) dispatch(fetchAllReviews({ storeId, page }))
-  }, [page])
+  }, [page, storeId, dispatch])
 
   return (
     <ReviewListWrapper>
@@ -70,7 +75,7 @@ const ReviewListContainer = () => {
       </ReviewTop>
 
       <ListContainer>
-        {reviews.map((review) => (
+        {newReviews.map((review) => (
           <ReviewList
             key={review.reviewEntryNo}
             reviewId={review.reviewEntryNo}

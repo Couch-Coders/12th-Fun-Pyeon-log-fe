@@ -3,6 +3,7 @@ import star from '../assets/star.png'
 import pin from '../assets/pin.png'
 import phone from '../assets/phone.png'
 import funlogImg from '../assets/convImg/funlog.png'
+import { ConvType } from '@stores/conv/convType'
 
 const { kakao } = window
 
@@ -17,10 +18,7 @@ const infoOverlay = new kakao.maps.CustomOverlay({
 })
 
 // 지도에 마커를 표시하는 함수입니다
-const displayMarkerOverlay = (
-  data: kakao.maps.services.PlacesSearchResultItem,
-  map: kakao.maps.Map
-) => {
+const displayMarkerOverlay = (data: ConvType, map: kakao.maps.Map) => {
   //  data에서 브랜드 이름을 빼내고 브랜드에 맞는 이미지를 찾습니다.
   const [storeBrand] = data.place_name.split(' ')
   const markerImg = getMarkerImg(storeBrand)
@@ -35,7 +33,14 @@ const displayMarkerOverlay = (
 
   const name = data.place_name
   const content = `<div class="infoOverlay">${name}</div>`
-  const overlayContent = overlayContainer(name, data.id)
+  const overlayContent = overlayContainer({
+    placeName: name,
+    storeId: data.id,
+    address: data.place_name,
+    phoneNumber: data.phone,
+    reviewCount: data.reviewCount,
+    starCount: data.starCount,
+  })
 
   // 마커에 클릭이벤트를 등록합니다
   kakao.maps.event.addListener(marker, 'click', function () {
@@ -87,8 +92,23 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = (placeName: string, storeId: string) => {
-  const currentUrl = String(document.location)
+const overlayContainer = ({
+  placeName,
+  storeId,
+  address,
+  phoneNumber,
+  reviewCount,
+  starCount,
+}: {
+  placeName: string
+  storeId: string
+  address: string
+  phoneNumber: string
+  reviewCount: number
+  starCount: number
+}) => {
+  const currentUrl = String(document.location.origin)
+  const storeEncode = encodeURIComponent(placeName)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -99,30 +119,46 @@ const overlayContainer = (placeName: string, storeId: string) => {
      </header>
     <div class="star-review">
       <div class="star">
-        <img src=${star} alt="star image"/>4.6
+        <img src=${star} alt="star image"/>${starCount}
       </div>
       <div class="review-count">
-      리뷰 23개
+      리뷰 ${reviewCount}개
       </div> 
     </div>
     <div class="store-info">
       <div class="address">
-      <img src=${pin} alt="pin image"/><p>서울시 어쩌구 무슨무슨로 2-13</p>
+      <img src=${pin} alt="pin image"/><p>${address}</p>
       </div>
       <div class="phone">
-      <img src=${phone} alt="phone image"/><p>02-525-2525</p>
+      <img src=${phone} alt="phone image"/><p>${
+    phoneNumber.length > 0 ? phoneNumber : '전화번호가 없습니다.'
+  }</p>
       </div>
     </div>
     <div class="detail-view">
-      <a href="${currentUrl}stores/${storeId}">상세보기</a>
+      <a href="${currentUrl}/stores/${storeId}?store=${storeEncode}">상세보기</a>
     </div>
   </div>`
+}
+
+const searchOneStore = (storeName: string, storeId: string) => {
+  const store: kakao.maps.services.PlacesSearchResult = []
+  const ps = new kakao.maps.services.Places()
+  ps.keywordSearch(storeName, (data, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      const searchedstore = data.filter((store) => store.id === storeId)
+      store.push(...searchedstore)
+    }
+  })
+
+  return store
 }
 
 const KakaoService = {
   displayMarkerOverlay,
   displayMyLocation,
   overlayContainer,
+  searchOneStore,
   kakao,
   overlay,
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { fetchStoreInfo } from '@stores/conv/convSlice'
 import { RootState, useAppDispatch } from '@stores/store'
 import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
@@ -12,6 +12,7 @@ import LoadingWithLogo from '@styles/LoadingWithLogo'
 
 const Store = () => {
   const dispatch = useAppDispatch()
+  const [storeParam, setStoreParam] = useSearchParams()
   const { storeId } = useParams<string>()
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
@@ -24,17 +25,21 @@ const Store = () => {
   })
 
   useEffect(() => {
-    if (storeId) {
-      dispatch(fetchStoreInfo(storeId))
+    const encodedstore = storeParam.get('store')
+
+    if (storeId && encodedstore) {
+      const decodedStore = decodeURIComponent(encodedstore)
+      dispatch(fetchStoreInfo({ storeId, decodedStore }))
     }
-  }, [storeId, dispatch])
+  }, [storeId, dispatch, storeParam])
 
   useEffect(() => {
     if (mapRef.current) mapRef.current.innerHTML = ''
     const mapContainer = mapRef.current as HTMLDivElement
-    if (selectedStore) {
-      console.log(selectedStore)
-      const [storeBrand] = selectedStore.place_name.split(' ')
+    if (selectedStore?.y) {
+      const [storeBrand] = selectedStore.place_name
+        ? selectedStore.place_name.split(' ', 1)
+        : '펀편log 편의점'.split(' ', 1)
       const mapOption = {
         center: new kakao.maps.LatLng(
           Number(selectedStore.y),

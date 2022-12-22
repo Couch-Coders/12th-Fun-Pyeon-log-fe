@@ -34,9 +34,9 @@ const displayMarkerOverlay = (data: ConvType, map: kakao.maps.Map) => {
   const name = data.place_name
   const content = `<div class="infoOverlay">${name}</div>`
   const overlayContent = overlayContainer({
-    placeName: name,
+    placeName: data.place_name,
     storeId: data.id,
-    address: data.place_name,
+    address: data.address_name,
     phoneNumber: data.phone,
     reviewCount: data.reviewCount,
     starCount: data.starCount,

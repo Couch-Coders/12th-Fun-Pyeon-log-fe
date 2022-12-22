@@ -6,7 +6,6 @@ import WritingBox from '@components/Writing/WritingBox/WritingBox'
 import { ReviewType } from '@stores/review/reviewType'
 import { RootState } from '@stores/store'
 import { StoreWrapper } from '@pages/store/Store.styles'
-import URLUtill from '@utils/urlUtill'
 
 const Edit = () => {
   const { storeId } = useParams()
@@ -21,7 +20,7 @@ const Edit = () => {
       setOriginReview(selectedReview)
     } else if (storeId) {
       alert('잘못된 접근입니다.')
-      navigate(URLUtill.getStoreUrl(storeId))
+      navigate(-1)
     }
   }, [])
 

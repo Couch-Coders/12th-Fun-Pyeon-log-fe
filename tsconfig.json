@@ -1,26 +1,30 @@
 {
-	"compilerOptions": {
-		"baseUrl": "./src",
-		"paths": {
-			"@components/*": ["./components/*"],
-			"@pages/*": ["./pages/*"],
-			"@services/*": ["./services/*"],
-			"@utils/*": ["./utils/*"]
-		},
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
-		"jsx": "react-jsx"
-	},
-	"include": ["src"]
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@pages/*": ["./pages/*"],
+      "@services/*": ["./services/*"],
+      "@utils/*": ["./utils/*"],
+      "@stores/*": ["./stores/*"],
+      "@styles/*": ["./styles/*"],
+      "@context/*": ["./context/*"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["kakao.maps.d.ts"]
+  },
+  "include": ["src"]
 }

@@ -11,4 +11,13 @@ module.exports = {
 			},
 		},
 	],
+  devServer: {
+    proxy: {
+			'/api': {
+				target: 'https://jlvadtrbkq.us16.qoddiapp.com',
+				changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+			},
+		},
+  },
 };

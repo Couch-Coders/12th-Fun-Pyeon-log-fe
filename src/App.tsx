@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Main from '@pages/Main'
+import Navigation from '@pages/Navigation/Navigation'
+import Store from '@pages/store/Store'
+import Write from '@pages/Write/Write'
+import { auth } from '@services/firebaseAuth'
+import { onAuthStateChanged } from 'firebase/auth'
+import { getUserThunk } from '@stores/auth/authSlice'
+import { useAppDispatch } from '@stores/store'
+import Edit from '@pages/Edit/Edit'
 
 function App() {
-	return (
-		<div className='App'>
-			<header className='App-header'>
-				<img src={logo} className='App-logo' alt='logo' />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a
-					className='App-link'
-					href='https://reactjs.org'
-					target='_blank'
-					rel='noopener noreferrer'>
-					Learn React
-				</a>
-			</header>
-		</div>
-	);
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token: string = await user.getIdToken()
+        dispatch(getUserThunk(token))
+      }
+    })
+    return unsubscribe
+  }, [dispatch])
+
+  return (
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route path="/" element={<Main />} />
+        <Route path="/stores/:storeId" element={<Store />} />
+        <Route path="/stores/:storeId/write" element={<Write />} />
+        <Route path="/stores/:storeId/edit/:reviewId" element={<Edit />} />
+      </Route>
+    </Routes>
+  )
 }
 
-export default App;
+export default App

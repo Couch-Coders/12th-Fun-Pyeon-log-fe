@@ -13,6 +13,8 @@ interface ListProps {
   starCount: number
   keywords: string[]
   reviewCount: number
+  address: string
+  phoneNumber: string
 }
 
 const List: React.FC<ListProps> = ({
@@ -23,12 +25,21 @@ const List: React.FC<ListProps> = ({
   starCount,
   reviewCount,
   keywords,
+  address,
+  phoneNumber,
 }) => {
   const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
   const listClickHandler = () => {
     if (mapApi) {
-      const content = kakaoService.overlayContainer(placeName, storeId)
+      const content = kakaoService.overlayContainer({
+        placeName,
+        storeId,
+        address,
+        phoneNumber,
+        reviewCount,
+        starCount,
+      })
       kakaoService.overlay.setPosition(center)
       kakaoService.overlay.setContent(content)
       kakaoService.overlay.setMap(mapApi)

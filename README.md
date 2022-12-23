@@ -144,7 +144,7 @@
 
 <br>
 
-## 프론트 깃 레포
+## 백엔드 깃 레포
 
 [**Fun편log** Back-end Git Repository](https://github.com/Couch-Coders/12th-Fun-Pyeon-log-be)
 

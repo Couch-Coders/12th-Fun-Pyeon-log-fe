@@ -6,12 +6,12 @@ import React, {
   useCallback,
 } from 'react'
 import { useSelector } from 'react-redux'
+import Map from '@components/Map/Map'
+import { MapContext } from '@context/MapContext'
+import KakaoService from '@services/kakaoService'
+import { fetchAllStores } from '@stores/conv/convSlice'
 import { setSearchedCoord, saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
-import KakaoService from '@services/kakaoService'
-import { MapContext } from '@context/MapContext'
-import { fetchAllStores } from '@stores/conv/convSlice'
-import Map from '@components/Map/Map'
 import { MapWrap, ControlBtns } from './MapContainer.styles'
 
 // 카카오 서치 함수 구분용 타입

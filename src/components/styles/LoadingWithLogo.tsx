@@ -1,8 +1,8 @@
 import React from 'react'
-import Modal from '@components/modal/Modal'
-import { LoadingContainer } from './LoadingWithLogo.styles'
-import { ReactComponent as Funbadge } from '../assets/funlog-badge.svg'
+import Modal from '@components/Modal/Modal'
 import Spinner from './Spinner'
+import { ReactComponent as Funbadge } from '../../assets/funlog-badge.svg'
+import { LoadingContainer } from './LoadingWithLogo.styles'
 
 const LoadingWithLogo = () => {
   return (

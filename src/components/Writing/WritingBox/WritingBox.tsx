@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Select from '@components/common/Select/Select'
+import FunButton from '@components/styles/FunButton'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
-import FunButton from '@styles/FunButton'
-import { useAppDispatch } from '@stores/store'
 import { createReview, updateReview } from '@stores/review/reivewSlice'
 import { ReviewType, WriteType } from '@stores/review/reviewType'
+import { useAppDispatch } from '@stores/store'
 import { ITEMS } from '@utils/constants'
 
 import {

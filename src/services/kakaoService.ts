@@ -1,9 +1,9 @@
-import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
-import star from '../assets/star.png'
-import pin from '../assets/pin.png'
-import phone from '../assets/phone.png'
-import funlogImg from '../assets/convImg/funlog.png'
 import { ConvType } from '@stores/conv/convType'
+import funlogImg from '../assets/convImg/funlog.png'
+import phone from '../assets/phone.png'
+import pin from '../assets/pin.png'
+import star from '../assets/star.png'
+import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
 
 const { kakao } = window
 

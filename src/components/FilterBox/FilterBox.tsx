@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
-import { RootState } from '@stores/store'
-import { setSortStores } from '@stores/conv/convSlice'
-import { BRANDS, ITEMS } from '@utils/constants'
-import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
-import kakaoServie from '@services/kakaoService'
+import FunButton from '@components/styles/FunButton'
 import { MapContext } from '@context/MapContext'
+import kakaoServie from '@services/kakaoService'
+import { setSortStores } from '@stores/conv/convSlice'
 import { ConvType } from '@stores/conv/convType'
 import { saveBrand, saveKeyword } from '@stores/sort/sortSlice'
+import { RootState } from '@stores/store'
+import { BRANDS, ITEMS } from '@utils/constants'
+import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 
 interface filterProps {
   setIsFiltering: (isFiltering: boolean) => void

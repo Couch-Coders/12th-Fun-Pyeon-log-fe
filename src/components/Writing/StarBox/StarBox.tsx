@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { StarFilled } from '@ant-design/icons'
 import { STAR_COUNT } from '@utils/constants'
+import { StarFilled } from '@ant-design/icons'
 import { Stars } from './StarBox.styles'
 
 interface StarProps {

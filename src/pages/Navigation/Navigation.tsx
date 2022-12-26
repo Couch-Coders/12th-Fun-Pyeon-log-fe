@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { googleSignOut } from '@services/firebaseAuth'
-import { RootState, useAppDispatch } from '@stores/store'
-import { logOutUserThunk } from '@stores/auth/authSlice'
-
+import { Outlet, useNavigate } from 'react-router-dom'
 import LoginModal from '@components/LoginModal/LoginModal'
-import Spinner from '@styles/Spinner'
-import FunButton from '@styles/FunButton'
+import FunButton from '@components/styles/FunButton'
+import Spinner from '@components/styles/Spinner'
+import { googleSignOut } from '@services/firebaseAuth'
+import { logOutUserThunk } from '@stores/auth/authSlice'
+import { RootState, useAppDispatch } from '@stores/store'
 import { ReactComponent as Funlogo } from '../../assets/funlog.svg'
 import {
   NavCon,

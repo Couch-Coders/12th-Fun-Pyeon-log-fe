@@ -1,4 +1,8 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import KeywordBadge from '@components/styles/KeywordBadge'
+import { getBrandImg } from '@services/markerImg'
+import { RootState } from '@stores/store'
 import funlogImg from '../../../assets/convImg/funlog.png'
 import { PhoneFilled, PushpinFilled, StarFilled } from '@ant-design/icons'
 import {
@@ -8,10 +12,6 @@ import {
   KeywordBox,
   StarPoint,
 } from './StoreBasicInfo.styles'
-import { getBrandImg } from '@services/markerImg'
-import { useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
-import KeywordBadge from '@styles/KeywordBadge'
 
 interface StoreInfo {
   storeImg: string

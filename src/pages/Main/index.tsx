@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
-import MapContainer from '@components/MapContainer/MapContainer'
-import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
-import styled from 'styled-components'
-import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
+import { useDispatch } from 'react-redux'
 import FilterBox from '@components/FilterBox/FilterBox'
 import ListBox from '@components/ListView/ListBox/ListBox'
-import { useDispatch } from 'react-redux'
+import MapContainer from '@components/MapContainer/MapContainer'
 import { saveSearchWord } from '@stores/sort/sortSlice'
+import styled from 'styled-components'
+import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
+import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
 
 styled(MapContainer)`
   width: 70vw;

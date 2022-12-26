@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useLocation, useParams, useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useParams, useSearchParams } from 'react-router-dom'
+import Map from '@components/Map/Map'
+import ReviewListContainer from '@components/StoreDisplay/ReviewListContainer/ReviewListContainer'
+import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
+import LoadingWithLogo from '@components/styles/LoadingWithLogo'
+import kakaoServie from '@services/kakaoService'
 import { fetchStoreInfo } from '@stores/conv/convSlice'
 import { RootState, useAppDispatch } from '@stores/store'
-import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
-import ReviewListContainer from '@components/StoreDisplay/ReviewListContainer/ReviewListContainer'
-import Map from '@components/Map/Map'
-import kakaoServie from '@services/kakaoService'
 import { StoreWrapper, StoreMapWrapper } from './Store.styles'
-import { useSelector } from 'react-redux'
-import LoadingWithLogo from '@styles/LoadingWithLogo'
 
 const Store = () => {
   const dispatch = useAppDispatch()

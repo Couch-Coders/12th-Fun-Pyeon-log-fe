@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const FilterWrapper = styled.div`
-  height: calc(100% - 90px);
+  height: calc(100% - 60px);
   padding: 20px 10px;
   overflow-y: scroll;
 
@@ -19,7 +19,7 @@ export const FilterWrapper = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 50px;
+    width: 60px;
     font-weight: 700;
     border: none;
     margin-bottom: 20px;
@@ -45,6 +45,10 @@ export const Title = styled.h2`
   font-weight: 700;
   margin-left: 10px;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 `
 
 export const KeywordGroup = styled.div`
@@ -55,6 +59,12 @@ export const KeywordGroup = styled.div`
     &:last-of-type {
       margin-bottom: 0;
       padding-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    > div {
+      padding: 5px;
     }
   }
 `

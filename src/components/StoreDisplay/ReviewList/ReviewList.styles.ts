@@ -27,6 +27,29 @@ export const ListContainer = styled.div<ListContainerProps>`
       display: none;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 24px 8px 8px;
+
+    .review {
+      font-size: 14px;
+      line-height: 1.1rem;
+      letter-spacing: 0.3px;
+      margin-bottom: 16px;
+      height: ${({ isWide }) => (isWide ? '150px' : '63px')};
+    }
+  }
+  @media screen and (max-width: 576px) {
+    padding: 20px 8px 8px;
+
+    .review {
+      font-size: 14px;
+      line-height: 1.1rem;
+      letter-spacing: 0.3px;
+      margin-bottom: 16px;
+      height: ${({ isWide }) => (isWide ? '120px' : '55px')};
+    }
+  }
 `
 export const ReviewEditButton = styled.div`
   position: absolute;
@@ -70,6 +93,27 @@ export const ReviewEditButton = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    button {
+      width: 22px;
+      font-size: 18px;
+
+      &:first-child {
+        margin-right: 12px;
+      }
+    }
+  }
+  @media screen and (max-width: 576px) {
+    button {
+      width: 20px;
+      font-size: 16px;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
 `
 
 export const ListInfo = styled.div`
@@ -86,6 +130,27 @@ export const ListInfo = styled.div`
       margin-right: 4px;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+    .star_box {
+      width: 50px;
+      svg {
+        fill: rgba(255, 230, 0, 1);
+        margin-right: 3px;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+    .star_box {
+      width: 35px;
+      svg {
+        fill: rgba(255, 230, 0, 1);
+        margin-right: 3px;
+      }
+    }
+  }
 `
 
 export const KeywordBox = styled.div<ListContainerProps>`
@@ -95,6 +160,19 @@ export const KeywordBox = styled.div<ListContainerProps>`
     flex-wrap: wrap;
     li {
       margin-bottom: ${({ isWide }) => (isWide ? '10px' : '0')};
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 380px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 330px;
+    li {
+      margin-bottom: ${({ isWide }) => (isWide ? '10px' : '0')};
+      span {
+        margin: 0 3px;
+      }
     }
   }
 `
@@ -110,5 +188,19 @@ export const ReviewWirter = styled.div`
     margin-left: 10px;
     font-size: 14px;
     font-weight: 500;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    .day {
+      margin-left: 8px;
+      font-size: 12px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    .day {
+      margin-left: 5px;
+      font-size: 10px;
+    }
   }
 `

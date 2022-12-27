@@ -81,6 +81,7 @@ export const Keywords = styled.div`
           flex-wrap: wrap;
           border-left: unset;
           padding-left: 0;
+          width: 180px;
           li {
             margin: 3px 0;
             text-align: center;

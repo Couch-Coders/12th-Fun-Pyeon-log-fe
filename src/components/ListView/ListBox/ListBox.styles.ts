@@ -10,7 +10,7 @@ export const ListWrapper = styled.div`
   }
 
   @media screen and (max-width: 576px) {
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
   }
 `
 export const SortBtns = styled.ul`

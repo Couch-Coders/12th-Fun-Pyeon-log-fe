@@ -8,6 +8,10 @@ export const ListWrapper = styled.div`
     padding: 10px;
     font-weight: 700;
   }
+
+  @media screen and (max-width: 576px) {
+    height: calc(100% - 50px);
+  }
 `
 export const SortBtns = styled.ul`
   width: 100%;
@@ -34,6 +38,30 @@ export const SortBtns = styled.ul`
 
     &.active {
       color: ${(props) => props.theme.colors.purple};
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+    padding: 2px;
+
+    li {
+      padding: 0 3px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    height: 25px;
+    justify-content: space-around;
+    padding: 0px;
+
+    li {
+      :nth-of-type(1) {
+        border-right: none;
+      }
+      :nth-of-type(3) {
+        border-left: none;
+      }
     }
   }
 `

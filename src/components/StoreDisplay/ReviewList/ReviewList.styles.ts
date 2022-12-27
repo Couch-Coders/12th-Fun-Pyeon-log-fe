@@ -10,9 +10,10 @@ export const ListContainer = styled.div<ListContainerProps>`
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px solid #d9d9d9;
-  padding: 28px 10px 10px;
+  padding: 35px 10px 10px;
 
   .review {
+    padding: 12px 5px 0;
     font-size: 16px;
     line-height: 1.3rem;
     letter-spacing: 0.5px;
@@ -29,7 +30,7 @@ export const ListContainer = styled.div<ListContainerProps>`
   }
 
   @media screen and (max-width: 768px) {
-    padding: 24px 8px 8px;
+    padding: 30px 8px 8px;
 
     .review {
       font-size: 14px;
@@ -40,14 +41,14 @@ export const ListContainer = styled.div<ListContainerProps>`
     }
   }
   @media screen and (max-width: 576px) {
-    padding: 20px 8px 8px;
+    padding: 30px 8px 8px;
 
     .review {
-      font-size: 14px;
-      line-height: 1.1rem;
-      letter-spacing: 0.3px;
+      font-size: 12px;
+      line-height: 1rem;
+      letter-spacing: 0.2px;
       margin-bottom: 16px;
-      height: ${({ isWide }) => (isWide ? '120px' : '55px')};
+      height: ${({ isWide }) => (isWide ? '120px' : '63px')};
     }
   }
 `
@@ -105,12 +106,14 @@ export const ReviewEditButton = styled.div`
     }
   }
   @media screen and (max-width: 576px) {
+    top: 3px;
+
     button {
-      width: 20px;
-      font-size: 16px;
+      width: 15px;
+      font-size: 14px;
 
       &:first-child {
-        margin-right: 10px;
+        margin-right: 8px;
       }
     }
   }
@@ -141,20 +144,16 @@ export const ListInfo = styled.div`
       }
     }
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 576px) {
     font-size: 16px;
     .star_box {
-      width: 35px;
-      svg {
-        fill: rgba(255, 230, 0, 1);
-        margin-right: 3px;
-      }
+      width: 40px;
     }
   }
 `
 
 export const KeywordBox = styled.div<ListContainerProps>`
-  width: 600px;
+  width: 700px;
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -164,7 +163,7 @@ export const KeywordBox = styled.div<ListContainerProps>`
   }
 
   @media screen and (max-width: 768px) {
-    width: 380px;
+    width: 530px;
   }
   @media screen and (max-width: 576px) {
     width: 330px;
@@ -181,13 +180,20 @@ export const ReviewWirter = styled.div`
   display: flex;
   align-items: baseline;
   position: absolute;
-  right: 0;
+  left: 10px;
+  top: 10px;
   font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 3px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(125, 83, 214, 0.5);
 
   .day {
     margin-left: 10px;
     font-size: 14px;
     font-weight: 500;
+    color: ${(props) => props.theme.colors.filterBrand};
   }
   @media screen and (max-width: 768px) {
     font-size: 14px;
@@ -200,7 +206,7 @@ export const ReviewWirter = styled.div`
     font-size: 12px;
 
     .day {
-      margin-left: 5px;
+      margin-top: 5px;
       font-size: 10px;
     }
   }

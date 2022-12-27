@@ -25,6 +25,14 @@ export const SelectBox = styled.div`
         color: #fff;
       }
     }
+
+    @media screen and (max-width: 768px) {
+      li {
+        font-size: 13px;
+        padding: 4px 7px;
+        margin: 2px;
+      }
+    }
   }
 
   &.checkbox {
@@ -60,6 +68,32 @@ export const SelectBox = styled.div`
 
         .desc {
           color: #000;
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      p {
+        font-size: 13px;
+      }
+      li {
+        .desc {
+          font-size: 13px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        li {
+          svg {
+            margin-right: 3px;
+            margin-left: 5px;
+          }
         }
       }
     }

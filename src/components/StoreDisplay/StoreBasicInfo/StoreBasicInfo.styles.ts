@@ -10,13 +10,13 @@ export const InfoContainer = styled.section`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-    min-width: 550px;
-    height: 180px;
+    min-width: 560px;
+    height: 200px;
   }
   @media screen and (max-width: 576px) {
     width: 90%;
-    min-width: 450px;
-    height: 180px;
+    min-width: 320px;
+    height: 200px;
   }
 `
 
@@ -84,10 +84,10 @@ export const ConvInfo = styled.div`
   @media screen and (max-width: 768px) {
     padding: 0 15px;
     h1 {
-      font-size: 2rem;
+      font-size: 1.6rem;
     }
     p {
-      font-size: 16px;
+      font-size: 14px;
 
       :first-child {
         margin-left: 5px;
@@ -101,10 +101,14 @@ export const ConvInfo = styled.div`
   @media screen and (max-width: 576px) {
     padding: 0 10px;
     h1 {
-      font-size: 1.8rem;
+      font-size: 1.2rem;
     }
     p {
-      font-size: 14px;
+      font-size: 12px;
+      flex-direction: column;
+      span {
+        margin-bottom: 3px;
+      }
     }
   }
 `
@@ -113,16 +117,9 @@ export const KeywordBox = styled.div`
   ul {
     display: flex;
     flex-wrap: wrap;
+
     li {
       margin-bottom: 12px;
-    }
-    @media screen and (max-width: 768px) {
-      li {
-        margin-bottom: 12px;
-        span {
-          font-size: 12px;
-        }
-      }
     }
     @media screen and (max-width: 768px) {
       li {
@@ -180,7 +177,11 @@ export const StarPoint = styled.div`
   @media screen and (max-width: 576px) {
     width: 80px;
     height: 30px;
-    font-size: 14px;
+    font-size: 12px;
+    top: 100px;
+    left: 0;
+    right: unset;
+    box-shadow: unset;
 
     p {
       width: 80px;

@@ -9,11 +9,11 @@ export const ReviewListWrapper = styled.section`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-    min-width: 550px;
+    min-width: 560px;
   }
   @media screen and (max-width: 576px) {
     width: 90%;
-    min-width: 450px;
+    min-width: 320px;
   }
 `
 

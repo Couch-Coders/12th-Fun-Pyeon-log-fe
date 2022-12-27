@@ -24,6 +24,11 @@ export const BaseBtn = styled.button`
       background-color: rgba(125, 83, 214, 0.1);
     }
   }
+
+  @media screen and (max-width: 768px) {
+    width: 4rem;
+    font-size: 12px;
+  }
 `
 
 export const GoogleSignInBtn = styled.button`

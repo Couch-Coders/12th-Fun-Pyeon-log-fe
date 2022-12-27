@@ -145,42 +145,12 @@ const MapContainer = () => {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser')
     }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude // 위도
-        const lng = position.coords.longitude // 경도
-        setMyPosition((prev) => ({ ...prev, lat, lng }))
-        if (searchedCoord) {
-          if (mapRef.current) mapRef.current.innerHTML = ''
-          const mapContainer = mapRef.current as HTMLDivElement
-          const center = new kakao.maps.LatLng(
-            searchedCoord.lat,
-            searchedCoord.lng
-          )
-          const mapOption = {
-            center,
-            level: 4,
-          }
-          const map = new kakao.maps.Map(mapContainer, mapOption)
-          setMapApi(map)
-        } else {
-          // 받아온 좌표로 지도 center 값 셋팅
-          const center = new kakao.maps.LatLng(lat, lng)
-          drawMap(center)
-          dispatch(setSearchedCoord({ lat, lng }))
-        }
-      },
-      (positionError) => {
-        alert(
-          `좌표를 가져오지 못했습니다. 기본위치에서 시작합니다. ${positionError.message}`
-        )
-        const center = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
-        drawMap(center)
-        dispatch(setSearchedCoord({ lat: myPosition.lat, lng: myPosition.lng }))
-      }
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude // 위도
+      const lng = position.coords.longitude // 경도
+      setMyPosition({ lat, lng })
+    })
+  }, [drawMap, defaultPosition.lat, defaultPosition.lng])
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {

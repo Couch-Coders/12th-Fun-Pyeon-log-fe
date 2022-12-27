@@ -24,6 +24,5 @@ export const LoadingContainer = styled.div`
     height: 60px;
     border: 5px solid #fff;
     border-top-color: #7d53d6;
-    margin-right: 0;
   }
 `

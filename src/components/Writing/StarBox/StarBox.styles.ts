@@ -32,4 +32,37 @@ export const Stars = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    p {
+      margin-bottom: unset;
+      margin-right: 10px;
+      font-size: 13px;
+    }
+    ul {
+      padding: 8px;
+
+      span {
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    p {
+      margin-bottom: unset;
+      margin-right: 10px;
+      font-size: 13px;
+    }
+  }
 `

@@ -6,6 +6,15 @@ export const ReviewListWrapper = styled.section`
   width: 80%;
   min-width: 800px;
   padding: 20px 0;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    min-width: 560px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 90%;
+    min-width: 320px;
+  }
 `
 
 export const ReviewTop = styled.div`
@@ -29,6 +38,8 @@ export const NameNCount = styled.div`
   h1 {
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    bottom: 0;
   }
 
   .count {
@@ -56,6 +67,24 @@ export const NameNCount = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    width: 140px;
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .count {
+      font-size: 14px;
+
+      span {
+        svg {
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+  }
 `
 
 export const ListContainer = styled.div`
@@ -70,7 +99,6 @@ export const ListContainer = styled.div`
   }
 
   .opposite {
-    /* border: 1px solid transparent; */
     margin: 10px 0;
     margin-left: calc(50% - 44px);
   }

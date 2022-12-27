@@ -58,6 +58,10 @@ const ReviewList: React.FC<ReviewType> = ({
 
   return (
     <ListContainer isWide={isWideView}>
+      <ReviewWirter>
+        <p className="user">{displayName}</p>
+        <p className="day">{date}</p>
+      </ReviewWirter>
       {userId === user?.email && (
         <ReviewEditButton>
           <button onClick={editHandler}>
@@ -89,11 +93,6 @@ const ReviewList: React.FC<ReviewType> = ({
                   ))}
           </ul>
         </KeywordBox>
-
-        <ReviewWirter>
-          <p className="user">{displayName}</p>
-          <p className="day">{date}</p>
-        </ReviewWirter>
       </ListInfo>
     </ListContainer>
   )

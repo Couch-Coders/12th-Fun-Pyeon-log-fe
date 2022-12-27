@@ -12,6 +12,7 @@ import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
 import { setSearchedCoord, saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
+import { AimOutlined } from '@ant-design/icons'
 import { MapWrap, ControlBtns } from './MapContainer.styles'
 
 // 카카오 서치 함수 구분용 타입
@@ -233,8 +234,11 @@ const MapContainer = () => {
         <button onClick={searchFromHereHandler} className="search_Btn">
           이 위치에서 다시 검색
         </button>
-        <button onClick={moveToCenter} className="myGps_Btn">
+        <button onClick={moveToCenter} className="myGps_Btn web">
           내위치로 이동
+        </button>
+        <button onClick={moveToCenter} className="myGps_Btn tablet">
+          <AimOutlined />
         </button>
       </ControlBtns>
     </MapWrap>

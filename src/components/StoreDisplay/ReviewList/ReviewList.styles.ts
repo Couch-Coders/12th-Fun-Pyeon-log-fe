@@ -101,19 +101,22 @@ export const ReviewEditButton = styled.div`
       font-size: 18px;
 
       &:first-child {
-        margin-right: 12px;
+        margin-right: 15px;
       }
     }
   }
   @media screen and (max-width: 576px) {
-    top: 3px;
-
     button {
-      width: 15px;
       font-size: 14px;
 
       &:first-child {
         margin-right: 8px;
+      }
+
+      span {
+        svg {
+          margin: 5px;
+        }
       }
     }
   }

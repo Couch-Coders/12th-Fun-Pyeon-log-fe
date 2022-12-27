@@ -19,13 +19,16 @@ export const NavCon = styled.header`
   @media screen and (max-width: 768px) {
     padding: 0 20px;
   }
+
+  @media screen and (max-width: 576px) {
+    height: 60px;
+  }
 `
 
 export const LogoCon = styled.div`
   cursor: pointer;
   svg {
     height: 50px;
-    width: 225px;
     width: 100%;
   }
 
@@ -36,6 +39,11 @@ export const LogoCon = styled.div`
     }
   }
 
+  @media screen and (max-width: 576px) {
+    svg {
+      height: 30px;
+      width: 100%;
+    }
   }
 `
 export const Avatar = styled.div`
@@ -59,7 +67,6 @@ export const Avatar = styled.div`
 export const LogoutCon = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
 
   font-size: 20px;
 
@@ -85,6 +92,11 @@ export const LogoutCon = styled.div`
     }
   }
 
+  @media screen and (max-width: 576px) {
+    p {
+      display: none;
+    }
+  }
 `
 export const LoadingContainer = styled.div`
   width: 5.5rem;

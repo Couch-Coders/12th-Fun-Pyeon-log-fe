@@ -196,8 +196,9 @@ export const ReviewWirter = styled.div`
       font-size: 12px;
     }
   }
-  @media screen and (max-width: 768px) {
-    font-size: 14px;
+  @media screen and (max-width: 576px) {
+    font-size: 12px;
+
     .day {
       margin-left: 5px;
       font-size: 10px;

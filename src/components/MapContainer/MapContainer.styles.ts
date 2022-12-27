@@ -8,6 +8,13 @@ export const MapWrap = styled.section`
     width: 100%;
     height: calc(100vh - 80px);
   }
+
+  @media screen and (max-width: 576px) {
+    .map {
+      width: 100%;
+      height: calc(65vh - 60px);
+    }
+  }
 `
 export const ControlBtns = styled.div`
   width: 100%;

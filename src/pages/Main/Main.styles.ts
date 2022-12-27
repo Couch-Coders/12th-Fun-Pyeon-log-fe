@@ -13,6 +13,13 @@ export const ListView = styled.section`
   max-width: 300px;
   height: calc(100vh - 80px);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+
+  @media screen and (max-width: 768px) {
+    width: 40vw;
+    min-width: 200px;
+    max-width: 250px;
+  }
+
 `
 export const ListTop = styled.div`
   height: 90px;
@@ -52,6 +59,21 @@ export const SearchBox = styled.div`
     border: none;
     text-align: right;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+    min-width: 145px;
+    margin-right: 5px;
+
+    input {
+      min-width: 120px;
+      padding-right: 0;
+      font-size: 13px;
+    }
+    button {
+      padding-left: 0px;
+    }
   }
 `
 export const SortBtn = styled.button`

@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const Wrapper = styled.article`
   display: flex;
   flex-direction: row;
+
+  @media screen and (max-width: 576px) {
+    flex-direction: column;
+  }
 `
 export const ListView = styled.section`
   background-color: white;
@@ -20,15 +24,26 @@ export const ListView = styled.section`
     max-width: 250px;
   }
 
+  @media screen and (max-width: 576px) {
+    order: 2;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 45vh;
+  }
 `
 export const ListTop = styled.div`
   height: 90px;
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
-  padding: 10px 20px;
+  padding: 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 576px) {
+    height: 50px;
+  }
 `
 export const SearchBox = styled.div`
   margin-right: 10px;

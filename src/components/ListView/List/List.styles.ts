@@ -72,12 +72,6 @@ export const Content = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    ul {
-      span {
-        font-size: 13px;
-      }
-    }
-
     .review {
       bottom: -7px;
       font-size: 13px;
@@ -88,13 +82,6 @@ export const Content = styled.div`
     ul {
       flex-direction: row;
       flex-wrap: wrap;
-
-      li {
-        span {
-          margin: 2px;
-          font-size: 12px;
-        }
-      }
     }
   }
 `

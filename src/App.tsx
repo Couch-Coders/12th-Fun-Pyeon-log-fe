@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Edit from '@pages/Edit/Edit'
+import Main from '@pages/Main/Main'
 import Navigation from '@pages/Navigation/Navigation'
 import Store from '@pages/Store/Store'
 import Write from '@pages/Write/Write'
@@ -8,7 +9,6 @@ import { auth } from '@services/firebaseAuth'
 import { getUserThunk } from '@stores/auth/authSlice'
 import { useAppDispatch } from '@stores/store'
 import { onAuthStateChanged } from 'firebase/auth'
-import Main from '@pages/Main'
 
 function App() {
   const dispatch = useAppDispatch()

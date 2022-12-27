@@ -18,4 +18,10 @@ export const KeywordWrapper = styled.li`
     }
   }
 
+  @media screen and (max-width: 576px) {
+    span {
+      margin: 2px;
+      font-size: 12px;
+    }
+  }
 `

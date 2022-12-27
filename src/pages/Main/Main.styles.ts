@@ -29,7 +29,7 @@ export const ListView = styled.section`
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    height: 45vh;
+    height: calc(40vh + 30px);
   }
 `
 export const ListTop = styled.div`

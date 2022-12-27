@@ -13,11 +13,11 @@ export const WritingBoxWrapper = styled.section`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-    min-width: 550px;
+    min-width: 560px;
   }
   @media screen and (max-width: 576px) {
     width: 90%;
-    min-width: 450px;
+    min-width: 320px;
   }
 `
 export const KeyBox = styled.div`
@@ -81,7 +81,7 @@ export const Keywords = styled.div`
           flex-wrap: wrap;
           border-left: unset;
           padding-left: 0;
-          width: 180px;
+          width: 160px;
           li {
             margin: 3px 0;
             text-align: center;
@@ -104,7 +104,7 @@ export const Keywords = styled.div`
           margin-right: 0;
         }
         ul {
-          width: 60%;
+          width: 200px;
         }
       }
     }

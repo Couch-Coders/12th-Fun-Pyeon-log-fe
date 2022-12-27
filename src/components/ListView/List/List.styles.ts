@@ -10,6 +10,10 @@ export const ConBox = styled.li`
     background-color: ${(props) => props.theme.colors.purple};
     color: white;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 15px 10px;
+  }
 `
 
 export const Title = styled.div`
@@ -29,6 +33,17 @@ export const Title = styled.div`
     svg {
       fill: ${(props) => props.theme.colors.star};
       margin-right: 3px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    h2 {
+      margin-bottom: 14px;
+    }
+
+    .star_box {
+      min-width: 40px;
     }
   }
 `
@@ -54,5 +69,18 @@ export const Content = styled.div`
     bottom: -10px;
     font-size: 14px;
     font-weight: 500;
+  }
+
+  @media screen and (max-width: 768px) {
+    ul {
+      span {
+        font-size: 13px;
+      }
+    }
+
+    .review {
+      bottom: -7px;
+      font-size: 13px;
+    }
   }
 `

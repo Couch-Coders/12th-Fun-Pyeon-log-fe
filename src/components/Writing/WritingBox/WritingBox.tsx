@@ -68,18 +68,16 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
         <StarBox starCount={starCount} setStarCount={setStarCount} />
 
         <Keywords>
-          <>
-            {ITEMS.map((el) => (
-              <Select
-                key={el.title}
-                title={el.title}
-                keywordArray={el.keywordArray}
-                selected={selected}
-                setSelected={setSelected}
-                selectType={'keyword'}
-              />
-            ))}
-          </>
+          {ITEMS.map((el) => (
+            <Select
+              key={el.title}
+              title={el.title}
+              keywordArray={el.keywordArray}
+              selected={selected}
+              setSelected={setSelected}
+              selectType={'keyword'}
+            />
+          ))}
         </Keywords>
       </KeyBox>
 

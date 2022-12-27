@@ -36,6 +36,16 @@ export const SortBtns = styled.ul`
       color: ${(props) => props.theme.colors.purple};
     }
   }
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+    padding: 2px;
+
+    li {
+      padding: 0 3px;
+    }
+  }
+
 `
 export const ResultBox = styled.ul`
   height: calc(100% - 30px);

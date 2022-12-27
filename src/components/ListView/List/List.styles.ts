@@ -83,4 +83,18 @@ export const Content = styled.div`
       font-size: 13px;
     }
   }
+
+  @media screen and (max-width: 576px) {
+    ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      li {
+        span {
+          margin: 2px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
 `

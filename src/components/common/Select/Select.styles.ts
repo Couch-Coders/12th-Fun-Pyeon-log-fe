@@ -101,18 +101,20 @@ export const SelectBox = styled.div`
 
   &.keyword {
     margin-bottom: 20px;
+
     p {
       text-align: center;
       font-weight: 700;
-      width: 10%;
-      margin-right: 10px;
+      margin-right: 5px;
+      width: 80px;
     }
 
     ul {
       display: flex;
       flex-wrap: wrap;
       border-left: 1px solid ${(props) => props.theme.colors.checkBoxDesc};
-      padding-left: 20px;
+      padding-left: 10px;
+      width: 90%;
       li {
         color: ${(props) => props.theme.colors.checkBoxDesc};
         border: 1px solid ${(props) => props.theme.colors.checkBoxDesc};
@@ -125,6 +127,31 @@ export const SelectBox = styled.div`
         &.on {
           color: white;
           background-color: ${(props) => props.theme.colors.purple};
+        }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      p {
+        font-size: 13px;
+      }
+      li {
+        .desc {
+          font-size: 13px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        li {
+          svg {
+            margin-right: 3px;
+            margin-left: 5px;
+          }
         }
       }
     }

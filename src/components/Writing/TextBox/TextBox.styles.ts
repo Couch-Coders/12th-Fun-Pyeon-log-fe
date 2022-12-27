@@ -29,4 +29,21 @@ export const TextWrapper = styled.div`
       outline: none;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    p {
+      span {
+        margin-left: 8px;
+      }
+    }
+  }
+  @media screen and (max-width: 576px) {
+    p {
+      font-size: 14px;
+      span {
+        font-size: 10px;
+        margin-left: 5px;
+      }
+    }
+  }
 `

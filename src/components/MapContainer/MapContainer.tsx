@@ -43,6 +43,8 @@ const MapContainer = () => {
     lng: 126.9707,
   }
 
+  const [currentPosition, setCurrentPosition] = useState<kakao.maps.LatLng>()
+
   // 위 서치로 받아온 data를 다루는 콜백함수
   const searchCallBack = useCallback(
     (
@@ -65,6 +67,7 @@ const MapContainer = () => {
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)
         setMarkers(myMarker)
+        setCurrentPosition(newLatLan)
 
         dispatch(fetchAllStores({ mapData: data, map }))
       } else {
@@ -105,6 +108,8 @@ const MapContainer = () => {
           }
         )
       }
+
+      setCurrentPosition(new kakao.maps.LatLng(lat, lng))
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchCallBack]
@@ -134,6 +139,7 @@ const MapContainer = () => {
       defaultPosition.lng
     )
     drawMap(center)
+    setCurrentPosition(center)
 
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     if (!navigator.geolocation) {
@@ -226,6 +232,18 @@ const MapContainer = () => {
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
   }
+
+  const resizeMap = useCallback(() => {
+    if (mapApi && currentPosition) mapApi.setCenter(currentPosition)
+  }, [mapApi, currentPosition])
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeMap)
+
+    return () => {
+      window.removeEventListener('resize', resizeMap)
+    }
+  }, [resizeMap])
 
   return (
     <MapWrap>

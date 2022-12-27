@@ -138,7 +138,7 @@ list-style: none;
     bottom: 5px;
     opacity: 0.9;
 
-    header {
+  header {
       h2{
       font-size: 13px;
       line-height: 1.3;
@@ -149,7 +149,7 @@ list-style: none;
       }
     }
 
-    .star-review {
+  .star-review {
       font-size: 13px;
       height: 30px;
 
@@ -167,9 +167,8 @@ list-style: none;
   height: 30px;
       }
     }
-  }
 
-  .store-info{
+    .store-info{
     padding: 5px 10px;
     padding-bottom: 0;
     font-size: 12px;
@@ -181,7 +180,7 @@ list-style: none;
       }
     }
 
-    .detail-view{
+  .detail-view{
     align-items: center;
     margin-top: 0px;
     padding: 7px;
@@ -194,6 +193,8 @@ list-style: none;
     }
   }
 }
+}
+
 
 .infoOverlay {
   position: absolute;
@@ -214,6 +215,5 @@ list-style: none;
     font-weight: bold;
   }
 }
-
 
 `

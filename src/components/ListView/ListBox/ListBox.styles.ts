@@ -8,6 +8,10 @@ export const ListWrapper = styled.div`
     padding: 10px;
     font-weight: 700;
   }
+
+  @media screen and (max-width: 576px) {
+    height: calc(100% - 60px);
+  }
 `
 export const SortBtns = styled.ul`
   width: 100%;
@@ -46,6 +50,20 @@ export const SortBtns = styled.ul`
     }
   }
 
+  @media screen and (max-width: 576px) {
+    height: 25px;
+    justify-content: space-around;
+    padding: 0px;
+
+    li {
+      :nth-of-type(1) {
+        border-right: none;
+      }
+      :nth-of-type(3) {
+        border-left: none;
+      }
+    }
+  }
 `
 export const ResultBox = styled.ul`
   height: calc(100% - 30px);

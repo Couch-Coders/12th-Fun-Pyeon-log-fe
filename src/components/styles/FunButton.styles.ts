@@ -42,4 +42,14 @@ export const GoogleSignInBtn = styled.button`
     color: white;
     background-color: ${(props) => props.theme.colors.purple};
   }
+  @media screen and (max-width: 768px) {
+    width: 160px;
+    font-size: 15px;
+    padding: 10px 5px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 140px;
+    font-size: 12px;
+    padding: 8px 5px;
+  }
 `

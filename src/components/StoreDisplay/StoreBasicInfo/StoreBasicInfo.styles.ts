@@ -112,9 +112,11 @@ export const ConvInfo = styled.div`
 export const KeywordBox = styled.div`
   ul {
     display: flex;
-
+    flex-wrap: wrap;
+    li {
+      margin-bottom: 12px;
+    }
     @media screen and (max-width: 768px) {
-      flex-wrap: wrap;
       li {
         margin-bottom: 12px;
         span {

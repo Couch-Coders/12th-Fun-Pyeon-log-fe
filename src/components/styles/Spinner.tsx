@@ -15,7 +15,6 @@ export const SpinnerContainer = styled.div`
   border: 3px solid #fff;
   border-radius: 50%;
   border-top-color: #7d53d6;
-  margin-right: 30px;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
   @keyframes spin {
@@ -27,6 +26,11 @@ export const SpinnerContainer = styled.div`
     to {
       -webkit-transform: rotate(360deg);
     }
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 30px;
+    height: 30px;
   }
 `
 

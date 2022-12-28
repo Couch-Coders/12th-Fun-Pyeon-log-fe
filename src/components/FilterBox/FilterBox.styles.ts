@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const FilterWrapper = styled.div`
-  height: calc(100% - 60px);
+  height: calc(100% - 90px);
   padding: 20px 10px;
   overflow-y: scroll;
 
@@ -39,6 +39,10 @@ export const FilterWrapper = styled.div`
 
   ::-webkit-scrollbar-track {
     background: rgba(125, 83, 214, 0.07);
+  }
+
+  @media screen and (max-width: 576px) {
+    height: calc(100% - 50px);
   }
 `
 export const Title = styled.h2`

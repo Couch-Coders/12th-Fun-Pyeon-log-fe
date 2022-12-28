@@ -23,11 +23,9 @@ const LoginModal: React.FC<ModalProps> = ({ setModalOpen }) => {
           <div className="logo">
             <Funbadge />
           </div>
-          <FunButton
-            buttonType={BUTTON_TYPE_CLASSES.google}
-            name={'Google 로그인'}
-            onClick={logIn}
-          />
+          <FunButton buttonType={BUTTON_TYPE_CLASSES.google} onClick={logIn}>
+            Google 로그인
+          </FunButton>
         </Content>
       </LoginBox>
     </Modal>

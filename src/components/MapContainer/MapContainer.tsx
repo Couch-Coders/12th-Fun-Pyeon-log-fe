@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import { useSelector } from 'react-redux'
 import Map from '@components/Map/Map'
+import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
 import { MapContext } from '@context/MapContext'
 import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
@@ -219,15 +220,26 @@ const MapContainer = () => {
     <MapWrap>
       <Map ref={mapRef} />
       <ControlBtns>
-        <button onClick={searchFromHereHandler} className="search_Btn">
+        <FunButton
+          buttonType={BUTTON_TYPE_CLASSES.map}
+          onClick={searchFromHereHandler}
+        >
           이 위치에서 다시 검색
-        </button>
-        <button onClick={moveToCenter} className="myGps_Btn web">
-          내위치로 이동
-        </button>
-        <button onClick={moveToCenter} className="myGps_Btn tablet">
+        </FunButton>
+        <FunButton
+          buttonType={BUTTON_TYPE_CLASSES.map}
+          onClick={moveToCenter}
+          className="web"
+        >
+          내 위치로 이동
+        </FunButton>
+        <FunButton
+          buttonType={BUTTON_TYPE_CLASSES.map}
+          onClick={moveToCenter}
+          className="tablet"
+        >
           <AimOutlined />
-        </button>
+        </FunButton>
       </ControlBtns>
     </MapWrap>
   )

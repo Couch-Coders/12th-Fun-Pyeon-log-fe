@@ -66,10 +66,11 @@ const ReviewListContainer = () => {
         <div className="button">
           <FunButton
             buttonType={BUTTON_TYPE_CLASSES.base}
-            name={'작성하기'}
             className={user ? '' : 'disabled'}
             onClick={moveToWrite}
-          />
+          >
+            작성하기
+          </FunButton>
         </div>
       </ReviewTop>
 

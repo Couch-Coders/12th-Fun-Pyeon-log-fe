@@ -87,16 +87,13 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
       />
 
       <BtnBox>
-        <FunButton
-          name={'취소'}
-          className="opposite"
-          onClick={() => navigate(-1)}
-        />
+        <FunButton className="opposite" onClick={() => navigate(-1)}>
+          취소
+        </FunButton>
 
-        <FunButton
-          name={isEdit ? '수정하기' : '게시하기'}
-          onClick={submitReview}
-        />
+        <FunButton onClick={submitReview}>
+          {isEdit ? '수정하기' : '게시하기'}
+        </FunButton>
       </BtnBox>
     </WritingBoxWrapper>
   )

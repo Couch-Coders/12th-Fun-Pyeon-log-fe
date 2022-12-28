@@ -26,31 +26,8 @@ export const ControlBtns = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
 
-  button {
-    background-color: #fff;
-    color: #555;
-    border: 1px solid ${(props) => props.theme.colors.border};
-    border-radius: 10px;
-    opacity: 0.9;
-    transition: 0.5s;
-    padding: 10px;
-    margin: 0 5px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 1;
-      color: ${(props) => props.theme.colors.purple};
-      border: 1px solid ${(props) => props.theme.colors.purple};
-      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    &.tablet {
-      display: none;
-    }
+  &.tablet {
+    display: none;
   }
 
   @media screen and (max-width: 768px) {

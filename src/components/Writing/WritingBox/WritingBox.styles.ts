@@ -4,7 +4,7 @@ export const WritingBoxWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 80%;
-  min-width: 800px;
+  min-width: 740px;
   padding: 20px 0;
 
   > div {

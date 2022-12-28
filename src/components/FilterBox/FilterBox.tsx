@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from '@components/common/Select/Select'
 import FunButton from '@components/styles/FunButton'
 import { MapContext } from '@context/MapContext'
-import kakaoServie from '@services/kakaoService'
+import KakaoService from '@services/kakaoService'
 import { setSortStores } from '@stores/conv/convSlice'
 import { ConvType } from '@stores/conv/convType'
 import { saveBrand, saveKeyword } from '@stores/sort/sortSlice'
@@ -29,7 +29,7 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const sortCallBack = (data: ConvType[]) => {
     if (mapApi) {
       for (let i = 0; i < data.length; i++) {
-        const marker = kakaoServie.displayMarkerOverlay(data[i], mapApi)
+        const marker = KakaoService.displayMarkerOverlay(data[i], mapApi)
         setMarkers(marker)
       }
     }
@@ -86,6 +86,7 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
     dispatch(saveKeyword(selectKeyword))
 
     setIsFiltering(false)
+    KakaoService.overlay.setMap(null)
   }
 
   const sortInit = () => {

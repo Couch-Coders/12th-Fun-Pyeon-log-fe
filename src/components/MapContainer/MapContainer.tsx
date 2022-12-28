@@ -47,10 +47,10 @@ const MapContainer = () => {
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds)
+        map.setLevel(4)
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)
-        map.setLevel(4)
         setMarkers(myMarker)
         dispatch(
           setSearchedCoord({ lat: newLatLan.getLat(), lng: newLatLan.getLng() })
@@ -99,22 +99,35 @@ const MapContainer = () => {
       if (!navigator.geolocation) {
         alert('Geolocation is not supported by your browser')
       }
-      navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude // 위도
-        const lng = position.coords.longitude // 경도
-        setMyPosition({ lat, lng })
-        if (searchedCoord) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude // 위도
+          const lng = position.coords.longitude // 경도
+          setMyPosition({ lat, lng })
+          if (searchedCoord) {
+            const center = new kakao.maps.LatLng(
+              searchedCoord.lat,
+              searchedCoord.lng
+            )
+            mapApi.setCenter(center)
+          }
+          searchStore(SearchType.CATEGORY, '', mapApi)
+        },
+        () => {
+          if (!searchedCoord) {
+            alert('위치동의를 하지 않아서 기본위치에서 시작합니다.')
+            searchStore(SearchType.CATEGORY, '', mapApi)
+            return
+          }
           const center = new kakao.maps.LatLng(
             searchedCoord.lat,
             searchedCoord.lng
           )
           mapApi.setCenter(center)
-        } else {
           searchStore(SearchType.CATEGORY, '', mapApi)
         }
-      })
+      )
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapApi, searchStore])
 
@@ -128,16 +141,9 @@ const MapContainer = () => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
-      removeMarkerNInfo()
       if (searchWord.length > 0) {
+        removeMarkerNInfo()
         searchStore(SearchType.KEYWORD, searchWord, mapApi)
-      } else if (searchWord.length === 0 && searchedCoord) {
-        const locPosition = new kakao.maps.LatLng(
-          searchedCoord.lat,
-          searchedCoord.lng
-        )
-        mapApi.setCenter(locPosition)
-        searchStore(SearchType.CATEGORY, '', mapApi)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,20 +175,6 @@ const MapContainer = () => {
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
   }
-
-  const resizeMap = useCallback(() => {
-    if (mapApi && searchedCoord)
-      mapApi.setCenter(
-        new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
-      )
-  }, [mapApi, searchedCoord])
-
-  useEffect(() => {
-    window.addEventListener('resize', resizeMap)
-    return () => {
-      window.removeEventListener('resize', resizeMap)
-    }
-  }, [resizeMap])
 
   return (
     <MapWrap>

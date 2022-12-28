@@ -22,10 +22,11 @@ const Store = () => {
   const mapRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const encodedstore = storeParam.get('store')
-    if (storeId && encodedstore) {
-      const decodedStore = decodeURIComponent(encodedstore)
-      dispatch(fetchStoreInfo({ storeId, decodedStore }))
+    const encodedAddress = storeParam.get('address')
+
+    if (storeId && encodedAddress) {
+      const decodedAddress = decodeURIComponent(encodedAddress)
+      dispatch(fetchStoreInfo({ storeId, decodedAddress }))
     }
   }, [storeId, dispatch, storeParam])
 

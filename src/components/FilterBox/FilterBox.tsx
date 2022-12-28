@@ -102,11 +102,9 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
 
   return (
     <FilterWrapper>
-      <FunButton
-        name={'초기화'}
-        onClick={sortInit}
-        className="initBtn opposite"
-      />
+      <FunButton onClick={sortInit} className="initBtn opposite">
+        초기화
+      </FunButton>
 
       <div>
         <Title>브랜드</Title>
@@ -136,10 +134,11 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
       </KeywordGroup>
 
       <FunButton
-        name={'찾아보기'}
         style={{ width: '100%', minHeight: '30px', fontWeight: '700' }}
         onClick={() => sortStore()}
-      />
+      >
+        찾아보기
+      </FunButton>
     </FilterWrapper>
   )
 }

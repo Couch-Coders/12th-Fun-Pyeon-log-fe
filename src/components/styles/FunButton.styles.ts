@@ -10,6 +10,7 @@ export const BaseBtn = styled.button`
 
   color: white;
   cursor: pointer;
+  transition: 0.5s;
 
   :hover {
     background-color: rgba(125, 83, 214, 0.8);
@@ -56,5 +57,55 @@ export const GoogleSignInBtn = styled.button`
     width: 140px;
     font-size: 12px;
     padding: 8px 5px;
+  }
+`
+
+export const mapBtn = styled.button`
+  background-color: #fff;
+  color: #555;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 10px;
+  opacity: 0.9;
+  transition: 0.5s;
+  padding: 10px;
+  margin: 0 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    color: ${(props) => props.theme.colors.purple};
+    border: 1px solid ${(props) => props.theme.colors.purple};
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  &.tablet {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    &.web {
+      display: none;
+    }
+
+    &.tablet {
+      display: flex;
+      width: 38px;
+      height: 38px;
+
+      span {
+        font-size: 20px;
+        color: ${(props) => props.theme.colors.searchBtn};
+      }
+
+      &:hover {
+        span {
+          color: ${(props) => props.theme.colors.purple};
+        }
+      }
+    }
   }
 `

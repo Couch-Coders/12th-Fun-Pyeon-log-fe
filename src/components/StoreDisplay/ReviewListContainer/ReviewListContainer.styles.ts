@@ -4,7 +4,7 @@ export const ReviewListWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 80%;
-  min-width: 800px;
+  min-width: 740px;
   padding: 20px 0;
 
   @media screen and (max-width: 768px) {

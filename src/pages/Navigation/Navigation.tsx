@@ -52,15 +52,16 @@ const Navigation = () => {
               <img src={user.imgUrl} alt="user avatar" />
             </Avatar>
             <p>{user.displayName}</p>
-            <FunButton name={'Logout'} onClick={signOutHandler} />
+            <FunButton onClick={signOutHandler}>Logout</FunButton>
           </LogoutCon>
         ) : (
           <FunButton
-            name={'Login'}
             onClick={() => {
               setModalOpen(true)
             }}
-          />
+          >
+            Login
+          </FunButton>
         )}
         {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
       </NavCon>

@@ -33,6 +33,8 @@ export const BRANDS = [
 
 export const STAR_COUNT = [0, 1, 2, 3, 4]
 
+export const DEFAULT_KAKAO_COORD = { lat: 37.5547, lng: 126.9707 }
+
 export const ITEMS = [
   { title: '제품', keywordArray: PRODUCT },
   { title: '분위기', keywordArray: MOOD },

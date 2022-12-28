@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useContext,
-  useCallback,
-} from 'react'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import Map from '@components/Map/Map'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
@@ -13,6 +7,7 @@ import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
 import { setSearchedCoord, saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
+import { DEFAULT_KAKAO_COORD } from '@utils/constants'
 import { AimOutlined } from '@ant-design/icons'
 import { MapWrap, ControlBtns } from './MapContainer.styles'
 
@@ -28,23 +23,12 @@ const MapContainer = () => {
     (state: RootState) => state.sort.searchedCoord
   )
   const dispatch = useAppDispatch()
-  const { setMapApi, setMarkers, deleteMarkers, mapApi } =
-    useContext(MapContext)
-  const mapRef = useRef<HTMLDivElement | null>(null)
+  const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
   // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
-    lat: 37.5547,
-    lng: 126.9707,
+    lat: 0,
+    lng: 0,
   })
-  const defaultPosition: {
-    lat: number
-    lng: number
-  } = {
-    lat: 37.5547,
-    lng: 126.9707,
-  }
-
-  const [currentPosition, setCurrentPosition] = useState<kakao.maps.LatLng>()
 
   // 위 서치로 받아온 data를 다루는 콜백함수
   const searchCallBack = useCallback(
@@ -63,20 +47,21 @@ const MapContainer = () => {
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds)
-
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)
+        map.setLevel(4)
         setMarkers(myMarker)
-        setCurrentPosition(newLatLan)
-
+        dispatch(
+          setSearchedCoord({ lat: newLatLan.getLat(), lng: newLatLan.getLng() })
+        )
         dispatch(fetchAllStores({ mapData: data, map }))
       } else {
         console.log(`error ${status}`)
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+
+    [dispatch, setMarkers]
   )
 
   // 검색 함수 kakao map을 인자로 받아와 작동한다.
@@ -84,11 +69,7 @@ const MapContainer = () => {
     (searchType: SearchType, searchTerm: string, mapApi: kakao.maps.Map) => {
       // 펼쳐진 오버레이 삭제
       KakaoService.overlay.setMap(null)
-
       const ps = new kakao.maps.services.Places()
-      const lat = mapApi.getCenter().getLat()
-      const lng = mapApi.getCenter().getLng()
-
       // if문으로
       if (searchType === SearchType.KEYWORD) {
         //  키워드 서치 기능
@@ -96,62 +77,46 @@ const MapContainer = () => {
           searchCallBack(data, status, mapApi)
         )
       } else {
-        dispatch(setSearchedCoord({ lat, lng }))
         //  카테고리 서치 기능
         ps.categorySearch(
           'CS2',
           (data, status) => searchCallBack(data, status, mapApi),
           //  카테고리 서치 옵션
           {
-            location: new kakao.maps.LatLng(lat, lng),
+            location: mapApi.getCenter(),
             sort: kakao.maps.services.SortBy.DISTANCE,
             useMapBounds: true,
           }
         )
       }
-
-      setCurrentPosition(new kakao.maps.LatLng(lat, lng))
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchCallBack]
-  )
-
-  // 지도 생성 함수
-  const drawMap = useCallback(
-    (center: kakao.maps.LatLng) => {
-      // 지도 초기화
-      if (mapRef.current) mapRef.current.innerHTML = ''
-      const mapContainer = mapRef.current as HTMLDivElement
-      const mapOption = {
-        center, // 지도의 중심좌표
-        level: 4, // 지도의 확대 레벨
-      }
-      const map = new kakao.maps.Map(mapContainer, mapOption)
-      setMapApi(map)
-      searchStore(SearchType.CATEGORY, '', map)
-    },
-    [setMapApi, searchStore]
   )
 
   // 처음 들어왔을 때
   useEffect(() => {
-    const center = new kakao.maps.LatLng(
-      defaultPosition.lat,
-      defaultPosition.lng
-    )
-    drawMap(center)
-    setCurrentPosition(center)
-
-    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser')
+    if (mapApi instanceof kakao.maps.Map) {
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by your browser')
+      }
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude // 위도
+        const lng = position.coords.longitude // 경도
+        setMyPosition({ lat, lng })
+        if (searchedCoord) {
+          const center = new kakao.maps.LatLng(
+            searchedCoord.lat,
+            searchedCoord.lng
+          )
+          mapApi.setCenter(center)
+        } else {
+          searchStore(SearchType.CATEGORY, '', mapApi)
+        }
+      })
     }
-    navigator.geolocation.getCurrentPosition((position) => {
-      const lat = position.coords.latitude // 위도
-      const lng = position.coords.longitude // 경도
-      setMyPosition({ lat, lng })
-    })
-  }, [drawMap, defaultPosition.lat, defaultPosition.lng])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapApi, searchStore])
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
@@ -163,11 +128,10 @@ const MapContainer = () => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
+      removeMarkerNInfo()
       if (searchWord.length > 0) {
-        removeMarkerNInfo()
         searchStore(SearchType.KEYWORD, searchWord, mapApi)
       } else if (searchWord.length === 0 && searchedCoord) {
-        removeMarkerNInfo()
         const locPosition = new kakao.maps.LatLng(
           searchedCoord.lat,
           searchedCoord.lng
@@ -183,14 +147,16 @@ const MapContainer = () => {
   const moveToCenter = () => {
     dispatch(saveSearchWord(''))
     removeMarkerNInfo()
-
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-    const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
-
-    if (myPosition.lat === 37.5547 && myPosition.lng === 126.9707)
-      alert('현재 위치 정보가 없습니다. 기본 위치로 이동합니다.')
-
     if (mapApi) {
+      let locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
+      if (myPosition.lat === 0) {
+        locPosition = new kakao.maps.LatLng(
+          DEFAULT_KAKAO_COORD.lat,
+          DEFAULT_KAKAO_COORD.lng
+        )
+        alert('현재 위치 정보가 없습니다. 기본 위치로 이동합니다.')
+      }
       mapApi.setCenter(locPosition)
       searchStore(SearchType.CATEGORY, '', mapApi)
     }
@@ -205,12 +171,14 @@ const MapContainer = () => {
   }
 
   const resizeMap = useCallback(() => {
-    if (mapApi && currentPosition) mapApi.setCenter(currentPosition)
-  }, [mapApi, currentPosition])
+    if (mapApi && searchedCoord)
+      mapApi.setCenter(
+        new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
+      )
+  }, [mapApi, searchedCoord])
 
   useEffect(() => {
     window.addEventListener('resize', resizeMap)
-
     return () => {
       window.removeEventListener('resize', resizeMap)
     }
@@ -218,7 +186,7 @@ const MapContainer = () => {
 
   return (
     <MapWrap>
-      <Map ref={mapRef} />
+      <Map />
       <ControlBtns>
         <FunButton
           buttonType={BUTTON_TYPE_CLASSES.map}

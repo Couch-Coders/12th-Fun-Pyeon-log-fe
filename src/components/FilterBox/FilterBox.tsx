@@ -36,12 +36,11 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   }
 
   const sortBrand = () => {
-    let newData: ConvType[]
-
     if (selectBrand.length === 0) {
-      newData = convList
-    } else if (selectBrand.includes('기타')) {
-      newData = stores.filter((data) =>
+      return convList
+    }
+    if (selectBrand.includes('기타')) {
+      const newData = stores.filter((data) =>
         selectBrand.includes(data.place_name.split(' ')[0])
       )
       const etcData = stores.filter(
@@ -50,27 +49,21 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
             data.place_name.split(' ')[0]
           )
       )
-      newData = [...newData, ...etcData]
-    } else {
-      newData = stores.filter((data) =>
-        selectBrand.includes(data.place_name.split(' ')[0])
-      )
+      return [...newData, ...etcData]
     }
-    return newData
+
+    return stores.filter((data) =>
+      selectBrand.includes(data.place_name.split(' ')[0])
+    )
   }
 
   const sortKeyword = (newData: ConvType[]) => {
-    let sortResult
-
     if (selectKeyword.length === 0) {
-      sortResult = newData
-    } else {
-      sortResult = newData.filter((data) =>
-        data.keywordList.some((keyword) => selectKeyword.includes(keyword))
-      )
+      return newData
     }
-
-    return sortResult
+    return newData.filter((data) =>
+      data.keywordList.some((keyword) => selectKeyword.includes(keyword))
+    )
   }
 
   const sortStore = () => {

@@ -12,6 +12,7 @@ import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
 import { setSearchedCoord, saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
+import { DEFAULT_KAKAO_COORD } from '@utils/constants'
 import { AimOutlined } from '@ant-design/icons'
 import { MapWrap, ControlBtns } from './MapContainer.styles'
 
@@ -32,16 +33,9 @@ const MapContainer = () => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
-    lat: 37.5547,
-    lng: 126.9707,
+    lat: DEFAULT_KAKAO_COORD.lat,
+    lng: DEFAULT_KAKAO_COORD.lng,
   })
-  const defaultPosition: {
-    lat: number
-    lng: number
-  } = {
-    lat: 37.5547,
-    lng: 126.9707,
-  }
 
   const [currentPosition, setCurrentPosition] = useState<kakao.maps.LatLng>()
 
@@ -135,8 +129,8 @@ const MapContainer = () => {
   // 처음 들어왔을 때
   useEffect(() => {
     const center = new kakao.maps.LatLng(
-      defaultPosition.lat,
-      defaultPosition.lng
+      DEFAULT_KAKAO_COORD.lat,
+      DEFAULT_KAKAO_COORD.lng
     )
     drawMap(center)
     setCurrentPosition(center)
@@ -150,7 +144,7 @@ const MapContainer = () => {
       const lng = position.coords.longitude // 경도
       setMyPosition({ lat, lng })
     })
-  }, [drawMap, defaultPosition.lat, defaultPosition.lng])
+  }, [drawMap])
 
   // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
   const removeMarkerNInfo = useCallback(() => {
@@ -186,7 +180,10 @@ const MapContainer = () => {
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
     const locPosition = new kakao.maps.LatLng(myPosition.lat, myPosition.lng)
 
-    if (myPosition.lat === 37.5547 && myPosition.lng === 126.9707)
+    if (
+      myPosition.lat === DEFAULT_KAKAO_COORD.lat &&
+      myPosition.lng === DEFAULT_KAKAO_COORD.lng
+    )
       alert('현재 위치 정보가 없습니다. 기본 위치로 이동합니다.')
 
     if (mapApi) {
@@ -217,7 +214,7 @@ const MapContainer = () => {
 
   return (
     <MapWrap>
-      <Map ref={mapRef} />
+      <Map />
       <ControlBtns>
         <button onClick={searchFromHereHandler} className="search_Btn">
           이 위치에서 다시 검색

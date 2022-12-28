@@ -1,4 +1,5 @@
 import { ConvType } from '@stores/conv/convType'
+import { DEFAULT_KAKAO_COORD } from '@utils/constants'
 import funlogImg from '../assets/convImg/funlog.png'
 import phone from '../assets/phone.png'
 import pin from '../assets/pin.png'
@@ -8,12 +9,18 @@ import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
 const { kakao } = window
 
 const overlay = new kakao.maps.CustomOverlay({
-  position: new kakao.maps.LatLng(37.54699, 127.09598),
+  position: new kakao.maps.LatLng(
+    DEFAULT_KAKAO_COORD.lat,
+    DEFAULT_KAKAO_COORD.lng
+  ),
   zIndex: 1,
 })
 
 const infoOverlay = new kakao.maps.CustomOverlay({
-  position: new kakao.maps.LatLng(37.54699, 127.09598),
+  position: new kakao.maps.LatLng(
+    DEFAULT_KAKAO_COORD.lat,
+    DEFAULT_KAKAO_COORD.lng
+  ),
   zIndex: 1,
 })
 

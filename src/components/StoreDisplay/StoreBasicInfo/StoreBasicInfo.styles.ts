@@ -5,8 +5,19 @@ export const InfoContainer = styled.section`
   position: relative;
   height: 170px;
   width: 80%;
-  min-width: 800px;
+  min-width: 740px;
   padding: 10px 0;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    min-width: 560px;
+    height: 200px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 90%;
+    min-width: 320px;
+    height: 200px;
+  }
 `
 
 export const ConvImgWrapper = styled.div`
@@ -16,32 +27,93 @@ export const ConvImgWrapper = styled.div`
   border-radius: 15px;
   overflow: hidden;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   img {
     width: 130px;
     height: 130px;
-    transform: translate(-5px, -5px);
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 100px;
+    height: 100px;
+    border-radius: 10px;
+
+    img {
+      width: 105px;
+      height: 105px;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    min-width: 80px;
+    width: 80px;
+    height: 80px;
+
+    img {
+      width: 85px;
+      height: 85px;
+    }
   }
 `
 export const ConvInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
 
   padding: 0 25px;
 
   h1 {
-    font-size: 3rem;
+    min-width: 480px;
+    font-size: 2.5rem;
     font-weight: bold;
     color: #7d53d6;
+    padding-right: 100px;
+    margin-bottom: 15px;
   }
 
   p {
     font-size: 20px;
     display: flex;
-    gap: 10px;
+    margin-bottom: 15px;
+    :first-child {
+      margin-left: 10px;
+    }
 
     span {
       margin-right: 5px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 15px;
+    h1 {
+      font-size: 1.6rem;
+    }
+    p {
+      font-size: 14px;
+
+      :first-child {
+        margin-left: 5px;
+      }
+
+      span {
+        margin-right: 3px;
+      }
+    }
+  }
+  @media screen and (max-width: 576px) {
+    padding: 0 10px;
+    h1 {
+      font-size: 1.2rem;
+    }
+    p {
+      font-size: 12px;
+      flex-direction: column;
+      span {
+        margin-bottom: 3px;
+      }
     }
   }
 `
@@ -49,6 +121,16 @@ export const ConvInfo = styled.div`
 export const KeywordBox = styled.div`
   ul {
     display: flex;
+    flex-wrap: wrap;
+
+    li {
+      margin-bottom: 12px;
+    }
+    @media screen and (max-width: 768px) {
+      li {
+        margin-bottom: 10px;
+      }
+    }
   }
 `
 
@@ -56,7 +138,7 @@ export const StarPoint = styled.div`
   position: absolute;
   top: 10px;
   right: 0;
-  width: 140px;
+  width: 120px;
   height: 45px;
 
   display: flex;
@@ -73,6 +155,8 @@ export const StarPoint = styled.div`
   font-weight: bold;
 
   svg {
+    width: 22px;
+    height: 22px;
     fill: rgba(255, 230, 0, 1);
     margin: 0 10px;
   }
@@ -84,5 +168,33 @@ export const StarPoint = styled.div`
     width: 120px;
     height: 45px;
     border-left: 1px solid #d9d9d9;
+    font-size: 21px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 90px;
+    height: 35px;
+    font-size: 16px;
+
+    p {
+      width: 80px;
+      height: 35px;
+      border-left: 1px solid #d9d9d9;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    width: 80px;
+    height: 30px;
+    font-size: 12px;
+    top: 100px;
+    left: 0;
+    right: unset;
+    box-shadow: unset;
+
+    p {
+      width: 80px;
+      height: 30px;
+      border-left: 1px solid #d9d9d9;
+    }
   }
 `

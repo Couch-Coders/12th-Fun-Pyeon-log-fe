@@ -5,7 +5,7 @@ import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicIn
 import WritingBox from '@components/Writing/WritingBox/WritingBox'
 import { ReviewType } from '@stores/review/reviewType'
 import { RootState } from '@stores/store'
-import { StoreWrapper } from '@pages/store/Store.styles'
+import { StoreWrapper } from '@pages/Store/Store.styles'
 
 const Edit = () => {
   const { storeId } = useParams()

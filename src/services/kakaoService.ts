@@ -1,19 +1,26 @@
-import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
-import star from '../assets/star.png'
-import pin from '../assets/pin.png'
-import phone from '../assets/phone.png'
-import funlogImg from '../assets/convImg/funlog.png'
 import { ConvType } from '@stores/conv/convType'
+import { DEFAULT_KAKAO_COORD } from '@utils/constants'
+import funlogImg from '../assets/convImg/funlog.png'
+import phone from '../assets/phone.png'
+import pin from '../assets/pin.png'
+import star from '../assets/star.png'
+import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
 
 const { kakao } = window
 
 const overlay = new kakao.maps.CustomOverlay({
-  position: new kakao.maps.LatLng(37.54699, 127.09598),
+  position: new kakao.maps.LatLng(
+    DEFAULT_KAKAO_COORD.lat,
+    DEFAULT_KAKAO_COORD.lng
+  ),
   zIndex: 1,
 })
 
 const infoOverlay = new kakao.maps.CustomOverlay({
-  position: new kakao.maps.LatLng(37.54699, 127.09598),
+  position: new kakao.maps.LatLng(
+    DEFAULT_KAKAO_COORD.lat,
+    DEFAULT_KAKAO_COORD.lng
+  ),
   zIndex: 1,
 })
 
@@ -108,7 +115,7 @@ const overlayContainer = ({
   starCount: number
 }) => {
   const currentUrl = String(document.location.origin)
-  const storeEncode = encodeURIComponent(placeName)
+  const addressEncode = encodeURIComponent(address)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -136,7 +143,7 @@ const overlayContainer = ({
       </div>
     </div>
     <div class="detail-view">
-      <a href="${currentUrl}/stores/${storeId}?store=${storeEncode}">상세보기</a>
+      <a href="${currentUrl}/stores/${storeId}?address=${addressEncode}">상세보기</a>
     </div>
   </div>`
 }
@@ -144,9 +151,10 @@ const overlayContainer = ({
 const searchOneStore = (storeName: string, storeId: string) => {
   const store: kakao.maps.services.PlacesSearchResult = []
   const ps = new kakao.maps.services.Places()
-  ps.keywordSearch(storeName, (data, status) => {
+  ps.keywordSearch(`${storeName} 편의점`, (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       const searchedstore = data.filter((store) => store.id === storeId)
+      console.log(storeName, searchedstore)
       store.push(...searchedstore)
     }
   })

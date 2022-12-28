@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { ReviewState, ReviewType, WriteType } from './reviewType'
-
-import ReviewService from '@services/reviewService'
 import ErrorService from '@services/errorService'
+import ReviewService from '@services/reviewService'
+import { ReviewState, ReviewType, WriteType } from './reviewType'
 
 const initialState: ReviewState = {
   reviews: [],

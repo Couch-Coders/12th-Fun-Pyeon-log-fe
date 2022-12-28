@@ -3,6 +3,11 @@ import styled from 'styled-components'
 export const Wrapper = styled.article`
   display: flex;
   flex-direction: row;
+  overflow-y: hidden;
+
+  @media screen and (max-width: 576px) {
+    flex-direction: column;
+  }
 `
 export const ListView = styled.section`
   background-color: white;
@@ -13,15 +18,33 @@ export const ListView = styled.section`
   max-width: 300px;
   height: calc(100vh - 80px);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+
+  @media screen and (max-width: 768px) {
+    width: 40vw;
+    min-width: 200px;
+    max-width: 250px;
+  }
+
+  @media screen and (max-width: 576px) {
+    order: 2;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: calc(40vh + 30px);
+  }
 `
 export const ListTop = styled.div`
   height: 90px;
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
-  padding: 10px 20px;
+  padding: 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 576px) {
+    height: 50px;
+  }
 `
 export const SearchBox = styled.div`
   margin-right: 10px;
@@ -52,6 +75,21 @@ export const SearchBox = styled.div`
     border: none;
     text-align: right;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+    min-width: 145px;
+    margin-right: 5px;
+
+    input {
+      min-width: 120px;
+      padding-right: 0;
+      font-size: 13px;
+    }
+    button {
+      padding-left: 0px;
+    }
   }
 `
 export const SortBtn = styled.button`

@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import FunButton from '@styles/FunButton'
 import Select from '@components/common/Select/Select'
-import { RootState } from '@stores/store'
-import { setSortStores } from '@stores/conv/convSlice'
-import { BRANDS, ITEMS } from '@utils/constants'
-import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
-import kakaoServie from '@services/kakaoService'
+import FunButton from '@components/styles/FunButton'
 import { MapContext } from '@context/MapContext'
+import KakaoService from '@services/kakaoService'
+import { setSortStores } from '@stores/conv/convSlice'
 import { ConvType } from '@stores/conv/convType'
 import { saveBrand, saveKeyword } from '@stores/sort/sortSlice'
+import { RootState } from '@stores/store'
+import { BRANDS, ITEMS } from '@utils/constants'
+import { FilterWrapper, KeywordGroup, Title } from './FilterBox.styles'
 
 interface filterProps {
   setIsFiltering: (isFiltering: boolean) => void
@@ -29,19 +29,18 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const sortCallBack = (data: ConvType[]) => {
     if (mapApi) {
       for (let i = 0; i < data.length; i++) {
-        const marker = kakaoServie.displayMarkerOverlay(data[i], mapApi)
+        const marker = KakaoService.displayMarkerOverlay(data[i], mapApi)
         setMarkers(marker)
       }
     }
   }
 
   const sortBrand = () => {
-    let newData: ConvType[]
-
     if (selectBrand.length === 0) {
-      newData = convList
-    } else if (selectBrand.includes('기타')) {
-      newData = stores.filter((data) =>
+      return convList
+    }
+    if (selectBrand.includes('기타')) {
+      const newData = stores.filter((data) =>
         selectBrand.includes(data.place_name.split(' ')[0])
       )
       const etcData = stores.filter(
@@ -50,27 +49,21 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
             data.place_name.split(' ')[0]
           )
       )
-      newData = [...newData, ...etcData]
-    } else {
-      newData = stores.filter((data) =>
-        selectBrand.includes(data.place_name.split(' ')[0])
-      )
+      return [...newData, ...etcData]
     }
-    return newData
+
+    return stores.filter((data) =>
+      selectBrand.includes(data.place_name.split(' ')[0])
+    )
   }
 
   const sortKeyword = (newData: ConvType[]) => {
-    let sortResult
-
     if (selectKeyword.length === 0) {
-      sortResult = newData
-    } else {
-      sortResult = newData.filter((data) =>
-        data.keywordList.some((keyword) => selectKeyword.includes(keyword))
-      )
+      return newData
     }
-
-    return sortResult
+    return newData.filter((data) =>
+      data.keywordList.some((keyword) => selectKeyword.includes(keyword))
+    )
   }
 
   const sortStore = () => {
@@ -86,6 +79,7 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
     dispatch(saveKeyword(selectKeyword))
 
     setIsFiltering(false)
+    KakaoService.overlay.setMap(null)
   }
 
   const sortInit = () => {
@@ -101,11 +95,9 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
 
   return (
     <FilterWrapper>
-      <FunButton
-        name={'초기화'}
-        onClick={sortInit}
-        className="initBtn opposite"
-      />
+      <FunButton onClick={sortInit} className="initBtn opposite">
+        초기화
+      </FunButton>
 
       <div>
         <Title>브랜드</Title>
@@ -135,10 +127,11 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
       </KeywordGroup>
 
       <FunButton
-        name={'찾아보기'}
         style={{ width: '100%', minHeight: '30px', fontWeight: '700' }}
         onClick={() => sortStore()}
-      />
+      >
+        찾아보기
+      </FunButton>
     </FilterWrapper>
   )
 }

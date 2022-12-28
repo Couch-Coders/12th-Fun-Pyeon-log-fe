@@ -26,7 +26,6 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'preferred-import', 'prettier', 'react-hooks'],
-  plugins: ['react', 'preferred-import', 'prettier', 'react-hooks'],
   rules: {
     'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -40,6 +39,68 @@ module.exports = {
       'error',
       {
         checksVoidReturn: false,
+      },
+    ],
+
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling', 'index'],
+          'unknown',
+        ],
+        pathGroups: [
+          {
+            pattern: '{react*, react*/**, react-dom/*}',
+            group: 'builtin',
+            position: 'before',
+          },
+          {
+            pattern: './App',
+            group: 'internal',
+          },
+          {
+            pattern: '@pages/*',
+            group: 'internal',
+          },
+          {
+            pattern: '@components/*',
+            group: 'internal',
+          },
+          {
+            pattern: './Spinner',
+            group: 'internal',
+          },
+          {
+            pattern: '@ant-design/*',
+            group: 'unknown',
+          },
+          {
+            pattern: '*.styles',
+            group: 'unknown',
+            position: 'after',
+          },
+          {
+            pattern: '@*/**/*.styles',
+            group: 'unknown',
+            position: 'after',
+          },
+          {
+            pattern: './**/*.styles',
+            group: 'unknown',
+            position: 'after',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['react', 'unknown'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+
+        'newlines-between': 'ignore',
       },
     ],
   },

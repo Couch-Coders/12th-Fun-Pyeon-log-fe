@@ -1,9 +1,9 @@
 import React from 'react'
-import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
+import Modal from '@components/Modal/Modal'
+import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
 import { googleSignIn } from '@services/firebaseAuth'
-import { LoginBox, CloseBtn, Content } from './LoginModal.styles'
 import { ReactComponent as Funbadge } from '../../assets/funlog-badge.svg'
-import Modal from '@components/modal/Modal'
+import { LoginBox, CloseBtn, Content } from './LoginModal.styles'
 
 interface ModalProps {
   setModalOpen: (modalOpen: boolean) => void
@@ -23,11 +23,9 @@ const LoginModal: React.FC<ModalProps> = ({ setModalOpen }) => {
           <div className="logo">
             <Funbadge />
           </div>
-          <FunButton
-            buttonType={BUTTON_TYPE_CLASSES.google}
-            name={'Google 로그인'}
-            onClick={logIn}
-          />
+          <FunButton buttonType={BUTTON_TYPE_CLASSES.google} onClick={logIn}>
+            Google 로그인
+          </FunButton>
         </Content>
       </LoginBox>
     </Modal>

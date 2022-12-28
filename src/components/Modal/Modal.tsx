@@ -1,6 +1,5 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React from 'react'
 import { createPortal } from 'react-dom'
-
 import { BackdropStyle, ModalWrapperStyle } from './Modal.styles'
 
 interface BackdropProps {

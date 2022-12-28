@@ -1,14 +1,14 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { GlobalStyle } from './global.styles'
-import App from './App'
-import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import MapProvider from '@context/MapContext'
 import { store, persistor } from '@stores/store'
+import ReactDOM from 'react-dom/client'
+import { PersistGate } from 'redux-persist/integration/react'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
-import MapProvider from '@context/MapContext'
-import { PersistGate } from 'redux-persist/integration/react'
+import App from './App'
+import { GlobalStyle } from './global.styles'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 

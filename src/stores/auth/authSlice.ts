@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { UserStateType, UserType } from './authType'
 import AuthService from '@services/authService'
 import ErrorService from '@services/errorService'
+import { UserStateType, UserType } from './authType'
 
 const initialState: UserStateType = {
   user: null,

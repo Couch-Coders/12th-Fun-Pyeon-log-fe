@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState, useAppDispatch } from '@stores/store'
 import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
-
+import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
+import { fetchAllReviews, initReviews } from '@stores/review/reivewSlice'
+import { RootState, useAppDispatch } from '@stores/store'
+import { REVIEW_SIZE } from '@utils/constants'
+import URLUtill from '@utils/urlUtill'
 import { PlusOutlined } from '@ant-design/icons'
-import FunButton, { BUTTON_TYPE_CLASSES } from '@styles/FunButton'
 import {
   ReviewListWrapper,
   ReviewTop,
   NameNCount,
   ListContainer,
 } from './ReviewListContainer.styles'
-import URLUtill from '@utils/urlUtill'
-import { fetchAllReviews, initReviews } from '@stores/review/reivewSlice'
-import { REVIEW_SIZE } from '@utils/constants'
 
 const ReviewListContainer = () => {
   const { storeId } = useParams()
@@ -67,10 +66,11 @@ const ReviewListContainer = () => {
         <div className="button">
           <FunButton
             buttonType={BUTTON_TYPE_CLASSES.base}
-            name={'작성하기'}
             className={user ? '' : 'disabled'}
             onClick={moveToWrite}
-          />
+          >
+            작성하기
+          </FunButton>
         </div>
       </ReviewTop>
 

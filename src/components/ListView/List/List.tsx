@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import kakaoService from '@services/kakaoService'
+import KeywordBadge from '@components/styles/KeywordBadge'
 import { MapContext } from '@context/MapContext'
+import kakaoService from '@services/kakaoService'
 import { StarFilled } from '@ant-design/icons'
 import { ConBox, Title, Content } from './List.styles'
-import KeywordBadge from '@styles/KeywordBadge'
 
 interface ListProps {
   placeName: string

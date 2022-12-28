@@ -129,7 +129,72 @@ list-style: none;
       border-radius: 5px;
     }
   }
+
+  @media screen and (max-width: 576px) {
+    width: 170px;
+    height: 200px;
+
+    left: -85px;
+    bottom: 5px;
+    opacity: 0.9;
+
+  header {
+      h2{
+      font-size: 13px;
+      line-height: 1.3;
+      }
+      img {
+      width: 40px;
+      height: 40px;
+      }
+    }
+
+  .star-review {
+      font-size: 13px;
+      height: 30px;
+
+      .star {
+      width: 50%;
+
+        img {
+        width: 15px;
+        height:  15px;
+        }
+      }
+
+      .review-count {
+        width: 50%;
+  height: 30px;
+      }
+    }
+
+    .store-info{
+    padding: 5px 10px;
+    padding-bottom: 0;
+    font-size: 12px;
+ 
+    .address,
+    .phone {
+      width: 100%;
+      line-height: 1.3;
+      }
+    }
+
+  .detail-view{
+    align-items: center;
+    margin-top: 0px;
+    padding: 7px;
+    border-top: 1px solid ${(props) => props.theme.colors.border};
+
+    a{
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 10px;
+    }
+  }
 }
+}
+
 
 .infoOverlay {
   position: absolute;
@@ -150,6 +215,5 @@ list-style: none;
     font-weight: bold;
   }
 }
-
 
 `

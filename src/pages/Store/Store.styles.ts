@@ -9,11 +9,21 @@ export const StoreWrapper = styled.article`
 export const StoreMapWrapper = styled.section`
   margin-top: 20px;
   width: 80%;
-  min-width: 800px;
-  height: 500px;
+  min-width: 740px;
+  height: 400px;
 
   .map {
     width: 100%;
     height: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    min-width: 560px;
+    height: 400px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 90%;
+    min-width: 320px;
+    height: 300px;
   }
 `

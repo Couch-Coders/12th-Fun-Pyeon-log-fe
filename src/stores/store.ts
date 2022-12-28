@@ -1,5 +1,5 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import {
   persistStore,
   persistReducer,
@@ -12,10 +12,10 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import sortReducer from './sort/sortSlice'
 import userReducer from './auth/authSlice'
-import reviewReducer from './review/reivewSlice'
 import convReducer from './conv/convSlice'
+import reviewReducer from './review/reivewSlice'
+import sortReducer from './sort/sortSlice'
 
 const rootReducer = combineReducers({
   sort: sortReducer,
@@ -34,7 +34,7 @@ type ExtendedPersistConfig = PersistConfig<RootState> & {
 const persistConfig: ExtendedPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['sort', 'conv'],
+  whitelist: ['sort', 'conv', 'user'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

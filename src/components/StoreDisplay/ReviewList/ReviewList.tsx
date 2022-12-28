@@ -1,4 +1,10 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import KeywordBadge from '@components/styles/KeywordBadge'
+import { deleteReview, selectReview } from '@stores/review/reivewSlice'
+import { RootState, useAppDispatch } from '@stores/store'
+import URLUtill from '@utils/urlUtill'
 import { DeleteOutlined, EditOutlined, StarFilled } from '@ant-design/icons'
 import {
   ListContainer,
@@ -7,12 +13,6 @@ import {
   ReviewWirter,
   ReviewEditButton,
 } from './ReviewList.styles'
-import { useSelector } from 'react-redux'
-import { RootState, useAppDispatch } from '@stores/store'
-import { deleteReview, selectReview } from '@stores/review/reivewSlice'
-import { useNavigate, useParams } from 'react-router-dom'
-import URLUtill from '@utils/urlUtill'
-import KeywordBadge from '@styles/KeywordBadge'
 
 interface ReviewType {
   reviewId: number
@@ -58,6 +58,10 @@ const ReviewList: React.FC<ReviewType> = ({
 
   return (
     <ListContainer isWide={isWideView}>
+      <ReviewWirter>
+        <p className="user">{displayName}</p>
+        <p className="day">{date}</p>
+      </ReviewWirter>
       {userId === user?.email && (
         <ReviewEditButton>
           <button onClick={editHandler}>
@@ -89,11 +93,6 @@ const ReviewList: React.FC<ReviewType> = ({
                   ))}
           </ul>
         </KeywordBox>
-
-        <ReviewWirter>
-          <p className="user">{displayName}</p>
-          <p className="day">{date}</p>
-        </ReviewWirter>
       </ListInfo>
     </ListContainer>
   )

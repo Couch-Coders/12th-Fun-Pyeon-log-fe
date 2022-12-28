@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
-import WritingBox from '@components/Writing/WritingBox/WritingBox'
-import { StoreWrapper } from '@pages/store/Store.styles'
 import { useSelector } from 'react-redux'
-import { RootState } from '@stores/store'
 import { useNavigate, useParams } from 'react-router-dom'
-import LoadingWithLogo from '@styles/LoadingWithLogo'
+import StoreBasicInfo from '@components/StoreDisplay/StoreBasicInfo/StoreBasicInfo'
+import LoadingWithLogo from '@components/styles/LoadingWithLogo'
+import WritingBox from '@components/Writing/WritingBox/WritingBox'
+import { RootState } from '@stores/store'
 import URLUtill from '@utils/urlUtill'
+import { StoreWrapper } from '@pages/Store/Store.styles'
 
 const Write = () => {
   const { storeId } = useParams()

@@ -1,5 +1,6 @@
 import React from 'react'
 import { KeywordWrapper } from './KeywordBadge.styles'
+
 interface KeywordProps {
   children: React.ReactNode
 }

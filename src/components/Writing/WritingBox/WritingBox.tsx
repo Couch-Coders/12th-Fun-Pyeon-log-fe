@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Select from '@components/common/Select/Select'
+import FunButton from '@components/styles/FunButton'
 import StarBox from '@components/Writing/StarBox/StarBox'
 import TextBox from '@components/Writing/TextBox/TextBox'
-import FunButton from '@styles/FunButton'
-import { useAppDispatch } from '@stores/store'
 import { createReview, updateReview } from '@stores/review/reivewSlice'
 import { ReviewType, WriteType } from '@stores/review/reviewType'
+import { useAppDispatch } from '@stores/store'
 import { ITEMS } from '@utils/constants'
 
 import {
@@ -68,18 +68,16 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
         <StarBox starCount={starCount} setStarCount={setStarCount} />
 
         <Keywords>
-          <>
-            {ITEMS.map((el) => (
-              <Select
-                key={el.title}
-                title={el.title}
-                keywordArray={el.keywordArray}
-                selected={selected}
-                setSelected={setSelected}
-                selectType={'keyword'}
-              />
-            ))}
-          </>
+          {ITEMS.map((el) => (
+            <Select
+              key={el.title}
+              title={el.title}
+              keywordArray={el.keywordArray}
+              selected={selected}
+              setSelected={setSelected}
+              selectType={'keyword'}
+            />
+          ))}
         </Keywords>
       </KeyBox>
 
@@ -89,16 +87,13 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
       />
 
       <BtnBox>
-        <FunButton
-          name={'취소'}
-          className="opposite"
-          onClick={() => navigate(-1)}
-        />
+        <FunButton className="opposite" onClick={() => navigate(-1)}>
+          취소
+        </FunButton>
 
-        <FunButton
-          name={isEdit ? '수정하기' : '게시하기'}
-          onClick={submitReview}
-        />
+        <FunButton onClick={submitReview}>
+          {isEdit ? '수정하기' : '게시하기'}
+        </FunButton>
       </BtnBox>
     </WritingBoxWrapper>
   )

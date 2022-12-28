@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useCallback, useContext, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { MapContext } from '@context/MapContext'
 import { RootState } from '@stores/store'
@@ -10,7 +10,7 @@ const Map = () => {
   const searchedCoord = useSelector(
     (state: RootState) => state.sort.searchedCoord
   )
-  const { setMapApi } = useContext(MapContext)
+  const { setMapApi, mapApi } = useContext(MapContext)
 
   useEffect(() => {
     if (mapRef.current) mapRef.current.innerHTML = ''
@@ -28,6 +28,20 @@ const Map = () => {
     setMapApi(map)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setMapApi])
+
+  const resizeMap = useCallback(() => {
+    if (mapApi && searchedCoord)
+      mapApi.setCenter(
+        new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
+      )
+  }, [mapApi, searchedCoord])
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeMap)
+    return () => {
+      window.removeEventListener('resize', resizeMap)
+    }
+  }, [resizeMap])
 
   return <MapViewer className="map" ref={mapRef}></MapViewer>
 }

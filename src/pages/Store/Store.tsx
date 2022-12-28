@@ -25,11 +25,11 @@ const Store = () => {
   })
 
   useEffect(() => {
-    const encodedstore = storeParam.get('store')
+    const encodedAddress = storeParam.get('address')
 
-    if (storeId && encodedstore) {
-      const decodedStore = decodeURIComponent(encodedstore)
-      dispatch(fetchStoreInfo({ storeId, decodedStore }))
+    if (storeId && encodedAddress) {
+      const decodedAddress = decodeURIComponent(encodedAddress)
+      dispatch(fetchStoreInfo({ storeId, decodedAddress }))
     }
   }, [storeId, dispatch, storeParam])
 

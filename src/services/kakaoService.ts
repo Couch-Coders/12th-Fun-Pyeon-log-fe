@@ -108,7 +108,7 @@ const overlayContainer = ({
   starCount: number
 }) => {
   const currentUrl = String(document.location.origin)
-  const storeEncode = encodeURIComponent(placeName)
+  const addressEncode = encodeURIComponent(address)
   const storeBrand = placeName.split(' ')[0]
   const brandimg = getBrandImg(storeBrand)
   return `
@@ -136,7 +136,7 @@ const overlayContainer = ({
       </div>
     </div>
     <div class="detail-view">
-      <a href="${currentUrl}/stores/${storeId}?store=${storeEncode}">상세보기</a>
+      <a href="${currentUrl}/stores/${storeId}?address=${addressEncode}">상세보기</a>
     </div>
   </div>`
 }
@@ -144,9 +144,10 @@ const overlayContainer = ({
 const searchOneStore = (storeName: string, storeId: string) => {
   const store: kakao.maps.services.PlacesSearchResult = []
   const ps = new kakao.maps.services.Places()
-  ps.keywordSearch(storeName, (data, status) => {
+  ps.keywordSearch(`${storeName} 편의점`, (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       const searchedstore = data.filter((store) => store.id === storeId)
+      console.log(storeName, searchedstore)
       store.push(...searchedstore)
     }
   })

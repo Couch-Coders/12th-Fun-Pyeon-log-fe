@@ -9,7 +9,7 @@ export const StoreWrapper = styled.article`
 export const StoreMapWrapper = styled.section`
   margin-top: 20px;
   width: 80%;
-  min-width: 800px;
+  min-width: 740px;
   height: 400px;
 
   .map {

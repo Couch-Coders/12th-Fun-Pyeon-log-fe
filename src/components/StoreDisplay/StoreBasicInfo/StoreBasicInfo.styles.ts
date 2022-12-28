@@ -5,7 +5,7 @@ export const InfoContainer = styled.section`
   position: relative;
   height: 170px;
   width: 80%;
-  min-width: 800px;
+  min-width: 740px;
   padding: 10px 0;
 
   @media screen and (max-width: 768px) {
@@ -27,10 +27,13 @@ export const ConvImgWrapper = styled.div`
   border-radius: 15px;
   overflow: hidden;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   img {
     width: 130px;
     height: 130px;
-    transform: translate(-5px, -5px);
   }
 
   @media screen and (max-width: 768px) {
@@ -62,9 +65,11 @@ export const ConvInfo = styled.div`
   padding: 0 25px;
 
   h1 {
-    font-size: 3rem;
+    min-width: 480px;
+    font-size: 2.5rem;
     font-weight: bold;
     color: #7d53d6;
+    padding-right: 100px;
     margin-bottom: 15px;
   }
 
@@ -133,7 +138,7 @@ export const StarPoint = styled.div`
   position: absolute;
   top: 10px;
   right: 0;
-  width: 140px;
+  width: 120px;
   height: 45px;
 
   display: flex;
@@ -150,6 +155,8 @@ export const StarPoint = styled.div`
   font-weight: bold;
 
   svg {
+    width: 22px;
+    height: 22px;
     fill: rgba(255, 230, 0, 1);
     margin: 0 10px;
   }
@@ -161,6 +168,7 @@ export const StarPoint = styled.div`
     width: 120px;
     height: 45px;
     border-left: 1px solid #d9d9d9;
+    font-size: 21px;
   }
 
   @media screen and (max-width: 768px) {

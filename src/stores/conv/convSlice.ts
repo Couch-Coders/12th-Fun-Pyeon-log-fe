@@ -58,15 +58,15 @@ export const fetchAllStores = createAsyncThunk(
 // 클릭한 한개의 편의점에 대한 정보 가져오기
 export const fetchStoreInfo = createAsyncThunk<
   ConvType,
-  { storeId: string; decodedStore: string },
+  { storeId: string; decodedAddress: string },
   { state: RootState }
 >(
   'convStore/fetchStore',
-  async (storeData: { storeId: string; decodedStore: string }, thunkApi) => {
+  async (storeData: { storeId: string; decodedAddress: string }, thunkApi) => {
     try {
-      const { storeId, decodedStore } = storeData
+      const { storeId, decodedAddress } = storeData
       const { stores } = thunkApi.getState().conv
-      const searchedStore = KakaoService.searchOneStore(decodedStore, storeId)
+      const searchedStore = KakaoService.searchOneStore(decodedAddress, storeId)
       const storeInfo = await StoreService.getStore(storeId)
       const result = searchedStore.length
         ? { ...searchedStore[0], ...storeInfo }

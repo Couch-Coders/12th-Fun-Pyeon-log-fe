@@ -42,8 +42,9 @@ const ListBox = () => {
   useEffect(() => {
     if (sortedConv.length > 0 && mapApi) {
       sortedConv.forEach((list) => {
-        const marker = KakaoService.displayMarkerOverlay(list, mapApi)
-        setMarkers(marker)
+        // const marker = KakaoService.displayMarkerOverlay(list, mapApi)
+        // setMarkers(marker)
+        setMarkers(list, mapApi)
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

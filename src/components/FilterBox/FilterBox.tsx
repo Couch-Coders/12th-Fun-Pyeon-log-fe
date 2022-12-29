@@ -29,8 +29,9 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const sortCallBack = (data: ConvType[]) => {
     if (mapApi) {
       for (let i = 0; i < data.length; i++) {
-        const marker = KakaoService.displayMarkerOverlay(data[i], mapApi)
-        setMarkers(marker)
+        // const marker = KakaoService.displayMarkerOverlay(data[i], mapApi)
+        // setMarkers(marker)
+        setMarkers(data[i], mapApi)
       }
     }
   }

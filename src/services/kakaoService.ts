@@ -169,6 +169,7 @@ const KakaoService = {
   searchOneStore,
   kakao,
   overlay,
+  infoOverlay,
 }
 
 export default KakaoService

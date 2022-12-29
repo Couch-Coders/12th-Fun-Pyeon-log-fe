@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import KeywordBadge from '@components/styles/KeywordBadge'
 import { MapContext } from '@context/MapContext'
 import kakaoService from '@services/kakaoService'
@@ -28,7 +28,7 @@ const List: React.FC<ListProps> = ({
   address,
   phoneNumber,
 }) => {
-  const { mapApi } = useContext(MapContext)
+  const { mapApi, selectedMarker } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
   const listClickHandler = () => {
     if (mapApi) {
@@ -46,6 +46,10 @@ const List: React.FC<ListProps> = ({
       mapApi.panTo(center)
     }
   }
+
+  useEffect(() => {
+    console.log(selectedMarker?.getTitle())
+  }, [selectedMarker])
 
   return (
     <ConBox

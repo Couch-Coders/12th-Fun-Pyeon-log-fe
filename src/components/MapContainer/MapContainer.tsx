@@ -23,7 +23,7 @@ const MapContainer = () => {
     (state: RootState) => state.sort.searchedCoord
   )
   const dispatch = useAppDispatch()
-  const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
+  const { addMarkers, deleteMarkers, mapApi } = useContext(MapContext)
   // 사용자 좌표 저장
   const [myPosition, setMyPosition] = useState<{ lat: number; lng: number }>({
     lat: 0,
@@ -51,7 +51,7 @@ const MapContainer = () => {
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)
-        setMarkers(myMarker)
+        addMarkers(myMarker)
         dispatch(
           setSearchedCoord({ lat: newLatLan.getLat(), lng: newLatLan.getLng() })
         )
@@ -61,7 +61,7 @@ const MapContainer = () => {
       }
     },
 
-    [dispatch, setMarkers]
+    [dispatch, addMarkers]
   )
 
   // 검색 함수 kakao map을 인자로 받아와 작동한다.

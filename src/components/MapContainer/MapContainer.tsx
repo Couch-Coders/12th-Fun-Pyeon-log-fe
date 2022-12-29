@@ -119,7 +119,7 @@ const MapContainer = () => {
         () => {
           if (!searchedCoord) {
             alert('위치동의를 하지 않아서 기본위치에서 시작합니다.')
-            searchStore(SearchType.CATEGORY, '', mapApi)
+            // searchStore(SearchType.CATEGORY, '', mapApi)
             // return
           }
           // const center = new kakao.maps.LatLng(
@@ -127,7 +127,7 @@ const MapContainer = () => {
           //   searchedCoord.lng
           // )
           // mapApi.setCenter(center)
-          // searchStore(SearchType.CATEGORY, '', mapApi)
+          searchStore(SearchType.CATEGORY, '', mapApi)
         }
       )
     }

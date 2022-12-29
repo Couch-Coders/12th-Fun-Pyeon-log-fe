@@ -89,12 +89,13 @@ const ReviewListContainer = () => {
 
         {page < pageCount && reviewCount > 0 && (
           <FunButton
-            name={'더보기'}
             className="opposite"
             onClick={() => {
               setPage(page + 1)
             }}
-          />
+          >
+            더보기
+          </FunButton>
         )}
         {reviewCount === 0 && (
           <p className="noReview">등록된 리뷰가 없습니다.</p>

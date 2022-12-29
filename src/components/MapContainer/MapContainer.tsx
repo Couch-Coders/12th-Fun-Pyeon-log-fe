@@ -51,6 +51,7 @@ const MapContainer = () => {
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)
+
         setMarkers(myMarker)
         dispatch(
           setSearchedCoord({ lat: newLatLan.getLat(), lng: newLatLan.getLng() })
@@ -95,6 +96,8 @@ const MapContainer = () => {
 
   // 처음 들어왔을 때
   useEffect(() => {
+    dispatch(saveSearchWord(''))
+
     if (mapApi instanceof kakao.maps.Map) {
       if (!navigator.geolocation) {
         alert('Geolocation is not supported by your browser')
@@ -117,14 +120,14 @@ const MapContainer = () => {
           if (!searchedCoord) {
             alert('위치동의를 하지 않아서 기본위치에서 시작합니다.')
             searchStore(SearchType.CATEGORY, '', mapApi)
-            return
+            // return
           }
-          const center = new kakao.maps.LatLng(
-            searchedCoord.lat,
-            searchedCoord.lng
-          )
-          mapApi.setCenter(center)
-          searchStore(SearchType.CATEGORY, '', mapApi)
+          // const center = new kakao.maps.LatLng(
+          //   searchedCoord.lat,
+          //   searchedCoord.lng
+          // )
+          // mapApi.setCenter(center)
+          // searchStore(SearchType.CATEGORY, '', mapApi)
         }
       )
     }

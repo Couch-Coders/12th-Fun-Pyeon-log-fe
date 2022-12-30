@@ -25,7 +25,12 @@ const ListBox = () => {
   const dispatch = useDispatch()
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
   const [targetStoreId, setTargetStoreId] = useState<string>('')
+  const { selectedMarker } = useContext(MapContext)
   const listRef = useRef<HTMLLIElement[] | null[]>([])
+
+  useEffect(() => {
+    if (selectedMarker) setTargetStoreId(selectedMarker?.getTitle())
+  }, [selectedMarker])
 
   const toggleBtn = useCallback(
     (type: string) => {

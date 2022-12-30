@@ -43,6 +43,17 @@ const ListBox = () => {
     [dispatch]
   )
 
+  const moveToTarget = useCallback((storeId: string) => {
+    listRef.current[Number(storeId)]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }, [])
+
+  useEffect(() => {
+    moveToTarget(targetStoreId)
+  }, [targetStoreId, moveToTarget])
+
   useEffect(() => {
     setConvList(sortedConv)
 

@@ -15,16 +15,16 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <MapProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <MapProvider>
           <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider theme={theme}>
               <GlobalStyle />
               <App />
             </ThemeProvider>
           </PersistGate>
-        </Provider>
-      </MapProvider>
+        </MapProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 )

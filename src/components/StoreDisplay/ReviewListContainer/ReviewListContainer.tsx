@@ -29,7 +29,7 @@ const ReviewListContainer = () => {
   const reviewCount = selectedStore?.reviewCount ?? 0
   const newReviews = reviews.filter((review, idx) => {
     return (
-      reviews.findIndex((review1, idx1) => {
+      reviews.findIndex((review1) => {
         return review.reviewEntryNo === review1.reviewEntryNo
       }) === idx
     )
@@ -89,12 +89,13 @@ const ReviewListContainer = () => {
 
         {page < pageCount && reviewCount > 0 && (
           <FunButton
-            name={'더보기'}
             className="opposite"
             onClick={() => {
               setPage(page + 1)
             }}
-          />
+          >
+            더보기
+          </FunButton>
         )}
         {reviewCount === 0 && (
           <p className="noReview">등록된 리뷰가 없습니다.</p>

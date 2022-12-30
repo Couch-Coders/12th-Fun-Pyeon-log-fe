@@ -1,8 +1,11 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import Tooltip from '@components/tooltip/Tooltip'
+
 import { MapContext } from '@context/MapContext'
 import { RootState } from '@stores/store'
 import { DEFAULT_KAKAO_COORD } from '@utils/constants'
+
 import { MapViewer } from './Map.styles'
 
 const Map = () => {
@@ -43,7 +46,11 @@ const Map = () => {
     }
   }, [resizeMap])
 
-  return <MapViewer className="map" ref={mapRef}></MapViewer>
+  return (
+    <MapViewer className="map" ref={mapRef}>
+      <Tooltip />
+    </MapViewer>
+  )
 }
 
 export default Map

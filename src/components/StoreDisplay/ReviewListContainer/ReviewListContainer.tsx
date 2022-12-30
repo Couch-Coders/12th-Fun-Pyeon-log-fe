@@ -29,7 +29,7 @@ const ReviewListContainer = () => {
   const reviewCount = selectedStore?.reviewCount ?? 0
   const newReviews = reviews.filter((review, idx) => {
     return (
-      reviews.findIndex((review1, idx1) => {
+      reviews.findIndex((review1) => {
         return review.reviewEntryNo === review1.reviewEntryNo
       }) === idx
     )

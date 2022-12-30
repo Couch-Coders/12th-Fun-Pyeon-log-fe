@@ -15,7 +15,7 @@ import { StoreWrapper, StoreMapWrapper } from './Store.styles'
 const Store = () => {
   const dispatch = useAppDispatch()
   const [storeParam] = useSearchParams()
-  const { mapApi } = useContext(MapContext)
+  const { mapApi, addMarkers, deleteMarkers } = useContext(MapContext)
   const { storeId } = useParams<string>()
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
@@ -32,6 +32,7 @@ const Store = () => {
 
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
+      deleteMarkers()
       if (selectedStore?.y) {
         const [storeBrand] = selectedStore.place_name
           ? selectedStore.place_name.split(' ', 1)
@@ -44,7 +45,8 @@ const Store = () => {
         mapApi.setCenter(center)
         mapApi.setLevel(3)
         // 편의점 위치에 마커 생성
-        kakaoServie.displayMyLocation(mapApi, center, storeBrand)
+        const marker = kakaoServie.displayMyLocation(mapApi, center, storeBrand)
+        addMarkers(marker)
       } else {
         const center = new kakao.maps.LatLng(
           Number(DEFAULT_KAKAO_COORD.lat),
@@ -53,10 +55,11 @@ const Store = () => {
         mapApi.setCenter(center)
         mapApi.setLevel(3)
         // 임의의 편의점 위치에 마커 생성
-        kakaoServie.displayMyLocation(mapApi, center)
+        const marker = kakaoServie.displayMyLocation(mapApi, center)
+        addMarkers(marker)
       }
     }
-  }, [selectedStore, mapApi])
+  }, [selectedStore, mapApi, addMarkers])
 
   return (
     <StoreWrapper>

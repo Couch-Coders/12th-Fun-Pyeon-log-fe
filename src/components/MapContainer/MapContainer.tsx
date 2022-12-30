@@ -50,7 +50,6 @@ const MapContainer = () => {
         if (searchType === SearchType.KEYWORD) {
           map.setBounds(bounds)
         }
-        // map.setLevel(4)
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)

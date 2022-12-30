@@ -65,8 +65,6 @@ const ListBox = () => {
   useEffect(() => {
     if (sortedConv.length > 0 && mapApi) {
       sortedConv.forEach((list) => {
-        // const marker = KakaoService.displayMarkerOverlay(list, mapApi)
-        // setMarkers(marker)
         setMarkers(list, mapApi)
       })
     }

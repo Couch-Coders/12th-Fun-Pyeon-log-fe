@@ -35,7 +35,8 @@ const MapContainer = () => {
     (
       data: kakao.maps.services.PlacesSearchResult,
       status: kakao.maps.services.Status,
-      map: kakao.maps.Map
+      map: kakao.maps.Map,
+      searchType: SearchType
     ) => {
       if (status === kakao.maps.services.Status.OK) {
         // 새로 지도의 영역 설정
@@ -46,8 +47,10 @@ const MapContainer = () => {
           )
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds)
-        map.setLevel(4)
+        if (searchType === SearchType.KEYWORD) {
+          map.setBounds(bounds)
+        }
+        // map.setLevel(4)
         // 센터 찾아서 가운데 위치 찾고 마커 표시
         const newLatLan = map.getCenter()
         const myMarker = KakaoService.displayMyLocation(map, newLatLan)
@@ -74,13 +77,13 @@ const MapContainer = () => {
       if (searchType === SearchType.KEYWORD) {
         //  키워드 서치 기능
         ps.keywordSearch(`${searchTerm} 편의점`, (data, status) =>
-          searchCallBack(data, status, mapApi)
+          searchCallBack(data, status, mapApi, searchType)
         )
       } else {
         //  카테고리 서치 기능
         ps.categorySearch(
           'CS2',
-          (data, status) => searchCallBack(data, status, mapApi),
+          (data, status) => searchCallBack(data, status, mapApi, searchType),
           //  카테고리 서치 옵션
           {
             location: mapApi.getCenter(),

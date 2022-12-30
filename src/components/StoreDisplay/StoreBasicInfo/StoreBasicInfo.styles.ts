@@ -104,6 +104,7 @@ export const ConvInfo = styled.div`
     }
   }
   @media screen and (max-width: 576px) {
+    width: calc(100% - 80px);
     padding: 0 10px;
     h1 {
       font-size: 1.2rem;
@@ -126,11 +127,15 @@ export const KeywordBox = styled.div`
     li {
       margin-bottom: 12px;
     }
+
     @media screen and (max-width: 768px) {
       li {
         margin-bottom: 10px;
       }
     }
+  }
+
+  @media screen and (max-width: 576px) {
   }
 `
 
@@ -151,7 +156,7 @@ export const StarPoint = styled.div`
 
   text-align: center;
 
-  font-size: 24px;
+  font-size: 21px;
   font-weight: bold;
 
   svg {
@@ -168,13 +173,17 @@ export const StarPoint = styled.div`
     width: 120px;
     height: 45px;
     border-left: 1px solid #d9d9d9;
-    font-size: 21px;
   }
 
   @media screen and (max-width: 768px) {
     width: 90px;
     height: 35px;
-    font-size: 16px;
+    font-size: 15px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
 
     p {
       width: 80px;
@@ -190,6 +199,11 @@ export const StarPoint = styled.div`
     left: 0;
     right: unset;
     box-shadow: unset;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
 
     p {
       width: 80px;

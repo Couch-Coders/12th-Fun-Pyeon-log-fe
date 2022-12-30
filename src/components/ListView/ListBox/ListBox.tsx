@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import List from '@components/ListView/List/List'
 import LoadingWithLogo from '@components/styles/LoadingWithLogo'
 import { MapContext } from '@context/MapContext'
-import KakaoService from '@services/kakaoService'
 import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
 import { ConvType } from '@stores/conv/convType'
 import { saveSortType } from '@stores/sort/sortSlice'
@@ -19,6 +24,13 @@ const ListBox = () => {
   const [convList, setConvList] = useState<ConvType[]>([])
   const dispatch = useDispatch()
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
+  const [targetStoreId, setTargetStoreId] = useState<string>('')
+  const { selectedMarker } = useContext(MapContext)
+  const listRef = useRef<HTMLLIElement[] | null[]>([])
+
+  useEffect(() => {
+    if (selectedMarker) setTargetStoreId(selectedMarker?.getTitle())
+  }, [selectedMarker])
 
   const toggleBtn = useCallback(
     (type: string) => {
@@ -31,6 +43,17 @@ const ListBox = () => {
     [dispatch]
   )
 
+  const moveToTarget = useCallback((storeId: string) => {
+    listRef.current[Number(storeId)]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }, [])
+
+  useEffect(() => {
+    moveToTarget(targetStoreId)
+  }, [targetStoreId, moveToTarget])
+
   useEffect(() => {
     setConvList(sortedConv)
 
@@ -42,8 +65,7 @@ const ListBox = () => {
   useEffect(() => {
     if (sortedConv.length > 0 && mapApi) {
       sortedConv.forEach((list) => {
-        const marker = KakaoService.displayMarkerOverlay(list, mapApi)
-        setMarkers(marker)
+        setMarkers(list, mapApi)
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,18 +92,24 @@ const ListBox = () => {
           <p className="noResult">검색 결과가 없습니다.</p>
         ) : (
           convList.map((store) => (
-            <List
+            <li
               key={store.id}
-              starCount={store.starCount}
-              keywords={store.keywordList}
-              reviewCount={store.reviewCount}
-              placeName={store.place_name}
-              lat={Number(store.y)}
-              lng={Number(store.x)}
-              storeId={store.id}
-              address={store.address_name}
-              phoneNumber={store.phone}
-            />
+              ref={(el) => (listRef.current[Number(store.id)] = el)}
+            >
+              <List
+                starCount={store.starCount}
+                keywords={store.keywordList}
+                reviewCount={store.reviewCount}
+                placeName={store.place_name}
+                lat={Number(store.y)}
+                lng={Number(store.x)}
+                storeId={store.id}
+                address={store.address_name}
+                phoneNumber={store.phone}
+                targetStoreId={targetStoreId}
+                setTargetStoreId={setTargetStoreId}
+              />
+            </li>
           ))
         )}
       </ResultBox>

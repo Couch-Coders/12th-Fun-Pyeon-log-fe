@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import KeywordBadge from '@components/styles/KeywordBadge'
 import { MapContext } from '@context/MapContext'
-import kakaoService from '@services/kakaoService'
+import KakaoService from '@services/kakaoService'
+import { setClickedStore } from '@stores/conv/convSlice'
+import { useAppDispatch } from '@stores/store'
 import { StarFilled } from '@ant-design/icons'
 import { ConBox, Title, Content } from './List.styles'
 
@@ -15,6 +17,8 @@ interface ListProps {
   reviewCount: number
   address: string
   phoneNumber: string
+  targetStoreId: string
+  setTargetStoreId: (targetStoreId: string) => void
 }
 
 const List: React.FC<ListProps> = ({
@@ -27,23 +31,30 @@ const List: React.FC<ListProps> = ({
   keywords,
   address,
   phoneNumber,
+  targetStoreId,
+  setTargetStoreId,
 }) => {
   const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
+  const dispatch = useAppDispatch()
   const listClickHandler = () => {
     if (mapApi) {
-      const content = kakaoService.overlayContainer({
-        placeName,
-        storeId,
-        address,
-        phoneNumber,
-        reviewCount,
-        starCount,
-      })
-      kakaoService.overlay.setPosition(center)
-      kakaoService.overlay.setContent(content)
-      kakaoService.overlay.setMap(mapApi)
+      KakaoService.overlay.setPosition(center)
+      KakaoService.overlay.setContent('<div id="kakao-overlay"></div>')
+      KakaoService.overlay.setMap(mapApi)
       mapApi.panTo(center)
+
+      setTargetStoreId(storeId)
+      dispatch(
+        setClickedStore({
+          placeName,
+          storeId,
+          address,
+          phoneNumber,
+          reviewCount,
+          starCount,
+        })
+      )
     }
   }
 
@@ -52,6 +63,7 @@ const List: React.FC<ListProps> = ({
       onClick={() => {
         listClickHandler()
       }}
+      className={targetStoreId === storeId ? 'active' : ''}
     >
       <Title>
         <h2>{placeName}</h2>

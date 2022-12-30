@@ -1,10 +1,5 @@
-import { ConvType } from '@stores/conv/convType'
 import { DEFAULT_KAKAO_COORD } from '@utils/constants'
-import funlogImg from '../assets/convImg/funlog.png'
-import phone from '../assets/phone.png'
-import pin from '../assets/pin.png'
-import star from '../assets/star.png'
-import { customMarkerImage, getBrandImg, getMarkerImg } from './markerImg'
+import { customMarkerImage, getMarkerImg } from './markerImg'
 
 const { kakao } = window
 
@@ -23,52 +18,6 @@ const infoOverlay = new kakao.maps.CustomOverlay({
   ),
   zIndex: 1,
 })
-
-// 지도에 마커를 표시하는 함수입니다
-const displayMarkerOverlay = (data: ConvType, map: kakao.maps.Map) => {
-  //  data에서 브랜드 이름을 빼내고 브랜드에 맞는 이미지를 찾습니다.
-  const [storeBrand] = data.place_name.split(' ')
-  const markerImg = getMarkerImg(storeBrand)
-  const markerCenter = new kakao.maps.LatLng(+data.y, +data.x)
-
-  // 마커를 생성하고 지도에 표시합니다
-  const marker = new kakao.maps.Marker({
-    map,
-    position: markerCenter,
-    image: markerImg ?? customMarkerImage.funMarkerImg,
-  })
-
-  const name = data.place_name
-  const content = `<div class="infoOverlay">${name}</div>`
-  const overlayContent = overlayContainer({
-    placeName: data.place_name,
-    storeId: data.id,
-    address: data.address_name,
-    phoneNumber: data.phone,
-    reviewCount: data.reviewCount,
-    starCount: data.starCount,
-  })
-
-  // 마커에 클릭이벤트를 등록합니다
-  kakao.maps.event.addListener(marker, 'click', function () {
-    overlay.setContent(overlayContent)
-    overlay.setPosition(markerCenter)
-    overlay.setMap(map)
-    map.panTo(markerCenter)
-  })
-
-  // 마커에 마우스오버 이벤트를 등록합니다
-  kakao.maps.event.addListener(marker, 'mouseover', () => {
-    infoOverlay.setContent(content)
-    infoOverlay.setPosition(markerCenter)
-    infoOverlay.setMap(map)
-  })
-  // 마커에 마우스아웃 이벤트를 등록합니다
-  kakao.maps.event.addListener(marker, 'mouseout', () => {
-    infoOverlay.setMap(null)
-  })
-  return marker
-}
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 const displayMyLocation = (
@@ -99,62 +48,12 @@ const displayMyLocation = (
   return marker
 }
 
-const overlayContainer = ({
-  placeName,
-  storeId,
-  address,
-  phoneNumber,
-  reviewCount,
-  starCount,
-}: {
-  placeName: string
-  storeId: string
-  address: string
-  phoneNumber: string
-  reviewCount: number
-  starCount: number
-}) => {
-  const currentUrl = String(document.location.origin)
-  const addressEncode = encodeURIComponent(address)
-  const storeBrand = placeName.split(' ')[0]
-  const brandimg = getBrandImg(storeBrand)
-  return `
-  <div class="overlay" >
-     <header>
-      <img src=${brandimg ?? funlogImg} alt="brand logo"/>
-       <h2>${placeName}</h2>
-     </header>
-    <div class="star-review">
-      <div class="star">
-        <img src=${star} alt="star image"/>${starCount}
-      </div>
-      <div class="review-count">
-      리뷰 ${reviewCount}개
-      </div> 
-    </div>
-    <div class="store-info">
-      <div class="address">
-      <img src=${pin} alt="pin image"/><p>${address}</p>
-      </div>
-      <div class="phone">
-      <img src=${phone} alt="phone image"/><p>${
-    phoneNumber.length > 0 ? phoneNumber : '전화번호가 없습니다.'
-  }</p>
-      </div>
-    </div>
-    <div class="detail-view">
-      <a href="${currentUrl}/stores/${storeId}?address=${addressEncode}">상세보기</a>
-    </div>
-  </div>`
-}
-
 const searchOneStore = (storeName: string, storeId: string) => {
   const store: kakao.maps.services.PlacesSearchResult = []
   const ps = new kakao.maps.services.Places()
   ps.keywordSearch(`${storeName} 편의점`, (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       const searchedstore = data.filter((store) => store.id === storeId)
-      console.log(storeName, searchedstore)
       store.push(...searchedstore)
     }
   })
@@ -163,12 +62,11 @@ const searchOneStore = (storeName: string, storeId: string) => {
 }
 
 const KakaoService = {
-  displayMarkerOverlay,
   displayMyLocation,
-  overlayContainer,
   searchOneStore,
   kakao,
   overlay,
+  infoOverlay,
 }
 
 export default KakaoService

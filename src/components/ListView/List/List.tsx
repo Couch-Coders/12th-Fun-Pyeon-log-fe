@@ -48,18 +48,16 @@ const List: React.FC<ListProps> = ({
       kakaoService.overlay.setContent(content)
       kakaoService.overlay.setMap(mapApi)
       mapApi.panTo(center)
+      setTargetStoreId(storeId)
     }
   }
-
-  useEffect(() => {
-    console.log(selectedMarker?.getTitle())
-  }, [selectedMarker])
 
   return (
     <ConBox
       onClick={() => {
         listClickHandler()
       }}
+      className={targetStoreId === storeId ? 'active' : ''}
     >
       <Title>
         <h2>{placeName}</h2>

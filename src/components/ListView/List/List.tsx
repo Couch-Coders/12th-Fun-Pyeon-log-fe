@@ -17,6 +17,8 @@ interface ListProps {
   reviewCount: number
   address: string
   phoneNumber: string
+  targetStoreId: string
+  setTargetStoreId: (targetStoreId: string) => void
 }
 
 const List: React.FC<ListProps> = ({
@@ -29,6 +31,8 @@ const List: React.FC<ListProps> = ({
   keywords,
   address,
   phoneNumber,
+  targetStoreId,
+  setTargetStoreId,
 }) => {
   const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
@@ -39,6 +43,8 @@ const List: React.FC<ListProps> = ({
       KakaoService.overlay.setContent('<div id="kakao-overlay"></div>')
       KakaoService.overlay.setMap(mapApi)
       mapApi.panTo(center)
+
+      setTargetStoreId(storeId)
       dispatch(
         setClickedStore({
           placeName,
@@ -57,6 +63,7 @@ const List: React.FC<ListProps> = ({
       onClick={() => {
         listClickHandler()
       }}
+      className={targetStoreId === storeId ? 'active' : ''}
     >
       <Title>
         <h2>{placeName}</h2>

@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 
-export const ConBox = styled.li`
+export const ConBox = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
   padding: 20px;
   cursor: pointer;
   transition: 0.5s;
+
+  &.active {
+    background-color: ${(props) => props.theme.colors.purple};
+    color: white;
+  }
 
   &:hover {
     background-color: ${(props) => props.theme.colors.purple};

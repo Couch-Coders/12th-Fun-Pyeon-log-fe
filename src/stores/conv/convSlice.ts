@@ -1,3 +1,4 @@
+import { OverlayProps } from '@components/Overlay/Overlay'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import ErrorService from '@services/errorService'
 import KakaoService from '@services/kakaoService'
@@ -10,6 +11,7 @@ const initialState: ConvState = {
   stores: [],
   sortedStores: [],
   selectedStore: null,
+  clickedStore: null,
   loading: false,
   error: '',
 }
@@ -86,6 +88,9 @@ const convSlice = createSlice({
   name: 'conv',
   initialState,
   reducers: {
+    setClickedStore: (state, action: PayloadAction<OverlayProps>) => {
+      state.clickedStore = action.payload
+    },
     setSortStores: (state, action: PayloadAction<ConvType[]>) => {
       state.sortedStores = action.payload
     },
@@ -138,7 +143,12 @@ const convSlice = createSlice({
   },
 })
 
-export const { setSortStores, reviewSort, starSort, distanceSort } =
-  convSlice.actions
+export const {
+  setSortStores,
+  reviewSort,
+  starSort,
+  distanceSort,
+  setClickedStore,
+} = convSlice.actions
 
 export default convSlice.reducer

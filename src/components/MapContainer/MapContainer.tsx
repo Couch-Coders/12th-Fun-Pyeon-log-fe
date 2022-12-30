@@ -95,6 +95,7 @@ const MapContainer = () => {
 
   // 처음 들어왔을 때
   useEffect(() => {
+    dispatch(saveSearchWord(''))
     if (mapApi instanceof kakao.maps.Map) {
       if (!navigator.geolocation) {
         alert('Geolocation is not supported by your browser')

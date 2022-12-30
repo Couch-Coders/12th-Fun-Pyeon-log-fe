@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import KeywordBadge from '@components/styles/KeywordBadge'
 import { MapContext } from '@context/MapContext'
 import kakaoService from '@services/kakaoService'
@@ -15,6 +15,8 @@ interface ListProps {
   reviewCount: number
   address: string
   phoneNumber: string
+  targetStoreId: string
+  setTargetStoreId: (targetStoreId: string) => void
 }
 
 const List: React.FC<ListProps> = ({
@@ -27,8 +29,10 @@ const List: React.FC<ListProps> = ({
   keywords,
   address,
   phoneNumber,
+  targetStoreId,
+  setTargetStoreId,
 }) => {
-  const { mapApi, selectedMarker } = useContext(MapContext)
+  const { mapApi } = useContext(MapContext)
   const center = new kakao.maps.LatLng(lat, lng)
   const listClickHandler = () => {
     if (mapApi) {

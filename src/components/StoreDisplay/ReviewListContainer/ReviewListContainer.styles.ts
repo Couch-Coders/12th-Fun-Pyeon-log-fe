@@ -53,7 +53,7 @@ export const NameNCount = styled.div`
     padding: 0 8px;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: -10px;
     align-items: flex-end;
 
     span {

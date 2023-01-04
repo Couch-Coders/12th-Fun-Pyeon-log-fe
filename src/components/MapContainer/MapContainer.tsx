@@ -12,7 +12,7 @@ import { AimOutlined } from '@ant-design/icons'
 import { MapWrap, ControlBtns } from './MapContainer.styles'
 
 // 카카오 서치 함수 구분용 타입
-enum SearchType {
+export enum SearchType {
   KEYWORD = 'KEYWORD',
   CATEGORY = 'CATEGORY',
 }
@@ -30,59 +30,43 @@ const MapContainer = () => {
     lng: 0,
   })
 
-  // 위 서치로 받아온 data를 다루는 콜백함수
-  const searchCallBack = useCallback(
-    (
-      data: kakao.maps.services.PlacesSearchResult,
-      status: kakao.maps.services.Status,
-      map: kakao.maps.Map,
-      searchType: SearchType
-    ) => {
-      if (status === kakao.maps.services.Status.OK) {
-        // 새로 지도의 영역 설정
-        const bounds = new kakao.maps.LatLngBounds()
-        for (let i = 0; i < data.length; i++) {
-          bounds.extend(
-            new kakao.maps.LatLng(Number(data[i].y), Number(data[i].x))
-          )
-        }
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        if (searchType === SearchType.KEYWORD) {
-          map.setBounds(bounds)
-        }
-        // 센터 찾아서 가운데 위치 찾고 마커 표시
-        const newLatLan = map.getCenter()
-        const myMarker = KakaoService.displayMyLocation(map, newLatLan)
-        addMarkers(myMarker)
-        dispatch(
-          setSearchedCoord({ lat: newLatLan.getLat(), lng: newLatLan.getLng() })
-        )
-        dispatch(fetchAllStores({ mapData: data, map }))
-      } else {
-        console.log(`error ${status}`)
-      }
-    },
-
-    [dispatch, addMarkers]
-  )
-
   // 검색 함수 kakao map을 인자로 받아와 작동한다.
   const searchStore = useCallback(
-    (searchType: SearchType, searchTerm: string, mapApi: kakao.maps.Map) => {
-      // 펼쳐진 오버레이 삭제
-      KakaoService.overlay.setMap(null)
-      const ps = new kakao.maps.services.Places()
-      // if문으로
-      if (searchType === SearchType.KEYWORD) {
-        //  키워드 서치 기능
-        ps.keywordSearch(`${searchTerm} 편의점`, (data, status) =>
-          searchCallBack(data, status, mapApi, searchType)
+    (searchType: SearchType, mapApi: kakao.maps.Map, searchTerm?: string) => {
+      dispatch(saveSearchWord(''))
+      if (searchType === SearchType.KEYWORD && searchTerm) {
+        //  키워드 서치
+        KakaoService.placeSearch.keywordSearch(
+          `${searchTerm} 편의점`,
+          (data, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const { myMarker, lat, lng } = KakaoService.searchCallBack(
+                data,
+                mapApi,
+                searchType
+              )
+              addMarkers(myMarker)
+              dispatch(setSearchedCoord({ lat, lng }))
+              dispatch(fetchAllStores({ mapData: data, map: mapApi }))
+            }
+          }
         )
       } else {
-        //  카테고리 서치 기능
-        ps.categorySearch(
+        //  카테고리 서치
+        KakaoService.placeSearch.categorySearch(
           'CS2',
-          (data, status) => searchCallBack(data, status, mapApi, searchType),
+          (data, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const { myMarker, lat, lng } = KakaoService.searchCallBack(
+                data,
+                mapApi,
+                searchType
+              )
+              addMarkers(myMarker)
+              dispatch(setSearchedCoord({ lat, lng }))
+              dispatch(fetchAllStores({ mapData: data, map: mapApi }))
+            }
+          },
           //  카테고리 서치 옵션
           {
             location: mapApi.getCenter(),
@@ -92,12 +76,11 @@ const MapContainer = () => {
         )
       }
     },
-    [searchCallBack]
+    [dispatch, addMarkers]
   )
 
   // 처음 들어왔을 때
   useEffect(() => {
-    dispatch(saveSearchWord(''))
     if (mapApi instanceof kakao.maps.Map) {
       if (!navigator.geolocation) {
         alert('Geolocation is not supported by your browser')
@@ -114,20 +97,13 @@ const MapContainer = () => {
             )
             mapApi.setCenter(center)
           }
-          searchStore(SearchType.CATEGORY, '', mapApi)
+          searchStore(SearchType.CATEGORY, mapApi)
         },
         () => {
           if (!searchedCoord) {
             alert('위치동의를 하지 않아서 기본위치에서 시작합니다.')
-            // searchStore(SearchType.CATEGORY, '', mapApi)
-            // return
           }
-          // const center = new kakao.maps.LatLng(
-          //   searchedCoord.lat,
-          //   searchedCoord.lng
-          // )
-          // mapApi.setCenter(center)
-          searchStore(SearchType.CATEGORY, '', mapApi)
+          searchStore(SearchType.CATEGORY, mapApi)
         }
       )
     }
@@ -146,7 +122,7 @@ const MapContainer = () => {
     if (mapApi instanceof kakao.maps.Map) {
       if (searchWord.length > 0) {
         removeMarkerNInfo()
-        searchStore(SearchType.KEYWORD, searchWord, mapApi)
+        searchStore(SearchType.KEYWORD, mapApi, searchWord)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,7 +130,6 @@ const MapContainer = () => {
 
   //  지도를 사용자의 위치로 이동하는 함수
   const moveToCenter = () => {
-    dispatch(saveSearchWord(''))
     removeMarkerNInfo()
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
     if (mapApi) {
@@ -167,15 +142,14 @@ const MapContainer = () => {
         alert('현재 위치 정보가 없습니다. 기본 위치로 이동합니다.')
       }
       mapApi.setCenter(locPosition)
-      searchStore(SearchType.CATEGORY, '', mapApi)
+      searchStore(SearchType.CATEGORY, mapApi)
     }
   }
 
   const searchFromHereHandler = () => {
-    dispatch(saveSearchWord(''))
     removeMarkerNInfo()
     if (mapApi) {
-      searchStore(SearchType.CATEGORY, '', mapApi)
+      searchStore(SearchType.CATEGORY, mapApi)
     }
   }
 

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import ReviewList from '@components/StoreDisplay/ReviewList/ReviewList'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
-import { fetchAllReviews, initReviews } from '@stores/review/reivewSlice'
+import Spinner from '@components/styles/Spinner'
+import { fetchAllReviews } from '@stores/review/reivewSlice'
+import { ReviewType } from '@stores/review/reviewType'
 import { RootState, useAppDispatch } from '@stores/store'
-import { REVIEW_SIZE } from '@utils/constants'
 import URLUtill from '@utils/urlUtill'
 import { PlusOutlined } from '@ant-design/icons'
 import {
@@ -24,16 +25,28 @@ const ReviewListContainer = () => {
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
   )
+  const loading = useSelector((state: RootState) => state.review.loading)
+
   const [page, setPage] = useState(0)
-  const [pageCount, setPageCount] = useState(0)
-  const reviewCount = selectedStore?.reviewCount ?? 0
-  const newReviews = reviews.filter((review, idx) => {
-    return (
-      reviews.findIndex((review1) => {
-        return review.reviewEntryNo === review1.reviewEntryNo
-      }) === idx
-    )
-  })
+  const [reivewLists, setReivewLists] = useState<ReviewType[]>(reviews)
+  const [hasMore, setHasMore] = useState(true)
+  const observer = useRef<IntersectionObserver | null>(null)
+
+  const totalReviewCount = selectedStore?.reviewCount ?? 0
+
+  const lastReviewRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (loading) return
+      if (observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prevNum) => prevNum + 1)
+        }
+      })
+      if (node) observer.current.observe(node)
+    },
+    [hasMore, loading]
+  )
 
   const moveToWrite = () => {
     if (storeId) {
@@ -42,15 +55,17 @@ const ReviewListContainer = () => {
   }
 
   useEffect(() => {
-    if (reviews.length > 0) dispatch(initReviews())
-  }, [])
+    if (totalReviewCount > 0) {
+      setReivewLists(reviews)
+      setHasMore(totalReviewCount > reviews.length)
+    }
+  }, [reviews, totalReviewCount])
 
   useEffect(() => {
-    if (reviewCount) setPageCount(Math.ceil(reviewCount / REVIEW_SIZE - 1))
-  }, [reviewCount])
-
-  useEffect(() => {
-    if (storeId) dispatch(fetchAllReviews({ storeId, page }))
+    if (storeId && hasMore) {
+      dispatch(fetchAllReviews({ storeId, page }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, storeId, dispatch])
 
   return (
@@ -60,7 +75,7 @@ const ReviewListContainer = () => {
           <h1>REVIEW</h1>
           <div className="count">
             <PlusOutlined />
-            <p>{selectedStore?.reviewCount}</p>
+            <p>{totalReviewCount}</p>
           </div>
         </NameNCount>
         <div className="button">
@@ -75,30 +90,41 @@ const ReviewListContainer = () => {
       </ReviewTop>
 
       <ListContainer>
-        {newReviews.map((review) => (
-          <ReviewList
-            key={review.reviewEntryNo}
-            reviewId={review.reviewEntryNo}
-            starCount={review.starCount}
-            createdDate={review.createdDate}
-            keywords={review.keywords}
-            reviewContent={review.reviewContent}
-            userId={review.userEmail}
-          />
-        ))}
-
-        {page < pageCount && reviewCount > 0 && (
-          <FunButton
-            className="opposite"
-            onClick={() => {
-              setPage(page + 1)
-            }}
-          >
-            더보기
-          </FunButton>
-        )}
-        {reviewCount === 0 && (
+        {reivewLists.map((review, idx) => {
+          if (reivewLists.length === idx + 1) {
+            return (
+              <ReviewList
+                ref={lastReviewRef}
+                key={review.reviewEntryNo}
+                reviewId={review.reviewEntryNo}
+                starCount={review.starCount}
+                createdDate={review.createdDate}
+                keywords={review.keywords}
+                reviewContent={review.reviewContent}
+                userId={review.userEmail}
+              />
+            )
+          } else {
+            return (
+              <ReviewList
+                key={review.reviewEntryNo}
+                reviewId={review.reviewEntryNo}
+                starCount={review.starCount}
+                createdDate={review.createdDate}
+                keywords={review.keywords}
+                reviewContent={review.reviewContent}
+                userId={review.userEmail}
+              />
+            )
+          }
+        })}
+        {totalReviewCount === 0 && (
           <p className="noReview">등록된 리뷰가 없습니다.</p>
+        )}
+        {loading && (
+          <div style={{ margin: '10px 0 ' }}>
+            <Spinner />
+          </div>
         )}
       </ListContainer>
     </ReviewListWrapper>

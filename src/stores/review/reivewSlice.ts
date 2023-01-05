@@ -85,8 +85,17 @@ const reviewSlice = createSlice({
     builder.addCase(
       fetchAllReviews.fulfilled,
       (state, action: PayloadAction<ReviewType[]>) => {
+        const newReviews = [...state.reviews, ...action.payload].filter(
+          (review, idx) => {
+            return (
+              [...state.reviews, ...action.payload].findIndex((review1) => {
+                return review.reviewEntryNo === review1.reviewEntryNo
+              }) === idx
+            )
+          }
+        )
         state.loading = false
-        state.reviews = [...state.reviews, ...action.payload]
+        state.reviews = newReviews
       }
     )
     builder.addCase(fetchAllReviews.rejected, (state, action) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import KeywordBadge from '@components/styles/KeywordBadge'
@@ -23,14 +23,10 @@ interface ReviewType {
   userId: string
 }
 
-const ReviewList: React.FC<ReviewType> = ({
-  reviewId,
-  createdDate,
-  reviewContent,
-  starCount,
-  keywords,
-  userId,
-}) => {
+const ReviewList = forwardRef<HTMLDivElement, ReviewType>(function ReviewList(
+  { reviewId, createdDate, reviewContent, starCount, keywords, userId },
+  ref
+) {
   const { storeId } = useParams()
   const [isWideView, setIsWideView] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -57,7 +53,7 @@ const ReviewList: React.FC<ReviewType> = ({
   }
 
   return (
-    <ListContainer isWide={isWideView}>
+    <ListContainer isWide={isWideView} ref={ref}>
       <ReviewWirter>
         <p className="user">{displayName}</p>
         <p className="day">{date}</p>
@@ -96,6 +92,6 @@ const ReviewList: React.FC<ReviewType> = ({
       </ListInfo>
     </ListContainer>
   )
-}
+})
 
 export default ReviewList

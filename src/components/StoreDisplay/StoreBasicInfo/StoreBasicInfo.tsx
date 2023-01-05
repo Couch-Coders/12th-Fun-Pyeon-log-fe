@@ -38,7 +38,6 @@ const StoreBasicInfo = () => {
 
   useLayoutEffect(() => {
     if (selectedStore) {
-      console.log(selectedStore)
       const [placeName] =
         selectedStore.place_name.split(' ', 1) ??
         'FUN편로그 편의점'.split(' ', 1)

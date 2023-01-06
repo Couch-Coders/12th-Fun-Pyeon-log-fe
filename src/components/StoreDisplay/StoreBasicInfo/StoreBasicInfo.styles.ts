@@ -65,7 +65,7 @@ export const ConvInfo = styled.div`
   padding: 0 25px;
 
   h1 {
-    min-width: 480px;
+    width: 100%;
     font-size: 2.5rem;
     font-weight: bold;
     color: #7d53d6;
@@ -90,6 +90,7 @@ export const ConvInfo = styled.div`
     padding: 0 15px;
     h1 {
       font-size: 1.6rem;
+      padding-right: 70px;
     }
     p {
       font-size: 14px;
@@ -108,6 +109,7 @@ export const ConvInfo = styled.div`
     padding: 0 10px;
     h1 {
       font-size: 1.2rem;
+      padding-right: 0;
     }
     p {
       font-size: 12px;

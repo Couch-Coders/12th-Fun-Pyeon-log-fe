@@ -29,8 +29,9 @@ const Map = () => {
     }
     const map = new kakao.maps.Map(mapContainer, mapOption)
     setMapApi(map)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setMapApi])
+  }, [])
 
   const resizeMap = useCallback(() => {
     if (mapApi && searchedCoord)

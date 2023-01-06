@@ -7,6 +7,7 @@ export interface UserType {
 
 export interface UserStateType {
   user: UserType | null
+  userPostion: { lat: number; lng: number } | null
   loading: boolean
   error: string
 }

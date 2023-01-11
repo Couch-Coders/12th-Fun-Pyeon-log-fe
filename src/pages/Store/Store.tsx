@@ -45,7 +45,7 @@ const Store = () => {
         mapApi.setCenter(center)
         mapApi.setLevel(3)
         // 편의점 위치에 마커 생성
-        const marker = kakaoServie.displayMyLocation(mapApi, center, storeBrand)
+        const marker = kakaoServie.displayMyLocation(mapApi, storeBrand)
         addMarkers(marker)
       } else {
         const center = new kakao.maps.LatLng(
@@ -55,7 +55,7 @@ const Store = () => {
         mapApi.setCenter(center)
         mapApi.setLevel(3)
         // 임의의 편의점 위치에 마커 생성
-        const marker = kakaoServie.displayMyLocation(mapApi, center)
+        const marker = kakaoServie.displayMyLocation(mapApi)
         addMarkers(marker)
       }
     }

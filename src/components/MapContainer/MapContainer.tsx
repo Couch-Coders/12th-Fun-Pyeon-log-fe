@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react'
+import React, { useEffect, useContext, useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import Map from '@components/Map/Map'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
 import { MapContext } from '@context/MapContext'
 import KakaoService from '@services/kakaoService'
-import { fetchAllStores } from '@stores/conv/convSlice'
-import { setSearchedCoord, saveSearchWord } from '@stores/sort/sortSlice'
-import { RootState, useAppDispatch } from '@stores/store'
+import { RootState } from '@stores/store'
 import { DEFAULT_KAKAO_COORD } from '@utils/constants'
+import useSearchStore from 'hooks/useSearchStore'
 import { AimOutlined } from '@ant-design/icons'
-import { MapWrap, ControlBtns } from './MapContainer.styles'
+import { ControlBtns } from './MapContainer.styles'
 
 // 카카오 서치 함수 구분용 타입
 export enum SearchType {
@@ -22,92 +20,9 @@ const MapContainer = () => {
   const searchedCoord = useSelector(
     (state: RootState) => state.sort.searchedCoord
   )
-  const usePosition = useSelector((state: RootState) => state.user.userPostion)
-  const dispatch = useAppDispatch()
-  const { addMarkers, deleteMarkers, mapApi } = useContext(MapContext)
-  // 사용자 좌표 저장
-  // const [searchedCoord, setSearchedCoord] = useState<{ lat: number; lng: number } | null>()
-
-  // 검색 함수 kakao map을 인자로 받아와 작동한다.
-  const searchStore = useCallback(
-    (searchType: SearchType, mapApi: kakao.maps.Map, searchTerm?: string) => {
-      dispatch(saveSearchWord(''))
-      if (searchType === SearchType.KEYWORD && searchTerm) {
-        //  키워드 서치
-        KakaoService.placeSearch.keywordSearch(
-          `${searchTerm} 편의점`,
-          (data, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              const { myMarker, lat, lng } = KakaoService.searchCallBack(
-                data,
-                mapApi,
-                searchType
-              )
-              addMarkers(myMarker)
-              dispatch(setSearchedCoord({ lat, lng }))
-              dispatch(fetchAllStores({ mapData: data, map: mapApi }))
-            }
-          }
-        )
-      } else {
-        //  카테고리 서치
-        KakaoService.placeSearch.categorySearch(
-          'CS2',
-          (data, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              const { myMarker, lat, lng } = KakaoService.searchCallBack(
-                data,
-                mapApi,
-                searchType
-              )
-              addMarkers(myMarker)
-              dispatch(setSearchedCoord({ lat, lng }))
-              dispatch(fetchAllStores({ mapData: data, map: mapApi }))
-            }
-          },
-          //  카테고리 서치 옵션
-          {
-            location: mapApi.getCenter(),
-            sort: kakao.maps.services.SortBy.DISTANCE,
-            useMapBounds: true,
-          }
-        )
-      }
-    },
-    [dispatch, addMarkers]
-  )
-
-  // // 처음 들어왔을 때
-  // useEffect(() => {
-  //   if (mapApi instanceof kakao.maps.Map) {
-  //     if (!navigator.geolocation) {
-  //       alert('Geolocation is not supported by your browser')
-  //     }
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-
-  //         const lat = position.coords.latitude // 위도
-  //         const lng = position.coords.longitude // 경도
-  //         setMyPosition({ lat, lng })
-  //         if (searchedCoord) {
-  //           const center = new kakao.maps.LatLng(
-  //             searchedCoord.lat,
-  //             searchedCoord.lng
-  //           )
-  //           mapApi.setCenter(center)
-  //         }
-  //         searchStore(SearchType.CATEGORY, mapApi)
-  //       },
-  //       () => {
-  //         if (!searchedCoord) {
-  //           alert('위치동의를 하지 않아서 기본위치에서 시작합니다.')
-  //         }
-  //         searchStore(SearchType.CATEGORY, mapApi)
-  //       }
-  //     )
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [mapApi, searchStore])
+  const userPosition = useSelector((state: RootState) => state.user.userPostion)
+  const { searchStore } = useSearchStore()
+  const { deleteMarkers, mapApi } = useContext(MapContext)
 
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
@@ -132,7 +47,6 @@ const MapContainer = () => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
-      console.log('처음 들어왔을 때')
       removeMarkerNInfo()
       if (searchWord.length > 0) {
         searchStore(SearchType.KEYWORD, mapApi, searchWord)
@@ -147,14 +61,14 @@ const MapContainer = () => {
     if (mapApi) {
       removeMarkerNInfo()
       let locPosition
-      if (!usePosition) {
+      if (!userPosition) {
         locPosition = new kakao.maps.LatLng(
           DEFAULT_KAKAO_COORD.lat,
           DEFAULT_KAKAO_COORD.lng
         )
         alert('현재 위치 정보가 없습니다. 기본 위치로 이동합니다.')
       } else {
-        locPosition = new kakao.maps.LatLng(usePosition.lat, usePosition.lng)
+        locPosition = new kakao.maps.LatLng(userPosition.lat, userPosition.lng)
       }
       mapApi.setCenter(locPosition)
       searchStore(SearchType.CATEGORY, mapApi)
@@ -169,31 +83,28 @@ const MapContainer = () => {
   }
 
   return (
-    <MapWrap>
-      <Map />
-      <ControlBtns>
-        <FunButton
-          buttonType={BUTTON_TYPE_CLASSES.map}
-          onClick={searchFromHereHandler}
-        >
-          이 위치에서 다시 검색
-        </FunButton>
-        <FunButton
-          buttonType={BUTTON_TYPE_CLASSES.map}
-          onClick={moveToCenter}
-          className="web"
-        >
-          내 위치로 이동
-        </FunButton>
-        <FunButton
-          buttonType={BUTTON_TYPE_CLASSES.map}
-          onClick={moveToCenter}
-          className="tablet"
-        >
-          <AimOutlined />
-        </FunButton>
-      </ControlBtns>
-    </MapWrap>
+    <ControlBtns>
+      <FunButton
+        buttonType={BUTTON_TYPE_CLASSES.map}
+        onClick={searchFromHereHandler}
+      >
+        이 위치에서 다시 검색
+      </FunButton>
+      <FunButton
+        buttonType={BUTTON_TYPE_CLASSES.map}
+        onClick={moveToCenter}
+        className="web"
+      >
+        내 위치로 이동
+      </FunButton>
+      <FunButton
+        buttonType={BUTTON_TYPE_CLASSES.map}
+        onClick={moveToCenter}
+        className="tablet"
+      >
+        <AimOutlined />
+      </FunButton>
+    </ControlBtns>
   )
 }
 

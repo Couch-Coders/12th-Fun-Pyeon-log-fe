@@ -2,30 +2,37 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import FilterBox from '@components/FilterBox/FilterBox'
 import ListBox from '@components/ListView/ListBox/ListBox'
+import Map from '@components/Map/Map'
 import MapContainer from '@components/MapContainer/MapContainer'
-import { MapContext } from '@context/MapContext'
 import { setUserPosition } from '@stores/auth/authSlice'
 import { saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
 import styled from 'styled-components'
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
-import { Wrapper, ListView, ListTop, SearchBox, SortBtn } from './Main.styles'
+import {
+  Wrapper,
+  ListView,
+  ListTop,
+  SearchBox,
+  SortBtn,
+  MapWrap,
+} from './Main.styles'
 
 styled(MapContainer)`
   width: 70vw;
   border: 1px solid #222;
 `
 
-const Map = () => {
+const Main = () => {
   const [isFiltering, setIsFiltering] = useState(false)
   const sortBtnRef = useRef<HTMLButtonElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const dispatch = useAppDispatch()
-  const { mapApi } = useContext(MapContext)
   const usePosition = useSelector((state: RootState) => state.user.userPostion)
   const searchedCoord = useSelector(
     (state: RootState) => state.sort.searchedCoord
   )
+
   const updateValue = () => {
     const { current } = inputRef
 
@@ -43,7 +50,6 @@ const Map = () => {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser')
     }
-    console.log('좌표설정 시도')
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude // 위도
@@ -92,10 +98,12 @@ const Map = () => {
           <ListBox />
         )}
       </ListView>
-
-      <MapContainer />
+      <MapWrap>
+        <Map />
+        <MapContainer />
+      </MapWrap>
     </Wrapper>
   )
 }
 
-export default Map
+export default Main

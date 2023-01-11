@@ -1,20 +1,5 @@
 import styled from 'styled-components'
 
-export const MapWrap = styled.section`
-  position: relative;
-  width: 100%;
-
-  .map {
-    width: 100%;
-    height: calc(100vh - 80px);
-  }
-
-  @media screen and (max-width: 576px) {
-    .map {
-      height: calc(65vh - 60px);
-    }
-  }
-`
 export const ControlBtns = styled.div`
   width: 100%;
   position: absolute;

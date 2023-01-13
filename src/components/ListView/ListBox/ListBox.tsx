@@ -24,7 +24,7 @@ const ListBox = () => {
   const [convList, setConvList] = useState<ConvType[]>([])
   const dispatch = useDispatch()
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
-  const [targetStoreId, setTargetStoreId] = useState<string>('')
+  const [targetStoreId, setTargetStoreId] = useState('')
   const { selectedMarker } = useContext(MapContext)
   const listRef = useRef<HTMLLIElement[] | null[]>([])
 

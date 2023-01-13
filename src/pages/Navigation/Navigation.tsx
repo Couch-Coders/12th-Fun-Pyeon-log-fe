@@ -21,7 +21,7 @@ const Navigation = () => {
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)
   const loading = useSelector((state: RootState) => state.user.loading)
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const signOutHandler = async () => {
     if (user) {

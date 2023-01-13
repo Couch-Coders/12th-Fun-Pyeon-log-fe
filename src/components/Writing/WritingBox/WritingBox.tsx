@@ -26,9 +26,9 @@ const WritingBox: React.FC<EditProps> = ({ isEdit, originReview }) => {
   const dispatch = useAppDispatch()
   const { storeId } = useParams()
 
-  const [starCount, setStarCount] = useState<number>(0)
+  const [starCount, setStarCount] = useState(0)
   const [selected, setSelected] = useState<string[]>([])
-  const [reviewContent, setReviewContent] = useState<string>('')
+  const [reviewContent, setReviewContent] = useState('')
 
   const reviewId = originReview?.reviewEntryNo
 

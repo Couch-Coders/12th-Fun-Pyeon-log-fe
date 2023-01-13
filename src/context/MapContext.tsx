@@ -31,6 +31,7 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedMarker, setSelectedMarker] =
     useState<kakao.maps.Marker | null>(null)
   const dispatch = useAppDispatch()
+
   const setMapApi = useCallback((newMap: kakao.maps.Map) => {
     setMap(newMap)
   }, [])

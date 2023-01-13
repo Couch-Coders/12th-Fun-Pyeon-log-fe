@@ -8,6 +8,7 @@ import LoadingWithLogo from '@components/styles/LoadingWithLogo'
 import { MapContext } from '@context/MapContext'
 import kakaoServie from '@services/kakaoService'
 import { fetchStoreInfo } from '@stores/conv/convSlice'
+import { initReviews } from '@stores/review/reivewSlice'
 import { RootState, useAppDispatch } from '@stores/store'
 import { DEFAULT_KAKAO_COORD } from '@utils/constants'
 import { StoreWrapper, StoreMapWrapper } from './Store.styles'
@@ -20,13 +21,14 @@ const Store = () => {
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
   )
-  const loading = useSelector((state: RootState) => state.review.loading)
+  const loading = useSelector((state: RootState) => state.conv.loading)
 
   useEffect(() => {
     const encodedAddress = storeParam.get('address')
     if (storeId && encodedAddress) {
       const decodedAddress = decodeURIComponent(encodedAddress)
       dispatch(fetchStoreInfo({ storeId, decodedAddress }))
+      dispatch(initReviews())
     }
   }, [storeId, dispatch, storeParam])
 
@@ -59,6 +61,7 @@ const Store = () => {
         addMarkers(marker)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedStore, mapApi, addMarkers])
 
   return (

@@ -3,8 +3,10 @@ import { Route, Routes } from 'react-router-dom'
 import Edit from '@pages/Edit/Edit'
 import Main from '@pages/Main/Main'
 import Navigation from '@pages/Navigation/Navigation'
+import ProtectRoute from '@pages/ProtectRoute/ProtectRoute'
 import Store from '@pages/Store/Store'
 import Write from '@pages/Write/Write'
+
 import { auth } from '@services/firebaseAuth'
 import { getUserThunk } from '@stores/auth/authSlice'
 import { useAppDispatch } from '@stores/store'
@@ -27,9 +29,11 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigation />}>
         <Route path="/" element={<Main />} />
-        <Route path="/stores/:storeId" element={<Store />} />
-        <Route path="/stores/:storeId/write" element={<Write />} />
-        <Route path="/stores/:storeId/edit/:reviewId" element={<Edit />} />
+        <Route path="/stores/:storeId/*" element={<Store />} />
+        <Route element={<ProtectRoute />}>
+          <Route path="/stores/:storeId/write" element={<Write />} />
+          <Route path="/stores/:storeId/edit/:reviewId" element={<Edit />} />
+        </Route>
       </Route>
     </Routes>
   )

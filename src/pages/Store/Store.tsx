@@ -17,7 +17,7 @@ const Store = () => {
   const dispatch = useAppDispatch()
   const [storeParam] = useSearchParams()
   const { mapApi, addMarkers, deleteMarkers } = useContext(MapContext)
-  const { storeId } = useParams<string>()
+  const { storeId } = useParams()
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
   )

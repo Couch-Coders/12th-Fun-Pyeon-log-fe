@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import KeywordBadge from '@components/styles/KeywordBadge'
 import { getBrandImg } from '@services/markerImg'
@@ -36,7 +36,7 @@ const StoreBasicInfo = () => {
     keywordList: ['제품이 다양해요', '매장이 청결해요', '펀편로그 좋아요'],
   })
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (selectedStore) {
       const [placeName] =
         selectedStore.place_name.split(' ', 1) ??

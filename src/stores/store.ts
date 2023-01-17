@@ -34,7 +34,11 @@ type ExtendedPersistConfig = PersistConfig<RootState> & {
 const persistConfig: ExtendedPersistConfig = {
   key: 'root',
   storage,
+<<<<<<< HEAD
   whitelist: ['sort', 'review', 'user', 'conv'],
+=======
+  whitelist: ['sort', 'user', 'conv', 'review'],
+>>>>>>> main
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

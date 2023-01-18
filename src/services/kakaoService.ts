@@ -2,6 +2,7 @@ import { DEFAULT_KAKAO_COORD } from '@utils/constants'
 import { customMarkerImage, getMarkerImg } from './markerImg'
 
 const { kakao } = window
+
 const placeSearch = new kakao.maps.services.Places()
 const overlay = new kakao.maps.CustomOverlay({
   position: new kakao.maps.LatLng(
@@ -57,7 +58,6 @@ const searchOneStore = (storeName: string, storeId: string) => {
 const KakaoService = {
   displayMyLocation,
   searchOneStore,
-  kakao,
   placeSearch,
   overlay,
   infoOverlay,

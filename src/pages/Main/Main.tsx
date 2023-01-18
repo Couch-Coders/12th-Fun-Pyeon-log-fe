@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux'
 import FilterBox from '@components/FilterBox/FilterBox'
 import ListBox from '@components/ListView/ListBox/ListBox'
 import Map from '@components/Map/Map'
-import MapContainer from '@components/MapContainer/MapContainer'
+import MapController from '@components/MapController/MapController'
+import { MapContext } from '@context/MapContext'
 import { setUserPosition } from '@stores/auth/authSlice'
 import { saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
+import { DEFAULT_KAKAO_COORD } from '@utils/constants'
 import styled from 'styled-components'
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
 import {
@@ -18,7 +20,7 @@ import {
   MapWrap,
 } from './Main.styles'
 
-styled(MapContainer)`
+styled(MapController)`
   width: 70vw;
   border: 1px solid #222;
 `
@@ -28,11 +30,8 @@ const Main = () => {
   const sortBtnRef = useRef<HTMLButtonElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const dispatch = useAppDispatch()
-  const usePosition = useSelector((state: RootState) => state.user.userPostion)
-  const searchedCoord = useSelector(
-    (state: RootState) => state.sort.searchedCoord
-  )
-
+  const { mapApi } = useContext(MapContext)
+  const userPosition = useSelector((state: RootState) => state.user.userPostion)
   const updateValue = () => {
     const { current } = inputRef
 
@@ -46,7 +45,7 @@ const Main = () => {
   }
 
   useEffect(() => {
-    if (!usePosition) return
+    if (userPosition) return
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser')
     }
@@ -58,10 +57,12 @@ const Main = () => {
       },
       () => {
         alert('위치 정보 제공에 동의하지 않을 시 사용자의 위치는 서울역입니다.')
-        dispatch(setUserPosition({ lat: -1, lng: -1 }))
+        const lat = DEFAULT_KAKAO_COORD.lat
+        const lng = DEFAULT_KAKAO_COORD.lng
+        dispatch(setUserPosition({ lat, lng }))
       }
     )
-  }, [])
+  }, [userPosition, dispatch])
 
   return (
     <Wrapper>
@@ -100,7 +101,9 @@ const Main = () => {
       </ListView>
       <MapWrap>
         <Map />
-        <MapContainer />
+        {mapApi && userPosition && (
+          <MapController mapApi={mapApi} userPosition={userPosition} />
+        )}
       </MapWrap>
     </Wrapper>
   )

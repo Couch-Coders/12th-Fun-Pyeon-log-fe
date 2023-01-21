@@ -1,7 +1,6 @@
-import React, { useEffect, useContext, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
-import { MapContext } from '@context/MapContext'
 import KakaoService from '@services/kakaoService'
 import { RootState } from '@stores/store'
 import useSearchStore from 'hooks/useSearchStore'
@@ -30,7 +29,6 @@ const MapController: React.FC<MapControllerProps> = ({
   const searchedCoord = useSelector(
     (state: RootState) => state.sort.searchedCoord
   )
-  const { deleteMarkers } = useContext(MapContext)
   const { searchStore } = useSearchStore()
 
   useEffect(() => {
@@ -38,20 +36,14 @@ const MapController: React.FC<MapControllerProps> = ({
       const center = new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
       mapApi.setCenter(center)
     }
+    console.log('init search')
     searchStore(SearchType.CATEGORY, mapApi)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchStore])
-
-  // 기존에 생성한 마커가 있을 시 마커와 인포윈도우를 지우는 함수
-  // const removeMarkerNInfo = useCallback(() => {
-  //   // 펼쳐진 오버레이 삭제
-  //   KakaoService.overlay.setMap(null)
-  //   deleteMarkers()
-  // }, [deleteMarkers])
+  }, [])
 
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
-    // removeMarkerNInfo()
+    KakaoService.overlay.setMap(null)
     if (searchWord.length > 0) {
       searchStore(SearchType.KEYWORD, mapApi, searchWord)
     }
@@ -61,7 +53,7 @@ const MapController: React.FC<MapControllerProps> = ({
   //  지도를 사용자의 위치로 이동하는 함수
   const moveToUserLocation = () => {
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-    // removeMarkerNInfo()
+    KakaoService.overlay.setMap(null)
     const locPosition = new kakao.maps.LatLng(
       userPosition.lat,
       userPosition.lng
@@ -72,7 +64,7 @@ const MapController: React.FC<MapControllerProps> = ({
   }
 
   const searchFromHereHandler = () => {
-    // removeMarkerNInfo()
+    KakaoService.overlay.setMap(null)
     searchStore(SearchType.CATEGORY, mapApi)
   }
 

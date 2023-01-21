@@ -8,36 +8,28 @@ import { useAppDispatch } from '@stores/store'
 interface MapContextType {
   mapApi: kakao.maps.Map | null
   selectedMarker: kakao.maps.Marker | null
-  markers: kakao.maps.Marker[]
   setMapApi: (newMap: kakao.maps.Map) => void
-  addMarkers: (newMarker: kakao.maps.Marker) => void
   setMarkers: (data: ConvType, map: kakao.maps.Map) => void
   deleteMarkers: () => void
 }
 
 export const MapContext = createContext<MapContextType>({
   mapApi: null,
-  markers: [],
   selectedMarker: null,
   setMapApi: (newMap) => {},
-  addMarkers: (newMarker) => {},
   setMarkers: (data, map) => {},
   deleteMarkers: () => {},
 })
 
 const MapProvider = ({ children }: { children: React.ReactNode }) => {
-  const [map, setMap] = useState<kakao.maps.Map | null>(null)
+  const [kakaoMap, setKakaoMap] = useState<kakao.maps.Map | null>(null)
   const [newMarkers, setNewMarkers] = useState<kakao.maps.Marker[]>([])
   const [selectedMarker, setSelectedMarker] =
     useState<kakao.maps.Marker | null>(null)
   const dispatch = useAppDispatch()
 
-  const setMapApi = useCallback((newMap: kakao.maps.Map) => {
-    setMap(newMap)
-  }, [])
-
-  const addMarkers = useCallback((newMarker: kakao.maps.Marker) => {
-    setNewMarkers((prev) => [...prev, newMarker])
+  const setMapApi = useCallback((newMapApi: kakao.maps.Map) => {
+    setKakaoMap(newMapApi)
   }, [])
 
   const setMarkers = useCallback(
@@ -88,24 +80,24 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
 
       setNewMarkers((prev) => [...prev, newMarker])
     },
-    [dispatch]
+    [dispatch, setNewMarkers]
   )
 
-  const deleteMarkers = () => {
-    newMarkers.forEach((markerInfo) => {
-      markerInfo.setMap(null)
+  const deleteMarkers = useCallback(() => {
+    setNewMarkers((prev) => {
+      prev.forEach((markerInfo) => {
+        markerInfo.setMap(null)
+      })
+      return []
     })
-    setNewMarkers([])
-  }
+  }, [])
 
   const value = {
-    mapApi: map,
-    markers: newMarkers,
+    mapApi: kakaoMap,
     selectedMarker,
     setMapApi,
     setMarkers,
     deleteMarkers,
-    addMarkers,
     setSelectedMarker,
   }
 

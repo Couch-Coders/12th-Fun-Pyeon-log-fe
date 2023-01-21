@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
 import Map from '@components/Map/Map'
@@ -16,7 +16,8 @@ import { StoreWrapper, StoreMapWrapper } from './Store.styles'
 const Store = () => {
   const dispatch = useAppDispatch()
   const [storeParam] = useSearchParams()
-  const { mapApi, addMarkers, deleteMarkers } = useContext(MapContext)
+  const { mapApi, deleteMarkers } = useContext(MapContext)
+  const storeMarkerRef = useRef<kakao.maps.Marker>()
   const { storeId } = useParams()
   const selectedStore = useSelector(
     (state: RootState) => state.conv.selectedStore
@@ -35,7 +36,10 @@ const Store = () => {
   useEffect(() => {
     if (mapApi instanceof kakao.maps.Map) {
       deleteMarkers()
-      if (selectedStore?.y) {
+      if (storeMarkerRef.current instanceof kakao.maps.Marker) {
+        storeMarkerRef.current.setMap(null)
+      }
+      if (selectedStore) {
         const [storeBrand] = selectedStore.place_name
           ? selectedStore.place_name.split(' ', 1)
           : ['펀편log']
@@ -47,8 +51,10 @@ const Store = () => {
         mapApi.setCenter(center)
         mapApi.setLevel(3)
         // 편의점 위치에 마커 생성
-        const marker = kakaoServie.displayMyLocation(mapApi, storeBrand)
-        addMarkers(marker)
+        storeMarkerRef.current = kakaoServie.displayMyLocation(
+          mapApi,
+          storeBrand
+        )
       } else {
         const center = new kakao.maps.LatLng(
           Number(DEFAULT_KAKAO_COORD.lat),
@@ -57,12 +63,11 @@ const Store = () => {
         mapApi.setCenter(center)
         mapApi.setLevel(3)
         // 임의의 편의점 위치에 마커 생성
-        const marker = kakaoServie.displayMyLocation(mapApi)
-        addMarkers(marker)
+        storeMarkerRef.current = kakaoServie.displayMyLocation(mapApi)
       }
+      storeMarkerRef.current.setMap(mapApi)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedStore, mapApi, addMarkers])
+  }, [selectedStore, deleteMarkers, mapApi])
 
   return (
     <StoreWrapper>

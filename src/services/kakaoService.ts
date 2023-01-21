@@ -22,25 +22,25 @@ const infoOverlay = new kakao.maps.CustomOverlay({
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 const displayMyLocation = (map: kakao.maps.Map, storeBrand?: string) => {
+  overlay.setMap(null)
+  console.log('set my marker location')
   const mapCenter = map.getCenter()
-  // 마커를 생성합니다
-  const marker = new kakao.maps.Marker({
-    map,
-    position: mapCenter,
-    image:
-      storeBrand && storeBrand.length > 0
-        ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
-        : customMarkerImage.myMarkerImg,
-  })
-
-  const content = `<div class="infoOverlay ${storeBrand ? ' ' : 'me'}">${
+  const content = `<div class="infoOverlay ${storeBrand ? '' : 'me'} ">${
     storeBrand ? ' ' : 'YOU'
   }</div>`
   overlay.setContent(content)
   overlay.setPosition(mapCenter)
   overlay.setMap(map)
+  const markerImg =
+    storeBrand && storeBrand.length > 0
+      ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
+      : customMarkerImage.myMarkerImg
 
-  return marker
+  // 마커를 생성합니다
+  return new kakao.maps.Marker({
+    position: mapCenter,
+    image: markerImg,
+  })
 }
 
 const searchOneStore = (storeName: string, storeId: string) => {

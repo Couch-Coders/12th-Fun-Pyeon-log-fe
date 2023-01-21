@@ -5,27 +5,27 @@ import React, {
   useCallback,
   useRef,
 } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import List from '@components/ListView/List/List'
 import LoadingWithLogo from '@components/styles/LoadingWithLogo'
 import { MapContext } from '@context/MapContext'
 import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
 import { ConvType } from '@stores/conv/convType'
 import { saveSortType } from '@stores/sort/sortSlice'
-import type { RootState } from '@stores/store'
+import { RootState, useAppDispatch } from '@stores/store'
 import { LIST_SORT_ITEMS } from '@utils/constants'
 import { ListWrapper, SortBtns, ResultBox } from './ListBox.styles'
 
 const ListBox = () => {
+  const dispatch = useAppDispatch()
   const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
   const loading = useSelector((state: RootState) => state.conv.loading)
   const sortType = useSelector((state: RootState) => state.sort.sortType)
-  const { mapApi, setMarkers } = useContext(MapContext)
+  const { mapApi, setMarkers, selectedMarker, deleteMarkers } =
+    useContext(MapContext)
   const [convList, setConvList] = useState<ConvType[]>([])
-  const dispatch = useDispatch()
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
   const [targetStoreId, setTargetStoreId] = useState('')
-  const { selectedMarker } = useContext(MapContext)
   const listRef = useRef<HTMLLIElement[] | null[]>([])
 
   useEffect(() => {
@@ -64,12 +64,13 @@ const ListBox = () => {
 
   useEffect(() => {
     if (sortedConv.length > 0 && mapApi) {
+      console.log(sortedConv, 'set marker')
+      deleteMarkers()
       sortedConv.forEach((list) => {
         setMarkers(list, mapApi)
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortedConv])
+  }, [sortedConv, mapApi, setMarkers, deleteMarkers])
 
   return (
     <ListWrapper>

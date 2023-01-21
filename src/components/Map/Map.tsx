@@ -10,26 +10,32 @@ import { MapViewer } from './Map.styles'
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null)
+  const isMapMounted = useRef(true)
   const searchedCoord = useSelector(
     (state: RootState) => state.sort.searchedCoord
   )
   const { setMapApi, mapApi } = useContext(MapContext)
 
   useEffect(() => {
-    if (mapRef.current) mapRef.current.innerHTML = ''
-    const mapContainer = mapRef.current as HTMLDivElement
-    const mapOption = {
-      center: searchedCoord
-        ? new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
-        : new kakao.maps.LatLng(
-            DEFAULT_KAKAO_COORD.lat,
-            DEFAULT_KAKAO_COORD.lng
-          ), // 지도의 중심좌표
-      level: 4, // 지도의 확대 레벨
+    if (isMapMounted.current) {
+      if (mapRef.current) mapRef.current.innerHTML = ''
+      const mapContainer = mapRef.current as HTMLDivElement
+      const mapOption = {
+        center: searchedCoord
+          ? new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
+          : new kakao.maps.LatLng(
+              DEFAULT_KAKAO_COORD.lat,
+              DEFAULT_KAKAO_COORD.lng
+            ), // 지도의 중심좌표
+        level: 4, // 지도의 확대 레벨
+      }
+      const map = new kakao.maps.Map(mapContainer, mapOption)
+      setMapApi(map)
+      console.log('set map')
     }
-    const map = new kakao.maps.Map(mapContainer, mapOption)
-    setMapApi(map)
-
+    return () => {
+      isMapMounted.current = false
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -1,5 +1,5 @@
-import React, { useCallback, useContext } from 'react'
-import { SearchType } from '@components/MapContainer/MapContainer'
+import { useCallback, useContext, useRef } from 'react'
+import { SearchType } from '@components/MapController/MapController'
 import { MapContext } from '@context/MapContext'
 import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
@@ -7,8 +7,9 @@ import { saveSearchWord, setSearchedCoord } from '@stores/sort/sortSlice'
 import { useAppDispatch } from '@stores/store'
 
 const useSearchStore = () => {
+  const markerRef = useRef<kakao.maps.Marker>()
   const dispatch = useAppDispatch()
-  const { addMarkers } = useContext(MapContext)
+  const { deleteMarkers } = useContext(MapContext)
 
   const searchCallBack = useCallback(
     (
@@ -26,21 +27,29 @@ const useSearchStore = () => {
         }
         map.setBounds(bounds)
       }
+
+      if (markerRef.current instanceof kakao.maps.Marker) {
+        console.log('mymarker null')
+        markerRef.current.setMap(null)
+      }
+      markerRef.current = KakaoService.displayMyLocation(map)
+      markerRef.current.setMap(map)
+      console.log('mymarker set', markerRef.current, map)
       // 센터 찾아서 가운데 위치 찾고 마커 표시
       const lat = map.getCenter().getLat()
       const lng = map.getCenter().getLng()
-      const myMarker = KakaoService.displayMyLocation(map)
 
-      addMarkers(myMarker)
       dispatch(setSearchedCoord({ lat, lng }))
       dispatch(fetchAllStores({ mapData: data, map }))
     },
-    [addMarkers, dispatch]
+    [dispatch]
   )
 
   const searchStore = useCallback(
     (searchType: SearchType, mapApi: kakao.maps.Map, searchTerm?: string) => {
       dispatch(saveSearchWord(''))
+      deleteMarkers()
+      console.log('search again', mapApi)
       if (searchType === SearchType.KEYWORD && searchTerm) {
         //  키워드 서치
         KakaoService.placeSearch.keywordSearch(
@@ -69,7 +78,7 @@ const useSearchStore = () => {
         )
       }
     },
-    [dispatch, searchCallBack]
+    [dispatch, searchCallBack, deleteMarkers]
   )
   return { searchStore }
 }

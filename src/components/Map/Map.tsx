@@ -37,7 +37,7 @@ const Map = () => {
       isMapMounted.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [setMapApi, searchedCoord])
 
   const resizeMap = useCallback(() => {
     if (mapApi && searchedCoord)

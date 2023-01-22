@@ -31,7 +31,6 @@ const Map = () => {
       }
       const map = new kakao.maps.Map(mapContainer, mapOption)
       setMapApi(map)
-      console.log('set map')
     }
     return () => {
       isMapMounted.current = false

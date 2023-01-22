@@ -21,7 +21,7 @@ const ListBox = () => {
   const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
   const loading = useSelector((state: RootState) => state.conv.loading)
   const sortType = useSelector((state: RootState) => state.sort.sortType)
-  const { mapApi, setMarkers, selectedMarker, deleteMarkers } =
+  const { mapApi, setMarkers, selectedMarker, setMyMarker } =
     useContext(MapContext)
   const [convList, setConvList] = useState<ConvType[]>([])
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
@@ -55,23 +55,25 @@ const ListBox = () => {
   }, [targetStoreId, moveToTarget])
 
   useEffect(() => {
-    setConvList(() => sortedConv)
-
+    setConvList(sortedConv)
     if (convList.length > 0) {
       toggleBtn(sortType)
     }
   }, [sortedConv, toggleBtn, convList.length, sortType])
 
   useEffect(() => {
-    if (!mapApi) return
-    if (convList.length > 0) {
-      deleteMarkers()
-      convList.forEach((list) => {
-        setMarkers(list, mapApi)
-      })
-      console.log(mapApi)
+    if (mapApi instanceof kakao.maps.Map) {
+      if (sortedConv) {
+        sortedConv.forEach((list) => {
+          setMarkers(list, mapApi)
+        })
+      }
+      setMyMarker(mapApi)
     }
-  }, [convList, mapApi, setMarkers, deleteMarkers])
+    return () => {
+      if (mapApi instanceof kakao.maps.Map) setMyMarker(mapApi)
+    }
+  }, [sortedConv, mapApi, setMarkers, setMyMarker])
 
   return (
     <ListWrapper>

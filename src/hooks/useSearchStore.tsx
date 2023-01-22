@@ -9,7 +9,7 @@ import { useAppDispatch } from '@stores/store'
 
 const useSearchStore = () => {
   const dispatch = useAppDispatch()
-  const { setMyMarker } = useContext(MapContext)
+  const { deleteMarkers } = useContext(MapContext)
 
   const searchCallBack = useCallback(
     (
@@ -33,16 +33,15 @@ const useSearchStore = () => {
 
       dispatch(setSearchedCoord({ lat, lng }))
       dispatch(fetchAllStores({ mapData: data, map }))
-      setMyMarker(map)
     },
-    [dispatch, setMyMarker]
+    [dispatch]
   )
 
   const searchStore = useCallback(
     (searchType: SearchType, mapApi: kakao.maps.Map, searchTerm?: string) => {
       dispatch(saveSearchWord(''))
+      deleteMarkers()
       KakaoService.overlay.setMap(null)
-      console.log('search again', mapApi)
       if (searchType === SearchType.KEYWORD && searchTerm) {
         //  키워드 서치
         KakaoService.placeSearch.keywordSearch(
@@ -71,7 +70,7 @@ const useSearchStore = () => {
         )
       }
     },
-    [dispatch, searchCallBack]
+    [dispatch, searchCallBack, deleteMarkers]
   )
   return { searchStore }
 }

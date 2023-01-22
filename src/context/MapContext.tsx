@@ -42,7 +42,6 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
 
       // 마커를 생성하고 지도에 표시합니다
       const newMarker = new kakao.maps.Marker({
-        map,
         position: markerCenter,
         image: markerImg ?? customMarkerImage.funMarkerImg,
       })
@@ -80,17 +79,30 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
         KakaoService.infoOverlay.setMap(null)
       })
 
-      setNewMarkers((prev) => [...prev, newMarker])
+      setNewMarkers((prev) => {
+        if (prev.length >= 16) {
+          return prev
+        }
+        newMarker.setMap(map)
+        return [...prev, newMarker]
+      })
     },
     [dispatch, setNewMarkers]
   )
 
   const setMyMarker = useCallback((map: kakao.maps.Map) => {
     const myMarker = KakaoService.displayMyLocation(map)
-    setNewMarkers((prev) => [...prev, myMarker])
+    setNewMarkers((prev) => {
+      if (prev.length >= 17) {
+        KakaoService.overlay.setMap(null)
+        myMarker.setMap(null)
+        return prev
+      }
+
+      return [...prev, myMarker]
+    })
   }, [])
 
-  console.log(newMarkers)
   const deleteMarkers = useCallback(() => {
     setNewMarkers((prev) => {
       prev.forEach((markerInfo) => {

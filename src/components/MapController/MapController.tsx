@@ -35,8 +35,8 @@ const MapController: React.FC<MapControllerProps> = ({
       const center = new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
       mapApi.setCenter(center)
     }
-    console.log('init search')
     searchStore(SearchType.CATEGORY, mapApi)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

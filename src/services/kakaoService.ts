@@ -42,7 +42,7 @@ const displayMyLocation = (map: kakao.maps.Map, storeBrand?: string) => {
     position: mapCenter,
     image: markerImg,
   })
-  console.log('set my marker location', marker)
+
   return marker
 }
 

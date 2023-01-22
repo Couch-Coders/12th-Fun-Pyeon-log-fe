@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import FunButton, { BUTTON_TYPE_CLASSES } from '@components/styles/FunButton'
-import KakaoService from '@services/kakaoService'
 import { RootState } from '@stores/store'
 import useSearchStore from 'hooks/useSearchStore'
 import { AimOutlined } from '@ant-design/icons'
@@ -43,28 +42,23 @@ const MapController: React.FC<MapControllerProps> = ({
 
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
-    KakaoService.overlay.setMap(null)
     if (searchWord.length > 0) {
       searchStore(SearchType.KEYWORD, mapApi, searchWord)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchWord, searchStore])
+  }, [searchWord, searchStore, mapApi])
 
   //  지도를 사용자의 위치로 이동하는 함수
   const moveToUserLocation = () => {
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-    KakaoService.overlay.setMap(null)
     const locPosition = new kakao.maps.LatLng(
       userPosition.lat,
       userPosition.lng
     )
-
     mapApi.setCenter(locPosition)
     searchStore(SearchType.CATEGORY, mapApi)
   }
 
   const searchFromHereHandler = () => {
-    KakaoService.overlay.setMap(null)
     searchStore(SearchType.CATEGORY, mapApi)
   }
 

@@ -62,17 +62,16 @@ const ListBox = () => {
   }, [sortedConv, toggleBtn, convList.length, sortType])
 
   useEffect(() => {
-    let isMount = true
     if (mapApi instanceof kakao.maps.Map) {
-      if (isMount && sortedConv) {
+      if (sortedConv) {
         sortedConv.forEach((list) => {
           setMarkers(list, mapApi)
         })
       }
+      setMyMarker(mapApi)
     }
     return () => {
       if (mapApi instanceof kakao.maps.Map) setMyMarker(mapApi)
-      isMount = false
     }
   }, [sortedConv, mapApi, setMarkers, setMyMarker])
 

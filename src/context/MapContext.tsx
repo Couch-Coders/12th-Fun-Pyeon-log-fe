@@ -93,9 +93,9 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
   const setMyMarker = useCallback((map: kakao.maps.Map) => {
     const myMarker = KakaoService.displayMyLocation(map)
     setNewMarkers((prev) => {
-      if (prev.length >= 16) {
-        myMarker.setMap(null)
+      if (prev.length >= 17) {
         KakaoService.overlay.setMap(null)
+        myMarker.setMap(null)
         return prev
       }
 

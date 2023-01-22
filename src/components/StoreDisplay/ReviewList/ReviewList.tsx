@@ -28,7 +28,7 @@ const ReviewList = forwardRef<HTMLDivElement, ReviewType>(function ReviewList(
   ref
 ) {
   const { storeId } = useParams()
-  const [isWideView, setIsWideView] = useState<boolean>(false)
+  const [isWideView, setIsWideView] = useState(false)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.user.user)

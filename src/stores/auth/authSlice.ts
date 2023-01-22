@@ -5,6 +5,7 @@ import { UserStateType, UserType } from './authType'
 
 const initialState: UserStateType = {
   user: null,
+  userPostion: null,
   loading: false,
   error: '',
 }
@@ -43,7 +44,17 @@ export const logOutUserThunk = createAsyncThunk(
 const authSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserPosition: (
+      state,
+      action: PayloadAction<{ lat: number; lng: number }>
+    ) => {
+      state.userPostion = action.payload
+    },
+    resetPosition: (state) => {
+      state.userPostion = initialState.userPostion
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getUserThunk.pending, (state, action) => {
       state.loading = true
@@ -72,5 +83,7 @@ const authSlice = createSlice({
     })
   },
 })
+
+export const { setUserPosition, resetPosition } = authSlice.actions
 
 export default authSlice.reducer

@@ -29,7 +29,7 @@ const ListBox = () => {
   const listRef = useRef<HTMLLIElement[] | null[]>([])
 
   useEffect(() => {
-    if (selectedMarker) setTargetStoreId(selectedMarker?.getTitle())
+    if (selectedMarker) setTargetStoreId(selectedMarker.getTitle())
   }, [selectedMarker])
 
   const toggleBtn = useCallback(
@@ -55,7 +55,7 @@ const ListBox = () => {
   }, [targetStoreId, moveToTarget])
 
   useEffect(() => {
-    setConvList(sortedConv)
+    setConvList(() => sortedConv)
 
     if (convList.length > 0) {
       toggleBtn(sortType)
@@ -63,14 +63,15 @@ const ListBox = () => {
   }, [sortedConv, toggleBtn, convList.length, sortType])
 
   useEffect(() => {
-    if (sortedConv.length > 0 && mapApi) {
-      console.log(sortedConv, 'set marker')
+    if (!mapApi) return
+    if (convList.length > 0) {
       deleteMarkers()
-      sortedConv.forEach((list) => {
+      convList.forEach((list) => {
         setMarkers(list, mapApi)
       })
+      console.log(mapApi)
     }
-  }, [sortedConv, mapApi, setMarkers, deleteMarkers])
+  }, [convList, mapApi, setMarkers, deleteMarkers])
 
   return (
     <ListWrapper>

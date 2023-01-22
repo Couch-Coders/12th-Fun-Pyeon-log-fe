@@ -11,6 +11,7 @@ interface MapContextType {
   setMapApi: (newMap: kakao.maps.Map) => void
   setMarkers: (data: ConvType, map: kakao.maps.Map) => void
   deleteMarkers: () => void
+  setMyMarker: (map: kakao.maps.Map) => void
 }
 
 export const MapContext = createContext<MapContextType>({
@@ -19,6 +20,7 @@ export const MapContext = createContext<MapContextType>({
   setMapApi: (newMap) => {},
   setMarkers: (data, map) => {},
   deleteMarkers: () => {},
+  setMyMarker: (map) => {},
 })
 
 const MapProvider = ({ children }: { children: React.ReactNode }) => {
@@ -83,6 +85,12 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     [dispatch, setNewMarkers]
   )
 
+  const setMyMarker = useCallback((map: kakao.maps.Map) => {
+    const myMarker = KakaoService.displayMyLocation(map)
+    setNewMarkers((prev) => [...prev, myMarker])
+  }, [])
+
+  console.log(newMarkers)
   const deleteMarkers = useCallback(() => {
     setNewMarkers((prev) => {
       prev.forEach((markerInfo) => {
@@ -99,6 +107,7 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     setMarkers,
     deleteMarkers,
     setSelectedMarker,
+    setMyMarker,
   }
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>

@@ -9,6 +9,22 @@ export const Wrapper = styled.article`
     flex-direction: column;
   }
 `
+export const MapWrap = styled.section`
+  position: relative;
+  width: 100%;
+
+  .map {
+    width: 100%;
+    height: calc(100vh - 80px);
+  }
+
+  @media screen and (max-width: 576px) {
+    .map {
+      height: calc(65vh - 60px);
+    }
+  }
+`
+
 export const ListView = styled.section`
   background-color: white;
   position: relative;

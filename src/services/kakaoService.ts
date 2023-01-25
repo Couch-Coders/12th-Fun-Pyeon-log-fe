@@ -3,6 +3,7 @@ import { customMarkerImage, getMarkerImg } from './markerImg'
 
 const { kakao } = window
 
+const placeSearch = new kakao.maps.services.Places()
 const overlay = new kakao.maps.CustomOverlay({
   position: new kakao.maps.LatLng(
     DEFAULT_KAKAO_COORD.lat,
@@ -20,38 +21,34 @@ const infoOverlay = new kakao.maps.CustomOverlay({
 })
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-const displayMyLocation = (
-  map: kakao.maps.Map,
-  locPosition: kakao.maps.LatLng,
-  storeBrand?: string
-) => {
-  // 마커를 생성합니다
-  const marker = new kakao.maps.Marker({
-    map,
-    position: locPosition,
-    image:
-      storeBrand && storeBrand.length > 0
-        ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
-        : customMarkerImage.myMarkerImg,
-  })
+const displayMyLocation = (map: kakao.maps.Map, storeBrand?: string) => {
+  overlay.setMap(null)
 
-  const content = `<div class="infoOverlay ${storeBrand ? ' ' : 'me'}">${
+  const mapCenter = map.getCenter()
+  const content = `<div class="infoOverlay ${storeBrand ? '' : 'me'} ">${
     storeBrand ? ' ' : 'YOU'
   }</div>`
   overlay.setContent(content)
-  overlay.setPosition(locPosition)
+  overlay.setPosition(mapCenter)
   overlay.setMap(map)
+  const markerImg =
+    storeBrand && storeBrand.length > 0
+      ? getMarkerImg(storeBrand) ?? customMarkerImage.funMarkerImg
+      : customMarkerImage.myMarkerImg
 
-  // 지도 중심좌표를 접속위치로 변경합니다
-  map.setCenter(locPosition)
+  // 마커를 생성합니다
+  const marker = new kakao.maps.Marker({
+    map,
+    position: mapCenter,
+    image: markerImg,
+  })
 
   return marker
 }
 
 const searchOneStore = (storeName: string, storeId: string) => {
   const store: kakao.maps.services.PlacesSearchResult = []
-  const ps = new kakao.maps.services.Places()
-  ps.keywordSearch(`${storeName} 편의점`, (data, status) => {
+  placeSearch.keywordSearch(`${storeName} 편의점`, (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       const searchedstore = data.filter((store) => store.id === storeId)
       store.push(...searchedstore)
@@ -64,7 +61,7 @@ const searchOneStore = (storeName: string, storeId: string) => {
 const KakaoService = {
   displayMyLocation,
   searchOneStore,
-  kakao,
+  placeSearch,
   overlay,
   infoOverlay,
 }

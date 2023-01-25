@@ -21,8 +21,8 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const brandData = useSelector((state: RootState) => state.sort.brandData)
   const keywordData = useSelector((state: RootState) => state.sort.keywordData)
   const dispatch = useDispatch()
-  const [selectBrand, setSelectBrand] = useState<string[]>(brandData)
-  const [selectKeyword, setSelectKeyword] = useState<string[]>(keywordData)
+  const [selectBrand, setSelectBrand] = useState(brandData)
+  const [selectKeyword, setSelectKeyword] = useState(keywordData)
   const [convList, setConvList] = useState(stores)
 
   // 위 서치로 받아온 data를 다루는 콜백함수

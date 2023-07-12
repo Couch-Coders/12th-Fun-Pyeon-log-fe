@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import KeywordBadge from '@components/styles/KeywordBadge'
 import { MapContext } from '@context/MapContext'
-import KakaoService from '@services/kakaoService'
 import { setClickedStore } from '@stores/conv/convSlice'
 import { useAppDispatch } from '@stores/store'
 import { StarFilled } from '@ant-design/icons'
@@ -34,14 +33,14 @@ const List: React.FC<ListProps> = ({
   targetStoreId,
   setTargetStoreId,
 }) => {
-  const { mapApi } = useContext(MapContext)
-  const center = new kakao.maps.LatLng(lat, lng)
+  const { mapApi, kakaoService, overlay } = useContext(MapContext)
   const dispatch = useAppDispatch()
   const listClickHandler = () => {
-    if (mapApi) {
-      KakaoService.overlay.setPosition(center)
-      KakaoService.overlay.setContent('<div id="kakao-overlay"></div>')
-      KakaoService.overlay.setMap(mapApi)
+    if (mapApi && kakaoService && overlay) {
+      const center = new kakaoService.maps.LatLng(lat, lng)
+      overlay.setPosition(center)
+      overlay.setContent('<div id="kakao-overlay"></div>')
+      overlay.setMap(mapApi)
       mapApi.panTo(center)
 
       setTargetStoreId(storeId)

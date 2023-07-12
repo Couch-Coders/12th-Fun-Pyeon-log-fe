@@ -34,7 +34,7 @@ type ExtendedPersistConfig = PersistConfig<RootState> & {
 const persistConfig: ExtendedPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['sort', 'review', 'user', 'conv'],
+  whitelist: ['user', 'sort', 'review', 'conv'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -50,6 +50,7 @@ export const store = configureStore({
 })
 
 export const useAppDispatch: () => AppDispatch = useDispatch
+
 export const persistor = persistStore(store)
 
 export default store

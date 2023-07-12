@@ -59,10 +59,10 @@ const ListBox = () => {
     if (convList.length > 0) {
       toggleBtn(sortType)
     }
-  }, [sortedConv, toggleBtn, convList.length, sortType])
+  }, [toggleBtn, sortedConv, sortType, convList.length])
 
   useEffect(() => {
-    if (mapApi instanceof kakao.maps.Map) {
+    if (mapApi !== null) {
       if (sortedConv) {
         sortedConv.forEach((list) => {
           setMarkers(list, mapApi)
@@ -70,10 +70,7 @@ const ListBox = () => {
       }
       setMyMarker(mapApi)
     }
-    return () => {
-      if (mapApi instanceof kakao.maps.Map) setMyMarker(mapApi)
-    }
-  }, [sortedConv, mapApi, setMarkers, setMyMarker])
+  }, [mapApi, sortedConv, setMarkers, setMyMarker])
 
   return (
     <ListWrapper>

@@ -10,11 +10,11 @@ const initialState: UserStateType = {
   error: '',
 }
 
-export const getUserThunk = createAsyncThunk(
+export const getUserSession = createAsyncThunk(
   'authSlice/getUser',
   async (token: string, thunkApi) => {
     try {
-      const userData = await AuthService.signIn({ token })
+      const userData = await AuthService.signIn(token)
       const displayName = userData.email.split('@')[0]
       return {
         email: userData.email,
@@ -28,6 +28,25 @@ export const getUserThunk = createAsyncThunk(
     }
   }
 )
+
+// export const getUserSession = createAsyncThunk(
+//   'authSlice/getUser',
+//   async (token: string, thunkApi) => {
+//     try {
+//       const userData = await AuthService.signIn({ token })
+//       const displayName = userData.email.split('@')[0]
+//       return {
+//         email: userData.email,
+//         token,
+//         displayName,
+//         imgUrl: userData.userImageUrl,
+//       }
+//     } catch (error) {
+//       const message = ErrorService.axiosErrorHandler(error)
+//       return thunkApi.rejectWithValue(message)
+//     }
+//   }
+// )
 
 export const logOutUserThunk = createAsyncThunk(
   'authSlice/logOutUser',
@@ -56,19 +75,19 @@ const authSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(getUserThunk.pending, (state, action) => {
+    builder.addCase(getUserSession.pending, (state, action) => {
       state.loading = true
     })
     builder.addCase(
-      getUserThunk.fulfilled,
+      getUserSession.fulfilled,
       (state, action: PayloadAction<UserType>) => {
         state.user = action.payload
         state.loading = false
       }
     )
-    builder.addCase(getUserThunk.rejected, (state, action) => {
+    builder.addCase(getUserSession.rejected, (state, action) => {
       state.loading = false
-      state.error = action.error.message ?? ''
+      state.error = action.error.message ?? '유저 세션 확인 실패'
     })
     builder.addCase(logOutUserThunk.pending, (state) => {
       state.loading = true
@@ -79,7 +98,7 @@ const authSlice = createSlice({
     })
     builder.addCase(logOutUserThunk.rejected, (state, action) => {
       state.loading = false
-      state.error = action.error.message ?? ''
+      state.error = action.error.message ?? '로그아웃 에러'
     })
   },
 })

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Outlet, useNavigate } from 'react-router-dom'
 import LoginModal from '@components/LoginModal/LoginModal'
 import FunButton from '@components/styles/FunButton'
 import Spinner from '@components/styles/Spinner'
-import { googleSignOut } from '@services/firebaseAuth'
-import { logOutUserThunk } from '@stores/auth/authSlice'
+import { googleSignOut, auth } from '@services/firebaseAuth'
+import { getUserSession, logOutUserThunk } from '@stores/auth/authSlice'
 import { RootState, useAppDispatch } from '@stores/store'
+import { onAuthStateChanged } from 'firebase/auth'
+
 import { ReactComponent as Funlogo } from '../../assets/funlog.svg'
 import {
   NavCon,
@@ -23,13 +25,23 @@ const Navigation = () => {
   const loading = useSelector((state: RootState) => state.user.loading)
   const [modalOpen, setModalOpen] = useState(false)
 
-  const signOutHandler = async () => {
+  const signOutHandler = () => {
     if (user) {
-      await googleSignOut()
-      await dispatch(logOutUserThunk())
+      googleSignOut()
+      dispatch(logOutUserThunk())
     }
     navigate('/', { replace: true })
   }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await user.getIdToken()
+        dispatch(getUserSession(token))
+      }
+    })
+    return unsubscribe
+  }, [dispatch])
 
   return (
     <>

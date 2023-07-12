@@ -21,12 +21,21 @@ interface StoreInfo {
   keywordList: string[]
   starCount: number
 }
+const selectedStore = {
+  storeId: 'sefasef',
+  starCount: 1,
+  reviewCount: 1,
+  keywordList: ['cu', 'cu'],
+  customDistance: 123,
+  place_name: 'asef asfasef s asfe',
+}
 
 const StoreBasicInfo = () => {
   const imgRef = useRef<HTMLImageElement | null>(null)
-  const selectedStore = useSelector(
-    (state: RootState) => state.conv.selectedStore
-  )
+  // const selectedStore = useSelector(
+  //   (state: RootState) => state.conv.selectedStore
+  // )
+
   const [storeInfo, setStoreInfo] = useState<StoreInfo>({
     storeImg: funlogImg,
     place_name: 'FUN편로그 편의점',

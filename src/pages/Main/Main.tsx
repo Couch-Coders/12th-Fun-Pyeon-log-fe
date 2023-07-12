@@ -6,9 +6,10 @@ import Map from '@components/Map/Map'
 import MapController from '@components/MapController/MapController'
 import { MapContext } from '@context/MapContext'
 import { setUserPosition } from '@stores/auth/authSlice'
-import { saveSearchWord } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
 import { DEFAULT_KAKAO_COORD } from '@utils/constants'
+import useSearchStore, { SearchType } from 'hooks/useSearchStore'
+
 import styled from 'styled-components'
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
 import {
@@ -30,14 +31,15 @@ const Main = () => {
   const sortBtnRef = useRef<HTMLButtonElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const dispatch = useAppDispatch()
-  const { mapApi } = useContext(MapContext)
+  const { mapApi, kakaoService } = useContext(MapContext)
   const userPosition = useSelector((state: RootState) => state.user.userPostion)
+  const { searchStore } = useSearchStore()
+
   const updateValue = () => {
     const { current } = inputRef
-
-    if (!current) return
+    if (!current || !mapApi || !kakaoService) return
     if (current.value.trim()) {
-      dispatch(saveSearchWord(current.value))
+      searchStore(SearchType.KEYWORD, mapApi, kakaoService, current.value)
     } else {
       alert('검색어를 입력해주세요.')
       current.value = ''
@@ -101,8 +103,12 @@ const Main = () => {
       </ListView>
       <MapWrap>
         <Map />
-        {mapApi && userPosition && (
-          <MapController mapApi={mapApi} userPosition={userPosition} />
+        {mapApi && userPosition && kakaoService && (
+          <MapController
+            mapApi={mapApi}
+            userPosition={userPosition}
+            kakao={kakaoService}
+          />
         )}
       </MapWrap>
     </Wrapper>

@@ -17,13 +17,15 @@ interface filterProps {
 
 const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   const { setMarkers, deleteMarkers, mapApi } = useContext(MapContext)
-  const stores = useSelector((state: RootState) => state.conv.stores)
+  // const stores = useSelector((state: RootState) => state.conv.stores)
   const brandData = useSelector((state: RootState) => state.sort.brandData)
   const keywordData = useSelector((state: RootState) => state.sort.keywordData)
   const dispatch = useDispatch()
   const [selectBrand, setSelectBrand] = useState(brandData)
+  // const [selectBrand, setSelectBrand] = useState<string[]>([])
   const [selectKeyword, setSelectKeyword] = useState(keywordData)
-  const [convList, setConvList] = useState(stores)
+  // const [selectKeyword, setSelectKeyword] = useState<string[]>([])
+  // const [convList, setConvList] = useState(stores)
 
   // 위 서치로 받아온 data를 다루는 콜백함수
   const sortCallBack = (data: ConvType[]) => {
@@ -35,61 +37,54 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
   }
 
   const sortBrand = () => {
-    if (selectBrand.length === 0) {
-      return convList
-    }
-    if (selectBrand.includes('기타')) {
-      const newData = stores.filter((data) =>
-        selectBrand.includes(data.place_name.split(' ')[0])
-      )
-      const etcData = stores.filter(
-        (data) =>
-          !['GS25', 'CU', '세븐일레븐', '이마트24', '미니스톱'].includes(
-            data.place_name.split(' ')[0]
-          )
-      )
-      return [...newData, ...etcData]
-    }
-
-    return stores.filter((data) =>
-      selectBrand.includes(data.place_name.split(' ')[0])
-    )
+    // if (selectBrand.length === 0) {
+    //   return convList
+    // }
+    // if (selectBrand.includes('기타')) {
+    //   const newData = stores.filter((data) =>
+    //     selectBrand.includes(data.place_name.split(' ')[0])
+    //   )
+    //   const etcData = stores.filter(
+    //     (data) =>
+    //       !['GS25', 'CU', '세븐일레븐', '이마트24', '미니스톱'].includes(
+    //         data.place_name.split(' ')[0]
+    //       )
+    //   )
+    //   return [...newData, ...etcData]
+    // }
+    // return stores.filter((data) =>
+    //   selectBrand.includes(data.place_name.split(' ')[0])
+    // )
   }
 
   const sortKeyword = (newData: ConvType[]) => {
-    if (selectKeyword.length === 0) {
-      return newData
-    }
-    return newData.filter((data) =>
-      data.keywordList.some((keyword) => selectKeyword.includes(keyword))
-    )
+    // if (selectKeyword.length === 0) {
+    //   return newData
+    // }
+    // return newData.filter((data) =>
+    //   data.keywordList.some((keyword) => selectKeyword.includes(keyword))
+    // )
   }
 
   const sortStore = () => {
-    deleteMarkers()
-
-    const newData = sortBrand()
-    const sortResult = sortKeyword(newData)
-
-    dispatch(setSortStores(sortResult))
-    sortCallBack(sortResult)
-
-    dispatch(saveBrand(selectBrand))
-    dispatch(saveKeyword(selectKeyword))
-
-    setIsFiltering(false)
-    KakaoService.overlay.setMap(null)
+    // deleteMarkers()
+    // const newData = sortBrand()
+    // const sortResult = sortKeyword(newData)
+    // dispatch(setSortStores(sortResult))
+    // sortCallBack(sortResult)
+    // // dispatch(saveBrand(selectBrand))
+    // // dispatch(saveKeyword(selectKeyword))
+    // setIsFiltering(false)
+    // KakaoService.overlay.setMap(null)
   }
 
   const sortInit = () => {
-    dispatch(setSortStores(convList))
-    sortCallBack(stores)
-
-    setSelectBrand([])
-    setSelectKeyword([])
-
-    dispatch(saveBrand([]))
-    dispatch(saveKeyword([]))
+    // dispatch(setSortStores(convList))
+    // sortCallBack(stores)
+    // setSelectBrand([])
+    // setSelectKeyword([])
+    // dispatch(saveBrand([]))
+    // dispatch(saveKeyword([]))
   }
 
   return (
@@ -102,7 +97,9 @@ const Filter: React.FC<filterProps> = ({ setIsFiltering }) => {
         <Title>브랜드</Title>
         <Select
           keywordArray={BRANDS}
-          selected={selectBrand}
+          // selected={selectBrand}
+          selected={['CU']}
+          // setSelected={setSelectBrand}
           setSelected={setSelectBrand}
           selectType={'brand'}
         />

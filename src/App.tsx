@@ -1,42 +1,29 @@
-import React, { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Edit from '@pages/Edit/Edit'
-import Main from '@pages/Main/Main'
-import Navigation from '@pages/Navigation/Navigation'
-import ProtectRoute from '@pages/ProtectRoute/ProtectRoute'
-import Store from '@pages/Store/Store'
-import Write from '@pages/Write/Write'
-
-import { auth } from '@services/firebaseAuth'
-import { getUserThunk } from '@stores/auth/authSlice'
-import { useAppDispatch } from '@stores/store'
-import { onAuthStateChanged } from 'firebase/auth'
+import React, { useEffect, useState } from 'react'
+import { RouterProvider } from 'react-router-dom'
+import { routers } from '@pages/routes'
 
 function App() {
-  const dispatch = useAppDispatch()
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const token: string = await user.getIdToken()
-        dispatch(getUserThunk(token))
-      }
-    })
-    return unsubscribe
-  }, [dispatch])
+    // API 스크립트 로드
+    if (!isScriptLoaded) {
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=d25f19cf0a1860dd105275f8a970b86d&libraries=services&autoload=false`
 
-  return (
-    <Routes>
-      <Route path="/" element={<Navigation />}>
-        <Route path="/" element={<Main />} />
-        <Route path="/stores/:storeId/*" element={<Store />} />
-        <Route element={<ProtectRoute />}>
-          <Route path="/stores/:storeId/write" element={<Write />} />
-          <Route path="/stores/:storeId/edit/:reviewId" element={<Edit />} />
-        </Route>
-      </Route>
-    </Routes>
-  )
+      script.onload = () => {
+        setIsScriptLoaded(true)
+      }
+      if (!document.querySelector(`script[src="${script.src}"]`)) {
+        document.body.appendChild(script)
+      }
+    }
+  }, [isScriptLoaded])
+  if (!isScriptLoaded) {
+    return <></>
+  }
+  return <RouterProvider router={routers} />
 }
 
-export default App
+export default React.memo(App)

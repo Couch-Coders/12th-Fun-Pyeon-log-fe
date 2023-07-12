@@ -1,16 +1,21 @@
 import { useCallback, useContext } from 'react'
-import { SearchType } from '@components/MapController/MapController'
 import { MapContext } from '@context/MapContext'
 
-import KakaoService from '@services/kakaoService'
+// import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
-import { saveSearchWord, setSearchedCoord } from '@stores/sort/sortSlice'
+import { setSearchedCoord } from '@stores/sort/sortSlice'
 import { useAppDispatch } from '@stores/store'
+import { DEFAULT_KAKAO_COORD } from '@utils/constants'
+
+// 카카오 서치 함수 구분용 타입
+export enum SearchType {
+  KEYWORD = 'KEYWORD',
+  CATEGORY = 'CATEGORY',
+}
 
 const useSearchStore = () => {
   const dispatch = useAppDispatch()
   const { deleteMarkers } = useContext(MapContext)
-
   const searchCallBack = useCallback(
     (
       data: kakao.maps.services.PlacesSearchResult,
@@ -38,23 +43,32 @@ const useSearchStore = () => {
   )
 
   const searchStore = useCallback(
-    (searchType: SearchType, mapApi: kakao.maps.Map, searchTerm?: string) => {
-      dispatch(saveSearchWord(''))
+    (
+      searchType: SearchType,
+      mapApi: kakao.maps.Map,
+      kakaoService: typeof kakao,
+      searchTerm?: string
+    ) => {
+      const kakaoUse = new kakaoService.maps.services.Places()
+      const kakaoOverlay = new kakaoService.maps.CustomOverlay({
+        position: new kakaoService.maps.LatLng(
+          DEFAULT_KAKAO_COORD.lat,
+          DEFAULT_KAKAO_COORD.lng
+        ),
+        zIndex: 1,
+      })
       deleteMarkers()
-      KakaoService.overlay.setMap(null)
+      kakaoOverlay.setMap(null)
       if (searchType === SearchType.KEYWORD && searchTerm) {
         //  키워드 서치
-        KakaoService.placeSearch.keywordSearch(
-          `${searchTerm} 편의점`,
-          (data, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              searchCallBack(data, mapApi, searchType)
-            }
+        kakaoUse.keywordSearch(`${searchTerm} 편의점`, (data, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            searchCallBack(data, mapApi, searchType)
           }
-        )
+        })
       } else {
         //  카테고리 서치
-        KakaoService.placeSearch.categorySearch(
+        kakaoUse.categorySearch(
           'CS2',
           (data, status) => {
             if (status === kakao.maps.services.Status.OK) {
@@ -70,7 +84,7 @@ const useSearchStore = () => {
         )
       }
     },
-    [dispatch, searchCallBack, deleteMarkers]
+    [searchCallBack, deleteMarkers]
   )
   return { searchStore }
 }

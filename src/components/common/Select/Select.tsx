@@ -6,7 +6,8 @@ interface KeywordProps {
   title?: string
   keywordArray: string[]
   selected: string[]
-  setSelected: (selected: string[]) => void
+  // setSelected: (selected: string[]) => void
+  setSelected: React.Dispatch<React.SetStateAction<string[]>>
   selectType: 'brand' | 'keyword' | 'checkbox'
 }
 

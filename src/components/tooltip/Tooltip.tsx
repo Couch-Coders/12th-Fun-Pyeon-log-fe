@@ -4,6 +4,14 @@ import { useSelector } from 'react-redux'
 import Overlay, { OverlayProps } from '@components/Overlay/Overlay'
 import { RootState } from '@stores/store'
 
+// const clickedStore = {
+//   placeName: 'ASef',
+//   storeId: 'fefsf',
+//   address: 'safasefassgasg',
+//   phoneNumber: '12312-14123-123',
+//   reviewCount: 1,
+//   starCount: 1,
+// }
 const Tooltip = () => {
   const clickedStore = useSelector(
     (state: RootState) => state.conv.clickedStore

@@ -1,7 +1,7 @@
 import { OverlayProps } from '@components/Overlay/Overlay'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import ErrorService from '@services/errorService'
-import KakaoService from '@services/kakaoService'
+// import KakaoService from '@services/kakaoService'
 import StoreService from '@services/storeService'
 import { RootState } from '@stores/store'
 import { calcDistance } from '@utils/calc'
@@ -67,15 +67,16 @@ export const fetchStoreInfo = createAsyncThunk<
   async (storeData: { storeId: string; decodedAddress: string }, thunkApi) => {
     try {
       const { storeId, decodedAddress } = storeData
-      const { stores } = thunkApi.getState().conv
-      const searchedStore = KakaoService.searchOneStore(decodedAddress, storeId)
+      // const { stores } = thunkApi.getState().conv
+      // const searchedStore = KakaoService.searchOneStore(decodedAddress, storeId)
       const storeInfo = await StoreService.getStore(storeId)
-      const result = searchedStore.length
-        ? { ...searchedStore[0], ...storeInfo }
-        : {
-            ...stores.filter((store) => store.id === storeId)[0],
-            ...storeInfo,
-          }
+      const result = { ...storeInfo }
+      // const result = searchedStore.length
+      // ? { ...searchedStore[0], ...storeInfo }
+      // : {
+      //     ...stores.filter((store) => store.id === storeId)[0],
+      //     ...storeInfo,
+      //   }
       return result
     } catch (error) {
       const message = ErrorService.axiosErrorHandler(error)

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
 import MapProvider from '@context/MapContext'
 import { store, persistor } from '@stores/store'
 import ReactDOM from 'react-dom/client'
@@ -14,17 +13,15 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
         <MapProvider>
-          <PersistGate loading={null} persistor={persistor}>
-            <ThemeProvider theme={theme}>
-              <GlobalStyle />
-              <App />
-            </ThemeProvider>
-          </PersistGate>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <App />
+          </ThemeProvider>
         </MapProvider>
-      </Provider>
-    </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 )

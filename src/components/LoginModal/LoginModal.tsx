@@ -11,7 +11,11 @@ interface ModalProps {
 
 const LoginModal: React.FC<ModalProps> = ({ setModalOpen }) => {
   const logIn = async () => {
-    await googleSignIn()
+    try {
+      await googleSignIn()
+    } catch (error) {
+      console.log(error)
+    }
     setModalOpen(false)
   }
 

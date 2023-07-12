@@ -1,7 +1,6 @@
 import { OverlayProps } from '@components/Overlay/Overlay'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import ErrorService from '@services/errorService'
-// import KakaoService from '@services/kakaoService'
 import StoreService from '@services/storeService'
 import { RootState } from '@stores/store'
 import { calcDistance } from '@utils/calc'
@@ -22,11 +21,12 @@ export const fetchAllStores = createAsyncThunk(
   async (
     mapInfo: {
       mapData: kakao.maps.services.PlacesSearchResult
-      map: kakao.maps.Map
+      lat: number
+      lng: number
     },
     thunkApi
   ) => {
-    const { mapData, map } = mapInfo
+    const { mapData, lat, lng } = mapInfo
     try {
       const storeIds = mapData.map((result) => result.id)
       const stores = await StoreService.getAllStore(storeIds)
@@ -34,22 +34,18 @@ export const fetchAllStores = createAsyncThunk(
         const [matchStore] = mapData.filter(
           (store) => store.id === data.storeId
         )
-
+        if (matchStore.distance) {
+          return { ...data, ...matchStore }
+        }
         const customDistance = calcDistance(
-          map,
+          lat,
+          lng,
           Number(matchStore.y),
           Number(matchStore.x)
         )
-        return { ...data, ...matchStore, customDistance }
+        return { ...data, ...matchStore, distance: String(customDistance) }
       })
-
-      if (storeData[0].distance) {
-        return storeData.sort((a, b) => Number(a.distance) - Number(b.distance))
-      } else {
-        return storeData.sort(
-          (a, b) => Number(a.customDistance) - Number(b.customDistance)
-        )
-      }
+      return storeData.sort((a, b) => Number(a.distance) - Number(b.distance))
     } catch (error) {
       const message = ErrorService.axiosErrorHandler(error)
       return thunkApi.rejectWithValue(message)
@@ -102,13 +98,7 @@ const convSlice = createSlice({
       state.sortedStores.sort((a, b) => b.starCount - a.starCount)
     },
     distanceSort: (state) => {
-      if (state.sortedStores[0].distance) {
-        state.sortedStores.sort(
-          (a, b) => Number(a.distance) - Number(b.distance)
-        )
-      } else if (state.sortedStores[0].customDistance) {
-        state.sortedStores.sort((a, b) => a.customDistance - b.customDistance)
-      }
+      state.sortedStores.sort((a, b) => Number(a.distance) - Number(b.distance))
     },
   },
   extraReducers(builder) {

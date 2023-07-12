@@ -17,7 +17,7 @@ interface MapContextType {
   setKakao: (newKakao: typeof kakao) => void
   setMarkers: (data: ConvType, map: kakao.maps.Map) => void
   deleteMarkers: () => void
-  setMyMarker: (map: kakao.maps.Map) => void
+  setMyMarker: () => void
 }
 
 export const MapContext = createContext<MapContextType>({
@@ -30,7 +30,7 @@ export const MapContext = createContext<MapContextType>({
   setKakao: (kakao) => {},
   setMarkers: (data, map) => {},
   deleteMarkers: () => {},
-  setMyMarker: (map) => {},
+  setMyMarker: () => {},
 })
 
 const MapProvider = ({ children }: { children: React.ReactNode }) => {
@@ -132,15 +132,13 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     [dispatch, setNewMarkers, kakaoService]
   )
   const displayMyLocation = (
-    map: kakao.maps.Map,
     kakaoService: typeof kakao,
     storeBrand?: string
   ) => {
-    if (!overlay.current) return
-    console.log(map)
+    if (!overlay.current || !mapApi) return
     overlay.current.setMap(null)
     const mapCenter =
-      map.getCenter() ??
+      mapApi.getCenter() ??
       new kakaoService.maps.LatLng(
         DEFAULT_KAKAO_COORD.lat,
         DEFAULT_KAKAO_COORD.lng
@@ -150,15 +148,15 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     }</div>`
     overlay.current.setContent(content)
     overlay.current.setPosition(mapCenter)
-    overlay.current.setMap(map)
+    overlay.current.setMap(mapApi)
     const markerImg =
       storeBrand && storeBrand.length > 0
         ? getMarkerImg(storeBrand) ?? funMarker
         : myMarker
 
     // 마커를 생성합니다
-    const marker = new kakao.maps.Marker({
-      map,
+    const marker = new kakaoService.maps.Marker({
+      map: mapApi,
       position: mapCenter,
       image: markerImg,
     })
@@ -166,9 +164,9 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     return marker
   }
 
-  const setMyMarker = useCallback((map: kakao.maps.Map) => {
+  const setMyMarker = useCallback(() => {
     if (!kakaoService) return
-    const myMarker = displayMyLocation(map, kakaoService)
+    const myMarker = displayMyLocation(kakaoService)
     if (myMarker) {
       setNewMarkers((prev) => {
         if (prev.length >= 17) {

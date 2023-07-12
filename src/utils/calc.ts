@@ -1,20 +1,19 @@
 export const calcDistance = (
-  map: kakao.maps.Map,
+  lat: number,
+  lng: number,
   lat2: number,
   lng2: number
 ) => {
-  const lat1 = map.getCenter().getLat()
-  const lng1 = map.getCenter().getLng()
   const deg2rad = (deg: number) => {
     return deg * (Math.PI / 180)
   }
 
   const R = 6371 // Radius of the earth in km
-  const dLat = deg2rad(lat2 - lat1) // deg2rad below
-  const dLon = deg2rad(lng2 - lng1)
+  const dLat = deg2rad(lat2 - lat) // deg2rad below
+  const dLon = deg2rad(lng2 - lng)
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) *
+    Math.cos(deg2rad(lat)) *
       Math.cos(deg2rad(lat2)) *
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2)

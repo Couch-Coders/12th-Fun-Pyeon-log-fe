@@ -10,7 +10,6 @@ import List from '@components/ListView/List/List'
 import LoadingWithLogo from '@components/styles/LoadingWithLogo'
 import { MapContext } from '@context/MapContext'
 import { distanceSort, reviewSort, starSort } from '@stores/conv/convSlice'
-import { ConvType } from '@stores/conv/convType'
 import { saveSortType } from '@stores/sort/sortSlice'
 import { RootState, useAppDispatch } from '@stores/store'
 import { LIST_SORT_ITEMS } from '@utils/constants'
@@ -23,7 +22,6 @@ const ListBox = () => {
   const sortType = useSelector((state: RootState) => state.sort.sortType)
   const { mapApi, setMarkers, selectedMarker, setMyMarker } =
     useContext(MapContext)
-  const [convList, setConvList] = useState<ConvType[]>([])
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
   const [targetStoreId, setTargetStoreId] = useState('')
   const listRef = useRef<HTMLLIElement[] | null[]>([])
@@ -43,33 +41,25 @@ const ListBox = () => {
     [dispatch]
   )
 
-  const moveToTarget = useCallback((storeId: string) => {
-    listRef.current[Number(storeId)]?.scrollIntoView({
+  useEffect(() => {
+    listRef.current[Number(targetStoreId)]?.scrollIntoView({
       behavior: 'smooth',
       block: 'center',
     })
-  }, [])
+  }, [targetStoreId])
 
   useEffect(() => {
-    moveToTarget(targetStoreId)
-  }, [targetStoreId, moveToTarget])
+    toggleBtn(sortType)
+  }, [toggleBtn, sortType])
 
   useEffect(() => {
-    setConvList(sortedConv)
-    if (convList.length > 0) {
-      toggleBtn(sortType)
-    }
-  }, [toggleBtn, sortedConv, sortType, convList.length])
+    if (!mapApi) return
 
-  useEffect(() => {
-    if (mapApi !== null) {
-      if (sortedConv) {
-        sortedConv.forEach((list) => {
-          setMarkers(list, mapApi)
-        })
-      }
-      setMyMarker(mapApi)
-    }
+    sortedConv.forEach((list) => {
+      setMarkers(list, mapApi)
+    })
+
+    setMyMarker()
   }, [mapApi, sortedConv, setMarkers, setMyMarker])
 
   return (
@@ -89,10 +79,10 @@ const ListBox = () => {
       <ResultBox>
         {loading ? (
           <LoadingWithLogo />
-        ) : convList.length === 0 ? (
+        ) : sortedConv.length === 0 ? (
           <p className="noResult">검색 결과가 없습니다.</p>
         ) : (
-          convList.map((store) => (
+          sortedConv.map((store) => (
             <li
               key={store.id}
               ref={(el) => (listRef.current[Number(store.id)] = el)}

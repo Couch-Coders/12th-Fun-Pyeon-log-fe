@@ -7,7 +7,7 @@ import { AimOutlined } from '@ant-design/icons'
 import { ControlBtns } from './MapController.styles'
 
 interface MapControllerProps {
-  kakao: typeof kakao
+  kakaoService: typeof kakao
   mapApi: kakao.maps.Map
   userPosition: {
     lat: number
@@ -18,7 +18,7 @@ interface MapControllerProps {
 const MapController: React.FC<MapControllerProps> = ({
   mapApi,
   userPosition,
-  kakao,
+  kakaoService,
 }) => {
   const searchedCoord = useSelector(
     (state: RootState) => state.sort.searchedCoord
@@ -27,26 +27,29 @@ const MapController: React.FC<MapControllerProps> = ({
 
   useEffect(() => {
     if (searchedCoord) {
-      const center = new kakao.maps.LatLng(searchedCoord.lat, searchedCoord.lng)
+      const center = new kakaoService.maps.LatLng(
+        searchedCoord.lat,
+        searchedCoord.lng
+      )
       mapApi.setCenter(center)
     }
-    searchStore(SearchType.CATEGORY, mapApi, kakao)
+    searchStore(SearchType.CATEGORY, mapApi, kakaoService)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   //  지도를 사용자의 위치로 이동하는 함수
   const moveToUserLocation = () => {
     // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-    const locPosition = new kakao.maps.LatLng(
+    const locPosition = new kakaoService.maps.LatLng(
       userPosition.lat,
       userPosition.lng
     )
     mapApi.setCenter(locPosition)
-    searchStore(SearchType.CATEGORY, mapApi, kakao)
+    searchStore(SearchType.CATEGORY, mapApi, kakaoService)
   }
 
   const searchFromHereHandler = () => {
-    searchStore(SearchType.CATEGORY, mapApi, kakao)
+    searchStore(SearchType.CATEGORY, mapApi, kakaoService)
   }
 
   return (

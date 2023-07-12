@@ -1,7 +1,6 @@
 import { useCallback, useContext } from 'react'
 import { MapContext } from '@context/MapContext'
 
-// import KakaoService from '@services/kakaoService'
 import { fetchAllStores } from '@stores/conv/convSlice'
 import { setSearchedCoord } from '@stores/sort/sortSlice'
 import { useAppDispatch } from '@stores/store'
@@ -37,7 +36,7 @@ const useSearchStore = () => {
       const lng = map.getCenter().getLng()
 
       dispatch(setSearchedCoord({ lat, lng }))
-      dispatch(fetchAllStores({ mapData: data, map }))
+      dispatch(fetchAllStores({ mapData: data, lat, lng }))
     },
     [dispatch]
   )

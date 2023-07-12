@@ -107,7 +107,7 @@ const Main = () => {
           <MapController
             mapApi={mapApi}
             userPosition={userPosition}
-            kakao={kakaoService}
+            kakaoService={kakaoService}
           />
         )}
       </MapWrap>

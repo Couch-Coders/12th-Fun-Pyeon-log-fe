@@ -12,7 +12,7 @@ export const StoreMapWrapper = styled.section`
   min-width: 740px;
   height: 400px;
 
-  .map {
+  #map {
     width: 100%;
     height: 100%;
   }

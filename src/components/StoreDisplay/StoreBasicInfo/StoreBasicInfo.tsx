@@ -25,7 +25,7 @@ const selectedStore = {
   storeId: 'sefasef',
   starCount: 1,
   reviewCount: 1,
-  keywordList: ['cu', 'cu'],
+  keywordList: ['cu', 'cua'],
   customDistance: 123,
   place_name: 'asef asfasef s asfe',
 }

@@ -56,23 +56,31 @@ export const fetchAllStores = createAsyncThunk(
 // 클릭한 한개의 편의점에 대한 정보 가져오기
 export const fetchStoreInfo = createAsyncThunk<
   ConvType,
-  { storeId: string; decodedAddress: string },
+  { storeId: string; searchedStore: kakao.maps.services.PlacesSearchResult },
   { state: RootState }
 >(
   'convStore/fetchStore',
-  async (storeData: { storeId: string; decodedAddress: string }, thunkApi) => {
+  async (
+    storeData: {
+      storeId: string
+      searchedStore: kakao.maps.services.PlacesSearchResult
+    },
+    thunkApi
+  ) => {
     try {
-      const { storeId, decodedAddress } = storeData
-      // const { stores } = thunkApi.getState().conv
-      // const searchedStore = KakaoService.searchOneStore(decodedAddress, storeId)
+      const { storeId, searchedStore } = storeData
+
+      const { stores } = thunkApi.getState().conv
+
       const storeInfo = await StoreService.getStore(storeId)
-      const result = { ...storeInfo }
-      // const result = searchedStore.length
-      // ? { ...searchedStore[0], ...storeInfo }
-      // : {
-      //     ...stores.filter((store) => store.id === storeId)[0],
-      //     ...storeInfo,
-      //   }
+
+      const result =
+        searchedStore.length > 0
+          ? { ...searchedStore[0], ...storeInfo }
+          : {
+              ...stores.filter((store) => store.id === storeId)[0],
+              ...storeInfo,
+            }
       return result
     } catch (error) {
       const message = ErrorService.axiosErrorHandler(error)

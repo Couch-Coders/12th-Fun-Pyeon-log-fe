@@ -22,9 +22,9 @@ const ReviewListContainer = () => {
   const dispatch = useAppDispatch()
   const reviews = useSelector((state: RootState) => state.review.reviews)
   const user = useSelector((state: RootState) => state.user.user)
-  // const selectedStore = useSelector(
-  //   (state: RootState) => state.conv.selectedStore
-  // )
+  const selectedStore = useSelector(
+    (state: RootState) => state.conv.selectedStore
+  )
   const loading = useSelector((state: RootState) => state.review.loading)
 
   const [page, setPage] = useState(0)
@@ -32,8 +32,8 @@ const ReviewListContainer = () => {
   const [hasMore, setHasMore] = useState(true)
   const observer = useRef<IntersectionObserver | null>(null)
 
-  // const totalReviewCount = selectedStore?.reviewCount ?? 0
-  const totalReviewCount = 0
+  const totalReviewCount = selectedStore?.reviewCount ?? 0
+  // const totalReviewCount = 0
 
   const lastReviewRef = useCallback(
     (node: HTMLDivElement) => {

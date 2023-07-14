@@ -16,6 +16,10 @@ interface MapContextType {
   setMapApi: React.Dispatch<React.SetStateAction<kakao.maps.Map | null>>
   setKakao: (newKakao: typeof kakao) => void
   setMarkers: (data: ConvType, map: kakao.maps.Map) => void
+  displayMyLocation: (
+    kakaoService: typeof kakao,
+    storeBrand?: string
+  ) => kakao.maps.Marker | undefined
   deleteMarkers: () => void
   setMyMarker: () => void
 }
@@ -28,6 +32,9 @@ export const MapContext = createContext<MapContextType>({
   infoOverlay: null,
   setMapApi: (newMap) => {},
   setKakao: (kakao) => {},
+  displayMyLocation: (kakao, brand) => {
+    return undefined
+  },
   setMarkers: (data, map) => {},
   deleteMarkers: () => {},
   setMyMarker: () => {},
@@ -70,16 +77,18 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     (data: ConvType, map: kakao.maps.Map) => {
       if (!kakaoService) return
       const [storeBrand] = data.place_name.split(' ')
-      const markerImg = getMarkerImg(storeBrand) ?? funMarker
+      const markerImg =
+        getMarkerImg(kakaoService, storeBrand) ??
+        new kakaoService.maps.MarkerImage(
+          funMarker,
+          new kakaoService.maps.Size(30, 40)
+        )
       const markerCenter = new kakaoService.maps.LatLng(+data.y, +data.x)
 
       // 마커를 생성하고 지도에 표시합니다
       const newMarker = new kakaoService.maps.Marker({
         position: markerCenter,
-        image: new kakaoService.maps.MarkerImage(
-          markerImg,
-          new kakaoService.maps.Size(30, 40)
-        ),
+        image: markerImg,
       })
 
       const content = `<div class="infoOverlay">${data.place_name}</div>`
@@ -131,38 +140,40 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     },
     [dispatch, setNewMarkers, kakaoService]
   )
-  const displayMyLocation = (
-    kakaoService: typeof kakao,
-    storeBrand?: string
-  ) => {
-    if (!overlay.current || !mapApi) return
-    overlay.current.setMap(null)
-    const mapCenter =
-      mapApi.getCenter() ??
-      new kakaoService.maps.LatLng(
-        DEFAULT_KAKAO_COORD.lat,
-        DEFAULT_KAKAO_COORD.lng
-      )
-    const content = `<div class="infoOverlay ${storeBrand ? '' : 'me'} ">${
-      storeBrand ? ' ' : 'YOU'
-    }</div>`
-    overlay.current.setContent(content)
-    overlay.current.setPosition(mapCenter)
-    overlay.current.setMap(mapApi)
-    const markerImg =
-      storeBrand && storeBrand.length > 0
-        ? getMarkerImg(storeBrand) ?? funMarker
-        : myMarker
+  const displayMyLocation = useCallback(
+    (kakaoService: typeof kakao, storeBrand?: string) => {
+      if (!overlay.current || !mapApi) return
+      overlay.current.setMap(null)
+      const mapCenter =
+        mapApi.getCenter() ??
+        new kakaoService.maps.LatLng(
+          DEFAULT_KAKAO_COORD.lat,
+          DEFAULT_KAKAO_COORD.lng
+        )
+      const content = `<div class="infoOverlay ${storeBrand ? '' : 'me'} ">${
+        storeBrand ? ' ' : 'YOU'
+      }</div>`
 
-    // 마커를 생성합니다
-    const marker = new kakaoService.maps.Marker({
-      map: mapApi,
-      position: mapCenter,
-      image: markerImg,
-    })
+      overlay.current.setContent(content)
+      overlay.current.setPosition(mapCenter)
+      overlay.current.setMap(mapApi)
+      const markerImg =
+        storeBrand && storeBrand.length > 0
+          ? getMarkerImg(kakaoService, storeBrand) ??
+            new kakao.maps.MarkerImage(funMarker, new kakao.maps.Size(30, 40))
+          : new kakao.maps.MarkerImage(myMarker, new kakao.maps.Size(20, 20))
 
-    return marker
-  }
+      // 마커를 생성합니다
+      const marker = new kakaoService.maps.Marker({
+        map: mapApi,
+        position: mapCenter,
+        image: markerImg,
+      })
+
+      return marker
+    },
+    [mapApi]
+  )
 
   const setMyMarker = useCallback(() => {
     if (!kakaoService) return
@@ -183,7 +194,7 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteMarkers = useCallback(() => {
     setNewMarkers((prev) => {
       prev.forEach((markerInfo) => {
-        markerInfo.setMap(null)
+        markerInfo?.setMap(null)
       })
       return []
     })
@@ -201,6 +212,7 @@ const MapProvider = ({ children }: { children: React.ReactNode }) => {
     setSelectedMarker,
     setMyMarker,
     setKakao,
+    displayMyLocation,
   }
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>

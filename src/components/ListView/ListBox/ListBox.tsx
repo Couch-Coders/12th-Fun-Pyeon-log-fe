@@ -20,6 +20,7 @@ const ListBox = () => {
   const sortedConv = useSelector((state: RootState) => state.conv.sortedStores)
   const loading = useSelector((state: RootState) => state.conv.loading)
   const sortType = useSelector((state: RootState) => state.sort.sortType)
+
   const { mapApi, setMarkers, selectedMarker, setMyMarker } =
     useContext(MapContext)
   const [select, setSelect] = useState(LIST_SORT_ITEMS[0].type)
@@ -50,7 +51,7 @@ const ListBox = () => {
 
   useEffect(() => {
     toggleBtn(sortType)
-  }, [toggleBtn, sortType])
+  }, [toggleBtn, sortType, sortedConv])
 
   useEffect(() => {
     if (!mapApi) return

@@ -30,6 +30,7 @@ export const fetchAllStores = createAsyncThunk(
     try {
       const storeIds = mapData.map((result) => result.id)
       const stores = await StoreService.getAllStore(storeIds)
+
       const storeData = stores.map((data) => {
         const [matchStore] = mapData.filter(
           (store) => store.id === data.storeId
@@ -68,9 +69,8 @@ export const fetchStoreInfo = createAsyncThunk<
     thunkApi
   ) => {
     try {
-      const { storeId, searchedStore } = storeData
-
       const { stores } = thunkApi.getState().conv
+      const { storeId, searchedStore } = storeData
 
       const storeInfo = await StoreService.getStore(storeId)
 
@@ -100,13 +100,19 @@ const convSlice = createSlice({
       state.sortedStores = action.payload
     },
     reviewSort: (state) => {
-      state.sortedStores.sort((a, b) => b.reviewCount - a.reviewCount)
+      state.sortedStores = state.sortedStores.sort(
+        (a, b) => b.reviewCount - a.reviewCount
+      )
     },
     starSort: (state) => {
-      state.sortedStores.sort((a, b) => b.starCount - a.starCount)
+      state.sortedStores = state.sortedStores.sort(
+        (a, b) => b.starCount - a.starCount
+      )
     },
     distanceSort: (state) => {
-      state.sortedStores.sort((a, b) => Number(a.distance) - Number(b.distance))
+      state.sortedStores = state.sortedStores.sort(
+        (a, b) => Number(a.distance) - Number(b.distance)
+      )
     },
   },
   extraReducers(builder) {
